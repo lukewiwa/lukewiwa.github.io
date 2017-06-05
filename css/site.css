@@ -110,3 +110,10 @@ h3[id]:before{
     width: 263px;
   }
 }
+
+img {
+  width: 38em;
+  display: block;
+  margin-left: 1em;
+  margin-right: auto;
+}
