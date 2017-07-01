@@ -1,7 +1,0 @@
-beautifulsoup4==4.5.3
-Jinja2==2.9.5
-Markdown==2.6.8
-MarkupSafe==0.23
-Pygments==2.2.0
-PyYAML==3.12
--e git+git@github.com:lukewiwa/urubu.git@1b42446d60c510be216605965bf2ff24777c82a0#egg=urubu
