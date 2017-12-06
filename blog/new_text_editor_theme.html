@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Luke Wiwatowski</title>
+    <title>New Text Editor and Syntax Colour Scheme</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="utf-8">
 
@@ -54,9 +54,8 @@
         <div class="navbar-collapse collapse">
 
           <ul class="nav navbar-nav navbar-left">
- 
             <li><a href="/code_of_points/">Code Of Points</a></li>
-            <li><a href="/blog/">Blog</a></li>
+            <li class="active"><a href="/blog/">Blog</a></li>
           </ul>
 
           <form class="navbar-form navbar-left" action="/search.html" role="search">
@@ -74,47 +73,38 @@
     </div>
 
 
-<div class="jumbotron">
-  <div class="container text-center">
-    <div class="row">
-      <div class="col-md-8 col-md-offset-2">
-         <h1>Luke Wiwatowski</h1>
-         <h2>Gymnastics Engineering Miscellaneous</h2>
-      </div>
-   </div>
- </div>
-</div>
-
 <div class="container">
+
+  <ol class="breadcrumb">
+    <li><a href="/">Home</a></li>
+      <li><a href="/blog/">Blog</a></li>
+      <li class="active">New Text Editor and Syntax Colour Scheme</li>
+  </ol>
+
+  <div class="page-header">
+    <h1>New Text Editor and Syntax Colour Scheme</h1>
+  </div>
+
   <div class="row">
 
-    <div class="col-md-4">
-<h4><span class="glyphicon glyphicon-star" aria-hidden="true"></span> Gymnastics</h4>
-<p>
-I was an Australian Representative for 15 years, during the 2010 Delhi Commonwealth Games I was lucky enough to be part of the Men's gold medal winning team. I also do small projects revolving around gymnastics and the <a href="/code_of_points/">Code of Points</a> more specifically.
-</p>  
+    <div class="col-md-8 content col-md-offset-2" role="main">
+    <main>
+      <p>After trying a few different text editors out, from the standard of gedit, to sublime text and even attempts at nano, I've standardised on Visual Studio Code which seems to be a standout for a few reasons. I'm not exactly an advanced programmer but when I am punching in a few crummy lines of python or writing some markdown notes I've reached for VSCode time and again. It seems to be both extremely flexible, as well as fairly intuitive. The interface VSCode's extension ecosystem and the git interface is straight forward and easy to use.</p>
+<p>There was however one bug bear of mine which irritated me somewhat when using it. I love the <strong>Vibrant Ink</strong> theme and there is an extension available, however the available theme does not have markdown support and I spend a lot of my time punching in notes using the markdown syntax. As such I attempting to do some tweaking of the Vibrant Ink theme but I wasn't happy with the results. I decided to eventually start from scratch.</p>
+<p><img alt="Dark Wiwa" src="../img/dark_wiwa.PNG" /></p>
+<p>I made use of Microsoft's <a href="http://yeoman.io/">Yeoman</a> to generate a scaffold theme and then used a great <a href="https://github.com/Tyriar/vscode-theme-generator">generator</a> to populate that scaffold with a basic colour scheme and added my own tweaks. My choice of colours ended up looking very festive. I've put the theme up on <a href="https://github.com/lukewiwa/dark_wiwa">Github</a>.</p>
+    </main>
     </div>
 
-    <div class="col-md-4">
-<h4><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span> Engineering</h4>
-<p>
-I graduated from Swinburne University with a Bachelors in mechanical engineering. Experience in controls engineering at Alerton Australia. Lab Assistant for PV Lab Australia.
-</p>
+
+  </div>
+
+    <div class="footer">
+        <p>Website powered by <a href="http://urubu.jandecaluwe.com">Urubu</a></p>
     </div>
 
-    <div class="col-md-4">
-<h4><span class="glyphicon glyphicon-user" aria-hidden="true"></span> Online</h4>
-<p>
-You can connect with me on the line using many different urls.
-</p>
-<a href="https://github.com/lukewiwa"><img src="/img/icons/social-1_logo-github.svg"></a>
-<a href="https://twitter.com/lukewiwa"><img src="/img/icons/social-1_logo-twitter.svg"></a>
-<a href="https://twitter.com/lukewiwa"><img src="/img/icons/social-1_logo-linkedin.svg"></a>
-    </div>
 
 </div>
-</div>
-
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
