@@ -113,8 +113,9 @@ h3[id]:before{
 }
 
 main img {
-  width: 38em;
+  max-width: 38em;
+  min-width: 20em;
   display: block;
-  margin-left: 1em;
+  margin-left: auto;
   margin-right: auto;
 }
