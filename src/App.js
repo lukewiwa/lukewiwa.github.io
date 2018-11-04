@@ -11,8 +11,9 @@ const App = () => (
     <div>
       <nav>
         <Link exact to="/">Wiwa</Link>
-        <Link to="/about">About</Link>
+        <Link to="/gymnastics">Gymnastics</Link>
         <Link to="/blog">Blog</Link>
+        <Link to="/about">About</Link>
       </nav>
       <div className="flex-center">
         <div className="container">

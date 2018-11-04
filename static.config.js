@@ -5,17 +5,32 @@ import matter from 'gray-matter'
 
 const readdir = util.promisify(fs.readdir)
 
-const blogFiles = async (dir) => {
-    const files = await readdir(dir)
-    let content = files.map(file => {
-        let post = path.join(dir, file)
-        let contents = matter.read(post)
-        let postDate = contents.data.date
-        contents.data.date = new Date(postDate).toLocaleDateString('en-AU')
-        return contents
+const sortByDate = (mdFiles) => {
+  return mdFiles.sort((a, b) => new Date(b.data.date) - new Date(a.data.date))
+}
 
-    }).sort((a, b) => b.data.date - a.data.date)
-    return content
+const mdContent = async (dir, files) => {
+  return await files.map(file => {
+    let post = path.join(dir, file)
+    let md = matter.read(post)
+    return md
+  })
+}
+
+const dateString = async (mdArray) => {
+  return await mdArray.map(entry => {
+    let postDate = new Date(entry.data.date)
+    entry.data.date = postDate.toLocaleDateString('en-AU')
+    return entry
+  })
+}
+
+const blogFiles = async (dir) => {
+  const files = await readdir(dir)
+  let md = await mdContent(dir, files)
+  let dateSorted = await sortByDate(md)
+  let content = await dateString(dateSorted)
+  return content
 }
 
 export default {
@@ -32,6 +47,10 @@ export default {
       {
         path: '/about',
         component: 'src/containers/About',
+      },
+      {
+        path: '/gymnastics',
+        component: 'src/containers/Gymnastics'
       },
       {
         path: '/blog',
