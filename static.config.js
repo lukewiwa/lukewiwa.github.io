@@ -1,13 +1,29 @@
-import axios from 'axios'
-import React, { Component } from 'react'
-import { ServerStyleSheet } from 'styled-components'
+import fs from 'fs'
+import util from 'util'
+import path from 'path'
+import matter from 'gray-matter'
+
+const readdir = util.promisify(fs.readdir)
+
+const blogFiles = async (dir) => {
+    const files = await readdir(dir)
+    let content = files.map(file => {
+        let post = path.join(dir, file)
+        let contents = matter.read(post)
+        let postDate = contents.data.date
+        contents.data.date = new Date(postDate).toLocaleDateString('en-AU')
+        return contents
+
+    }).sort((a, b) => b.data.date - a.data.date)
+    return content
+}
 
 export default {
   getSiteData: () => ({
-    title: 'React Static',
+    title: 'Wiwa',
   }),
   getRoutes: async () => {
-    const { data: posts } = await axios.get('https://jsonplaceholder.typicode.com/posts')
+    const posts = await blogFiles('blog')
     return [
       {
         path: '/',
@@ -24,7 +40,7 @@ export default {
           posts,
         }),
         children: posts.map(post => ({
-          path: `/post/${post.id}`,
+          path: `/${post.data.slug}`,
           component: 'src/containers/Post',
           getData: () => ({
             post,
@@ -36,29 +52,5 @@ export default {
         component: 'src/containers/404',
       },
     ]
-  },
-  renderToHtml: (render, Comp, meta) => {
-    const sheet = new ServerStyleSheet()
-    const html = render(sheet.collectStyles(<Comp />))
-    meta.styleTags = sheet.getStyleElement()
-    return html
-  },
-  Document: class CustomHtml extends Component {
-    render () {
-      const {
-        Html, Head, Body, children, renderMeta,
-      } = this.props
-
-      return (
-        <Html>
-          <Head>
-            <meta charSet="UTF-8" />
-            <meta name="viewport" content="width=device-width, initial-scale=1" />
-            {renderMeta.styleTags}
-          </Head>
-          <Body>{children}</Body>
-        </Html>
-      )
-    }
   },
 }

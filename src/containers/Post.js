@@ -1,12 +1,12 @@
 import React from 'react'
-import { withRouteData, Link } from 'react-static'
+import { withRouteData } from 'react-static'
+import ReactMarkdown from 'react-markdown/with-html'
 //
 
 export default withRouteData(({ post }) => (
   <div>
-    <Link to="/blog/">{'<'} Back</Link>
     <br />
-    <h3>{post.title}</h3>
-    <p>{post.body}</p>
+    <h3>{post.data.title}</h3>
+    <ReactMarkdown source={post.content} escapeHtml={false} />
   </div>
 ))
