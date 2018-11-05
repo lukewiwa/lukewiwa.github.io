@@ -15,9 +15,12 @@
   "dependencies": {
     "axios": "^0.16.2",
     "gray-matter": "^4.0.1",
+    "highlight.js": "^9.13.1",
     "react": "^16.0.0",
+    "react-addons-shallow-compare": "^15.6.2",
     "react-dom": "^16.0.0",
     "react-hot-loader": "^4.0.0-beta.21",
+    "react-lowlight": "^2.0.0",
     "react-markdown": "^4.0.3",
     "react-router": "^4.2.0",
     "react-static": "^5.9.12"
