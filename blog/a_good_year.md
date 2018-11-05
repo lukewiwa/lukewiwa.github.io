@@ -1,6 +1,6 @@
 ---
 title: A Good Year
-slug: a-good-year
+slug: a_good_year
 layout: simple_page
 date: 2017-12-29
 teaser: It's that time to take stock of another year in my life
@@ -15,6 +15,6 @@ I've always been a late starter to professional work but this year was the one i
 
 My few months of work experience did see me fulfil the criteria for graduation and after ten long years chipping away I can finally call myself a graduate! Thanks to my gymnastics career this was a very slow burn which sometimes left me wondering whether I'd even finish but this year I finally have closure on this chapter of my life.
 
-Finally I was extremely lucky to get a graduate engineering role in civil engineering. I am excited for the future and I seem to be working with a pretty good group of people. 
+Finally I was extremely lucky to get a graduate engineering role in civil engineering. I am excited for the future and I seem to be working with a pretty good group of people.
 
 All in all I'm hoping for more years like this one.

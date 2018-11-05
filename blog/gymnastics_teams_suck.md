@@ -1,6 +1,6 @@
 ---
 title: The Case Against Gymnastics Teams
-slug: gymnastics-teams-suck
+slug: gymnastics_teams_suck
 layout: simple_page
 date: 2017-03-03
 teaser: There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical.

@@ -1,6 +1,6 @@
 ---
 title: Does Driving Performance Degrade Or Improve With Increased Automation
-slug: automation-and-driving-performance
+slug: automation_and_driving_performance
 layout: simple_page
 date: 2017-08-18
 teaser: During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here's an essay which I wrote answering the question "Does Driving Performance Degrade Or Improve With Increased Automation"

@@ -1,6 +1,6 @@
 ---
 title: New Text Editor and Syntax Colour Scheme
-slug: new-text-editor-theme
+slug: new_text_editor_theme
 layout: simple_page
 date: 2017-12-06
 teaser: I'm A Visual Studio Code convert and here's a new syntax highlighting theme to celebrate

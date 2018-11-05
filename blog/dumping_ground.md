@@ -1,6 +1,6 @@
 ---
 title: A Dumping Ground
-slug: dumping-ground
+slug: dumping_ground
 layout: simple_page
 date: 2017-03-03
 ---

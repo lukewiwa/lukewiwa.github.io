@@ -68,6 +68,6 @@ toyplot.html.render(
 ```
 The output is a rather nice looking plot based on html, css and javascript. The result is below.
 
-![cool graph](/graphs/Parallel&#32;Bars.svg)
+![cool graph](/graphs/rr.svg)
 
 The full code is available on [Github](https://github.com/lukewiwa/matrix_plots_code_of_points) for anybody interested.

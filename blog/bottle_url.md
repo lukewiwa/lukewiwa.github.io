@@ -1,6 +1,6 @@
 ---
 title: Bottle URL Redirect
-slug: bottle-url
+slug: bottle_url
 layout: simple_page
 date: 2017-05-23
 teaser: The little documented url method in bottle.py
