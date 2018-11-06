@@ -3,18 +3,21 @@ import { Router, Link } from 'react-static'
 import { hot } from 'react-hot-loader'
 //
 import Routes from 'react-static-routes'
+import Nav from './components/Nav'
 
 import './app.css'
 
 const App = () => (
   <Router>
     <div>
-      <nav>
-        <Link exact to="/">Wiwa</Link>
-        <Link to="/gymnastics">Gymnastics</Link>
-        <Link to="/blog">Blog</Link>
-        <Link to="/about">About</Link>
-      </nav>
+      <Nav 
+        title={"Wiwa"}
+        headings={[
+          {link: "blog", title: "Blog"},
+          {link: "gymnastics", title: "Gymnastics"},
+          {link: "about", title: "About"},
+        ]}
+      />
       <div className="flex-center">
         <div className="container">
           <Routes />
