@@ -52,7 +52,10 @@ export default {
       },
       {
         path: '/gymnastics',
-        component: 'src/containers/Gymnastics'
+        component: 'src/containers/Gymnastics',
+        children: [
+          { path: '/markov', component: 'src/containers/TwitterBot' }
+        ]
       },
       {
         path: '/blog',
@@ -81,7 +84,7 @@ export default {
     return html
   },
   Document: class CustomHtml extends Component {
-    render () {
+    render() {
       const {
         Html, Head, Body, children, renderMeta,
       } = this.props
