@@ -16,7 +16,7 @@ const Container = styled.nav`
   align-items: center;
 
   @media only screen and (min-width : 42em) {
-    grid-template-columns: minmax(1em, 1fr) 20em minmax(auto, 20em) 20em minmax(1em, 1fr) ;
+    grid-template-columns: minmax(1em, 1fr) 20em minmax(auto, 10em) 20em minmax(1em, 1fr) ;
     grid-template-rows: 4em;
     grid-template-areas: ". brand . menu .";
   }
