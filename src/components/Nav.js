@@ -1,11 +1,11 @@
 import React from 'react'
 import { Link } from 'react-static'
 import styled from 'styled-components'
+import { minWidth, mainColour } from '../styles/variables'
 
 const Container = styled.nav`
-  border-bottom: 1px solid #f2f2f2;
 
-  background-color: #f2f2f2;
+  background-color: ${mainColour};
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 3em 3em;
@@ -15,28 +15,29 @@ const Container = styled.nav`
   justify-items: center;
   align-items: center;
 
-  @media only screen and (min-width : 42em) {
+  @media only screen and (min-width : ${minWidth}em) {
     grid-template-columns: minmax(1em, 1fr) 20em minmax(auto, 20em) 20em minmax(1em, 1fr);
     grid-template-rows: 4em;
     grid-template-areas: ". brand . menu .";
   }
 
   a {
-    color: #777;
+    color: #FFFFFF;
   }
 `
 
 const Brand = styled.div`
+  margin: 1em;
   grid-area: brand;
   font-weight: 800;
-  @media only screen and (min-width : 42em) {
+  @media only screen and (min-width : ${minWidth}em) {
     justify-self: start;
   }
 `
 
 const Menu = styled.div`
   grid-area: menu;
-  @media only screen and (min-width : 42em) {
+  @media only screen and (min-width : ${minWidth}em) {
     justify-self: end;
   }
 `

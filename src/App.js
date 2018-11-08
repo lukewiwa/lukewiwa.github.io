@@ -15,7 +15,6 @@ const App = () => (
         headings={[
           { link: 'blog', title: 'Blog' },
           { link: 'gymnastics', title: 'Gymnastics' },
-          { link: 'about', title: 'About' },
         ]}
       />
       <div className="flex-center">
