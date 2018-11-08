@@ -54,8 +54,8 @@ export default {
         path: '/gymnastics',
         component: 'src/containers/Gymnastics',
         children: [
-          { path: '/markov', component: 'src/containers/TwitterBot' },
-          { path: '/MAG2020', component: 'src/containers/MAG2020' },
+          { path: '/markov', component: 'src/gymnastics/Markov' },
+          { path: '/MAG2020', component: 'src/gymnastics/MAG2020' },
         ]
       },
       {
