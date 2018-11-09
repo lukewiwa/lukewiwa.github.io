@@ -5662,8 +5662,10 @@ const MagCode = () => (
 
 
 export default () => (
-  <div className="container-wider">
-    <Title>MAG 2020</Title>
-    <MagCode />
+  <div className="flex-center">
+    <div className="container-wider">
+      <Title>MAG 2020</Title>
+      <MagCode />
+    </div>
   </div>
 )

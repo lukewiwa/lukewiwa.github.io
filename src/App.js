@@ -5,7 +5,7 @@ import { hot } from 'react-hot-loader'
 import Routes from 'react-static-routes'
 import Nav from './components/Nav'
 
-import './app.css'
+import GlobalStyle from './styles/GlobalStyle'
 
 const App = () => (
   <Router>
@@ -18,6 +18,7 @@ const App = () => (
         ]}
       />
       <Routes />
+      <GlobalStyle />
     </div>
   </Router>
 )

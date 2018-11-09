@@ -14,9 +14,11 @@
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "feather-icons": "^4.9.0",
     "gray-matter": "^4.0.1",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",
+    "react-feather": "^1.1.4",
     "react-hot-loader": "^4.0.0-beta.21",
     "react-markdown": "^4.0.3",
     "react-router": "^4.2.0",
