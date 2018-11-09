@@ -1,10 +1,9 @@
 import React from 'react'
 import { Link } from 'react-static'
 import styled from 'styled-components'
-import { minWidth, mainColour } from '../styles/variables'
+import { minWidth, mainColour, secondColour, thirdColour } from '../styles/variables'
 
 const Container = styled.nav`
-
   background-color: ${mainColour};
   display: grid;
   grid-template-columns: 1fr;
@@ -12,9 +11,8 @@ const Container = styled.nav`
   grid-template-areas:
     "brand"
     "menu";
-  justify-items: center;
   align-items: center;
-
+  justify-items: center;
   @media only screen and (min-width : ${minWidth}em) {
     grid-template-columns: minmax(1em, 1fr) 20em minmax(auto, 20em) 20em minmax(1em, 1fr);
     grid-template-rows: 4em;
@@ -22,16 +20,17 @@ const Container = styled.nav`
   }
 
   a {
-    color: #FFFFFF;
+    color: ${secondColour};
   }
 `
 
 const Brand = styled.div`
   margin: 1em;
   grid-area: brand;
-  font-weight: 800;
+  font-size: 1.2rem;
   @media only screen and (min-width : ${minWidth}em) {
     justify-self: start;
+
   }
 `
 
@@ -43,25 +42,34 @@ const Menu = styled.div`
 `
 
 const Item = styled(Link)`
-  margin: 1em;
+  padding: 0.5em 0;
+  margin: 0 0.5em;
+  &:hover {
+    text-decoration: none;
+    color: ${thirdColour};
+  }
   &.active {
-    font-weight: 600;
+    border-bottom-style: solid;
+    border-bottom-width: 2px;
+    border-color: ${secondColour};
   }
 `
 
-export default function Nav (props) {
+export default function Nav(props) {
   return (
     <Container>
       <Brand>
-        <Link exact to="/">
+        <Item exact to="/">
           {props.title}
-        </Link>
+        </Item>
       </Brand>
       <Menu>
         {props.headings.map((heading, i) => (
+
           <Item key={i} to={`/${heading.link}`}>
             {heading.title}
           </Item>
+
         ))}
       </Menu>
     </Container>

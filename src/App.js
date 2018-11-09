@@ -17,11 +17,7 @@ const App = () => (
           { link: 'gymnastics', title: 'Gymnastics' },
         ]}
       />
-      <div className="flex-center">
-        <div className="container">
-          <Routes />
-        </div>
-      </div>
+      <Routes />
     </div>
   </Router>
 )
