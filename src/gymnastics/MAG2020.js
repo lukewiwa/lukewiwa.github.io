@@ -1,5 +1,5 @@
 import React from 'react'
-import { Title } from '../components/Styled'
+import { Title } from '../styles/Styled'
 //
 
 const MagCode = () => (

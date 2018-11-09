@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { TwitterTimelineEmbed } from 'react-twitter-embed'
-import { Title } from '../components/Styled'
+import { Title } from '../styles/Styled'
 //
 
 export default () => (

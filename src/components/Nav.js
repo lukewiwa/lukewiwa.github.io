@@ -55,23 +55,21 @@ const Item = styled(Link)`
   }
 `
 
-export default function Nav(props) {
-  return (
-    <Container>
-      <Brand>
-        <Item exact to="/">
-          {props.title}
+export default props => (
+  <Container>
+    <Brand>
+      <Item exact to="/">
+        {props.title}
+      </Item>
+    </Brand>
+    <Menu>
+      {props.headings.map((heading, i) => (
+
+        <Item key={i} to={`/${heading.link}`}>
+          {heading.title}
         </Item>
-      </Brand>
-      <Menu>
-        {props.headings.map((heading, i) => (
 
-          <Item key={i} to={`/${heading.link}`}>
-            {heading.title}
-          </Item>
-
-        ))}
-      </Menu>
-    </Container>
-  )
-}
+      ))}
+    </Menu>
+  </Container>
+)

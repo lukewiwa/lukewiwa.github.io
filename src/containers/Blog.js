@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { withRouteData, Link } from 'react-static'
-import { Title } from '../components/Styled'
+import { Title } from '../styles/Styled'
 //
 
 export default withRouteData(({ posts }) => (
