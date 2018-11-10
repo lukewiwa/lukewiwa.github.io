@@ -302,7 +302,7 @@ export default createGlobalStyle`
     -webkit-flex-grow: 1;
     flex-grow: 1;
     overflow: hidden;
-    padding: 0 0.9375rem 0.9375rem;
+    padding: 0 0.9375rem 4em 0.9375rem;
   }
 
   .container {

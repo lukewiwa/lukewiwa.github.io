@@ -2,7 +2,7 @@ import React from 'react'
 import { withSiteData, Link } from 'react-static'
 import styled from 'styled-components'
 import { Award, Settings, Smartphone } from 'react-feather'
-import { media, colWidth } from '../styles/variables'
+import { media, maxWidth } from '../styles/variables'
 
 const Layout = styled.div`
   display: grid;
@@ -22,14 +22,14 @@ const Hero = styled.div`
 const Info = styled.div`
   grid-area: info;
   display: grid;
-  grid-template-areas: 
+  grid-template-areas:
     "."
     "."
     ".";
   justify-content: center;
   ${media.column`
     grid-template-areas: "." "." ".";
-    grid-template-columns: repeat(3, minmax(14em, ${colWidth / 3}em));
+    grid-template-columns: repeat(3, minmax(14em, ${maxWidth / 3}em));
     grid-template-rows: 1fr;
   `}
 `
