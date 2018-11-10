@@ -1,8 +1,8 @@
 import React from 'react'
-import { withSiteData } from 'react-static'
+import { withSiteData, Link } from 'react-static'
 import styled from 'styled-components'
 import { Award, Settings, Smartphone } from 'react-feather'
-import { media } from '../styles/variables'
+import { media, colWidth } from '../styles/variables'
 
 const Layout = styled.div`
   display: grid;
@@ -29,7 +29,7 @@ const Info = styled.div`
   justify-content: center;
   ${media.column`
     grid-template-areas: "." "." ".";
-    grid-template-columns: repeat(3, minmax(14em, 20em));
+    grid-template-columns: repeat(3, minmax(14em, ${colWidth / 3}em));
     grid-template-rows: 1fr;
   `}
 `
@@ -47,13 +47,13 @@ export default withSiteData(() => (
       <InfoBlock>
         <h5><Award /> Gymnastics</h5>
         <p>
-          I was an Australian Representative for 15 years, during the 2010 Delhi Commonwealth Games I was lucky enough to be part of the Men's gold medal winning team. I also do small projects revolving around gymnastics and the Code of Points more specifically.
+          Australian Representative for 15 years. 2010 Delhi Commonwealth Games Gold Medal winner. Various small projects revolving around <Link to="/gymnastics">gymnastics</Link>.
         </p>
       </InfoBlock>
       <InfoBlock>
         <h5><Settings /> Engineering</h5>
         <p>
-          I graduated from Swinburne University with a Bachelors in mechanical engineering. Experience in controls engineering at Alerton Australia. Lab Assistant for PV Lab Australia. Graduate Civil Engineer for Opus/WSP Australia.
+        Bachelors in mechanical engineering from Swinburne University. Controls engineering at Alerton Australia. Lab Assistant for PV Lab Australia. Software Engineer for WSP Australia.
         </p>
       </InfoBlock>
       <InfoBlock>
