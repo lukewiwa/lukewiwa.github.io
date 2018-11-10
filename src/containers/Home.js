@@ -1,7 +1,7 @@
 import React from 'react'
 import { withSiteData, Link } from 'react-static'
 import styled from 'styled-components'
-import { Award, Settings, Smartphone } from 'react-feather'
+import { Award, Settings, Smartphone, Twitter, Linkedin, GitHub } from 'react-feather'
 import { media, maxWidth } from '../styles/variables'
 
 const Layout = styled.div`
@@ -36,6 +36,9 @@ const Info = styled.div`
 const InfoBlock = styled.div`
   margin: 1em;
 `
+const IconLink = styled.a`
+  margin: 1em;
+`
 
 export default withSiteData(() => (
   <Layout>
@@ -60,6 +63,11 @@ export default withSiteData(() => (
         <h5><Smartphone /> Online</h5>
         <p>
         You can connect with me on the line using many different urls.
+        </p>
+        <p>
+          <IconLink href="https://www.linkedin.com/in/lukewiwa/"><Linkedin /></IconLink>
+          <IconLink href="https://github.com/lukewiwa/"><GitHub /></IconLink>
+          <IconLink href="https://twitter.com/lukewiwa/"><Twitter /></IconLink>
         </p>
       </InfoBlock>
     </Info>

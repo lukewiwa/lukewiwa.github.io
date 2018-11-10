@@ -1,7 +1,9 @@
 import React from 'react'
 import { Link } from 'react-static'
 import styled from 'styled-components'
-import { minWidth, mainColour, secondColour, thirdColour } from '../styles/variables'
+import { minWidth, maxWidth, mainColour, secondColour, thirdColour } from '../styles/variables'
+
+const section = maxWidth / 3
 
 const Container = styled.nav`
   background-color: ${mainColour};
@@ -14,7 +16,7 @@ const Container = styled.nav`
   align-items: center;
   justify-items: center;
   @media only screen and (min-width : ${minWidth}em) {
-    grid-template-columns: minmax(1em, 1fr) 20em minmax(auto, 20em) 20em minmax(1em, 1fr);
+  grid-template-columns: minmax(1em, 1fr) ${section}em minmax(auto, ${section}em) ${section}em minmax(1em, 1fr);
     grid-template-rows: 4em;
     grid-template-areas: ". brand . menu .";
   }
