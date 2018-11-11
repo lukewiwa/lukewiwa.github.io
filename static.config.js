@@ -36,6 +36,7 @@ const blogFiles = async (dir) => {
 }
 
 export default {
+  siteRoot: 'https://lukewiwa.com',
   getSiteData: () => ({
     title: 'Wiwa',
   }),
