@@ -1,5 +1,5 @@
 import React from 'react'
-import { withSiteData, Link } from 'react-static'
+import { withSiteData, Link, Head } from 'react-static'
 import styled from 'styled-components'
 import { Award, Settings, Smartphone, Twitter, Linkedin, GitHub } from 'react-feather'
 import { media, maxWidth } from '../styles/variables'
@@ -42,6 +42,7 @@ const IconLink = styled.a`
 
 export default withSiteData(() => (
   <Layout>
+    <Head><title>Wiwa</title></Head>
     <Hero>
       <h1 style={{ fontSize: '4rem', fontWeight: 20, textAlign: 'center' }}>Luke Wiwatowski</h1>
       <h2 style={{ fontSize: '2rem', fontWeight: 20, textAlign: 'center' }}>Gymnastics Engineering Miscellaneous</h2>

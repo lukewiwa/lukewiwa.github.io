@@ -1,10 +1,11 @@
 import React from 'react'
-import { Link } from 'react-static'
+import { Link, Head } from 'react-static'
 import { Title } from '../styles/Styled'
 //
 
 export default () => (
   <div className="flex-center">
+    <Head><title>Wiwa - Gymnastics</title></Head>
     <div className="container">
       <Title>Gymnastics Projects.</Title>
       <span>

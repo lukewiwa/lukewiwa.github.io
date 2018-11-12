@@ -1,11 +1,12 @@
 
 import React from 'react'
-import { withRouteData, Link } from 'react-static'
+import { withRouteData, Link, Head } from 'react-static'
 import { Title } from '../styles/Styled'
 //
 
 export default withRouteData(({ posts }) => (
   <div className="flex-center">
+    <Head><title>Wiwa - Blog</title></Head>
     <div className="container">
       <Title>Ramblings</Title>
       {posts.map(post => (
