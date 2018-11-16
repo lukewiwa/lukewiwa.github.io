@@ -57,13 +57,13 @@ export default withSiteData(() => (
       <InfoBlock>
         <h5><Settings /> Engineering</h5>
         <p>
-        Bachelors in mechanical engineering from Swinburne University. Controls engineering at Alerton Australia. Lab Assistant for PV Lab Australia. Software Engineer for WSP Australia.
+          Bachelors in mechanical engineering from Swinburne University. Controls engineering at Alerton Australia. Lab Assistant for PV Lab Australia. Software Engineer for WSP Australia.
         </p>
       </InfoBlock>
       <InfoBlock>
         <h5><Smartphone /> Online</h5>
         <p>
-        You can connect with me on the line using many different urls.
+          You can connect with me on the line using many different urls.
         </p>
         <p>
           <IconLink href="https://www.linkedin.com/in/lukewiwa/"><Linkedin /></IconLink>

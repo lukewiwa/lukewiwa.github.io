@@ -7,7 +7,7 @@ import { Title } from '../styles/Styled'
 
 export default withRouteData(({ post }) => (
   <div className="flex-center">
-  <Head><title>Wiwa - {post.data.title}</title></Head>
+    <Head><title>Wiwa - {post.data.title}</title></Head>
     <div className="container">
       <Title>{post.data.title}</Title>
       <ReactMarkdown source={post.content} escapeHtml={false} />

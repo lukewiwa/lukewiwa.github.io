@@ -9,10 +9,12 @@
     "build": "react-static build",
     "bundle": "react-static bundle",
     "export": "react-static export",
-    "serve": "serve dist -p 3000"
+    "serve": "serve dist -p 3000",
+    "wiwa": "node ./wiwa.js"
   },
   "dependencies": {
     "axios": "^0.16.2",
+    "csvtojson": "^2.0.8",
     "feather-icons": "^4.9.0",
     "gray-matter": "^4.0.1",
     "react": "^16.0.0",
@@ -22,6 +24,7 @@
     "react-markdown": "^4.0.3",
     "react-router": "^4.2.0",
     "react-static": "^5.9.12",
+    "react-table": "^6.8.6",
     "react-twitter-embed": "^2.0.3",
     "styled-components": "^4.0.3"
   },
