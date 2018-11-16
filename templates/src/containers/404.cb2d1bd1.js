@@ -1,0 +1,2 @@
+webpackJsonp([6],{61:function(e,t,l){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var a=l(0),n=function(e){return e&&e.__esModule?e:{default:e}}(a),u=l(17);t.default=function(){return n.default.createElement("div",{className:"flex-center"},n.default.createElement(u.Head,null,n.default.createElement("title",null,"Wiwa - Splat")),n.default.createElement("div",{className:"container"},n.default.createElement("h1",null,"404 - Oh no's! We couldn't find that page :(")))}}});
+//# sourceMappingURL=404.cb2d1bd1.js.map
