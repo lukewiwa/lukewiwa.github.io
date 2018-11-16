@@ -36,7 +36,8 @@ export const magCode = async () => {
     { responseType: 'text' }
   )
   const text = response.data
-  const table = await csv().fromString(text)
-  console.log(table)
+  const table = await csv({
+    ignoreColumns: /(id|index)/
+  }).fromString(text)
   return table
 }
