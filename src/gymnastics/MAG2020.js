@@ -7,9 +7,11 @@ import { Title } from '../styles/Styled'
 
 const headers = [
   { Header: 'Apparatus', accessor: 'app', maxWidth: 150 },
-  { Header: 'EG', accessor: 'eg', maxWidth: 40, style: {textAlign: 'right'} },
-  { Header: 'Value', accessor: 'value', maxWidth: 70},
-  { Header: 'Description', accessor: 'description' },
+  {
+    Header: 'EG', accessor: 'eg', maxWidth: 40, style: { textAlign: 'right' },
+  },
+  { Header: 'Value', accessor: 'value', maxWidth: 70 },
+  { Header: 'Description', accessor: 'description', minWidth: 200 },
 ]
 
 export default withRouteData(({ magTable }) => (
