@@ -11,7 +11,7 @@ const headers = [
     Header: 'EG', accessor: 'eg', maxWidth: 40, style: { textAlign: 'right' },
   },
   { Header: 'Value', accessor: 'value', maxWidth: 70 },
-  { Header: 'Description', accessor: 'description', minWidth: 200 },
+  { Header: 'Description', accessor: 'description', minWidth: 1400 },
 ]
 
 export default withRouteData(({ magTable }) => (
