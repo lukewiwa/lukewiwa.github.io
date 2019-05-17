@@ -1,35 +1,19 @@
 {
   "name": "lukewiwa.com",
-  "version": "1.0.1",
-  "main": "index.js",
+  "description": "This is a basic template to use VuePress as your blogging platform",
+  "version": "0.11.0-beta",
   "license": "MIT",
   "scripts": {
-    "start": "react-static start",
-    "stage": "react-static build --staging",
-    "build": "react-static build",
-    "bundle": "react-static bundle",
-    "export": "react-static export",
-    "serve": "serve dist -p 3000"
+    "dev": "vuepress dev src",
+    "build": "vuepress build src"
   },
-  "dependencies": {
-    "axios": "^0.16.2",
-    "csvtojson": "^2.0.8",
-    "feather-icons": "^4.9.0",
-    "gray-matter": "^4.0.1",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "react-feather": "^1.1.4",
-    "react-hot-loader": "^4.0.0-beta.21",
-    "react-markdown": "^4.0.3",
-    "react-router": "^4.2.0",
-    "react-static": "^5.9.12",
-    "react-table": "^6.8.6",
-    "react-twitter-embed": "^2.0.3",
-    "styled-components": "^4.0.3"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "babel-plugin-styled-components": "^1.8.0",
-    "eslint-config-react-tools": "1.x.x",
-    "serve": "^6.1.0"
+    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.0",
+    "vuepress": "^1.0.0-alpha.30",
+    "vuepress-plugin-janitor": "^1.0.0",
+    "vuepress-plugin-reading-time": "^0.1.1",
+    "vuepress-plugin-rss": "^2.0.0",
+    "yaml-front-matter": "^4.0.0"
   }
 }
