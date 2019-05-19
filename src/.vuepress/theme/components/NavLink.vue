@@ -5,13 +5,7 @@
     v-if="!isExternal(link) && !isXml(link)"
     :exact="exact"
   >{{ item.text }}</router-link>
-  <a 
-    v-else-if="isXml(link)"
-    :href="link"
-    class="nav-link"
-  >
-    {{ item.text }}
-  </a>
+  <a v-else-if="isXml(link)" :href="link" class="nav-link">{{ item.text }}</a>
   <a
     v-else
     :href="link"
@@ -25,9 +19,10 @@
 </template>
 
 <script>
-import { isExternal, isMailto, isTel, isXml, ensureExt } from '../util'
+import { isExternal, isMailto, isTel, isXml, ensureExt } from "../util";
 
 export default {
+  name: "NavLink",
   props: {
     item: {
       required: true
@@ -35,15 +30,17 @@ export default {
   },
 
   computed: {
-    link () {
-      return ensureExt(this.item.link)
+    link() {
+      return ensureExt(this.item.link);
     },
 
-    exact () {
+    exact() {
       if (this.$site.locales) {
-        return Object.keys(this.$site.locales).some(rootLink => rootLink === this.link)
+        return Object.keys(this.$site.locales).some(
+          rootLink => rootLink === this.link
+        );
       }
-      return this.link === '/'
+      return this.link === "/";
     }
   },
 
@@ -53,5 +50,5 @@ export default {
     isTel,
     isXml
   }
-}
+};
 </script>

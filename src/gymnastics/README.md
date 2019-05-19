@@ -1,8 +1,8 @@
 ---
-title: Blog
+title: Gymnastics
 ---
 
-<BlogPostList
+<GymnasticsPostList
   :pages="$site.pages"
   :page-size="$site.themeConfig.pageSize"
   :start-page="$site.themeConfig.startPage"
