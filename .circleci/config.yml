@@ -24,7 +24,10 @@ jobs:
           command: npm run build
       - run:
           name: deploy-to-gh-pages
-          command: npm run deploy
+          command: |
+            git config --global user.email "luke.wiwa@gmail.com"
+            git config --global user.name "lukewiwa"
+            npm run deploy
 workflows:
   version: 2
   Build_And_Deploy:
