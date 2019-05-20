@@ -32,10 +32,9 @@ jobs:
         command: git push -f origin master
 workflows:
   version: 2
-  deploy:
+  build_and_deploy:
     jobs:
-      - deploy
+      - deploy:
         filters:
           branches:
-            only:
-              - deploy
+            only: deploy
