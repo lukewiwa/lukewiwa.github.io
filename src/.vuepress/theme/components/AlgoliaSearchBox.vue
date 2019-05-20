@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: "DropdownLink",
+  name: "AlgoliaSearchBox",
   props: ["options"],
 
   mounted() {

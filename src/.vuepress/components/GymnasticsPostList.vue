@@ -6,7 +6,7 @@
     </div>
     <ul class="blog-list">
       <li v-for="(item, index) in filteredList" class="blog-list__item">
-        <BlogPostPreview
+        <GymnasticsPostPreview
           v-show="index >= currentPage * pageSize && index < (currentPage + 1) * pageSize"
           :item="item"
         />
