@@ -1,11 +1,11 @@
 version: 2
 jobs:
-  build_blog:
-    working_directory: ~/blog
+  deploy_blog:
+    working_directory: ~/project
     docker:
       - image: circleci/node:12
     steps:
-      - checkout:
+      - checkout
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
@@ -18,35 +18,18 @@ jobs:
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
-            - node_modules
+            - ./node_modules
       - run:
           name: build-blog
           command: npm run build
-  deploy_blog:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout:
       - run:
           name: deploy-to-gh-pages
           command: npm run deploy
 workflows:
   version: 2
-  Build:
-    jobs:
-      - build_blog:
-          filters:
-            branches:
-              ignore: deploy
   Build_And_Deploy:
     jobs:
-      - build_blog:
-          filters:
-            branches:
-              only: deploy
       - deploy_blog:
-          requires:
-            - build_blog
           filters:
             branches:
               only: deploy
