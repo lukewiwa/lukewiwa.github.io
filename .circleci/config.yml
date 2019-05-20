@@ -1,10 +1,11 @@
 version: 2
 jobs:
-  deploy:
+  build_blog:
     working_directory: ~/blog
     docker:
       - image: circleci/node:12
     steps:
+      - checkout:
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
@@ -22,6 +23,12 @@ jobs:
         name: build-blog
         command: npm run build
       - run:
+  deploy_blog:
+    working_directory: ~/blog
+    docker:
+      - image: circleci/node:12
+    steps:
+      - checkout:
         name: clear-source-files
         command: rm -r ./node_modules ./src package.json package-lock.json README.md
       - run:
@@ -32,9 +39,15 @@ jobs:
         command: git push -f origin master
 workflows:
   version: 2
-  build_and_deploy:
+  Build:
     jobs:
-      - deploy:
-        filters:
-          branches:
-            only: deploy
+      - build_blog
+  Build_And_Deploy:
+    jobs:
+      - build_blog
+      - deploy_blog:
+          requires:
+            - build_blog
+          filters:
+            branches:
+              only: deploy
