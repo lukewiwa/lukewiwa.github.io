@@ -33,7 +33,6 @@ jobs:
     docker:
       - image: circleci/node:12
     steps:
-      - checkout:
       - run:
           name: stuff
           command: npm run stuff
