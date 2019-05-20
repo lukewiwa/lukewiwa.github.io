@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  build:
+    working_directory: ~/blog
+    docker:
+      - image: circleci/node:12.1
+    branches:
+      only:
+        - deploy
+    steps:
+      - run:
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
+      - restore_cache: # special step to restore the dependency cache
+          # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
+          key: dependency-cache-{{ checksum "package.json" }}
+      - run:
+          name: install-npm-dependencies
+          command: npm install
+      - save_cache: # special step to save the dependency cache
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
+      - run:
+        name: clear-source-files
+        command: find ./ -type f -not -name 'public' -delete
