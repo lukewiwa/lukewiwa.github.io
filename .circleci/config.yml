@@ -46,7 +46,9 @@ workflows:
           filters:
             branches:
               ignore: deploy
-      - stuff
+      - stuff:
+          requires:
+            - build_blog
   Build_And_Deploy:
     jobs:
       - build_blog:
