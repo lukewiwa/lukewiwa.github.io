@@ -38,7 +38,10 @@ workflows:
       - build_blog
   Build_And_Deploy:
     jobs:
-      - build_blog
+      - build_blog:
+          filters:
+            branches:
+              only: deploy
       - deploy_blog:
           requires:
             - build_blog
