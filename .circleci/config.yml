@@ -1,12 +1,9 @@
 version: 2
 jobs:
-  build:
+  deploy:
     working_directory: ~/blog
     docker:
-      - image: circleci/node:12.1
-    branches:
-      only:
-        - deploy
+      - image: circleci/node:12
     steps:
       - run:
           name: update-npm
@@ -22,5 +19,23 @@ jobs:
           paths:
             - ./node_modules
       - run:
+        name: build-blog
+        command: npm run build
+      - run:
         name: clear-source-files
-        command: find ./ -type f -not -name 'public' -delete
+        command: rm -r ./node_modules ./src package.json package-lock.json README.md
+      - run:
+        name: prepare-deploy
+        command: mv ./public/* ./ && rm -r ./public
+      - run:
+        name: git-push
+        command: git push -f origin master
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy:
+        filters:
+          branches:
+            only:
+              - deploy
