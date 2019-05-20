@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "vuepress dev src",
-    "build": "vuepress build src"
+    "build": "vuepress build src",
+    "deploy": "gh-pages -b master --message '[skip ci] Updates' --dist public"
   },
   "dependencies": {
     "csvtojson": "^2.0.8",
@@ -15,6 +16,7 @@
   },
   "devDependencies": {
     "@vuepress/plugin-google-analytics": "^1.0.0-alpha.0",
+    "gh-pages": "^2.0.1",
     "vuepress": "^1.0.0-alpha.30",
     "vuepress-plugin-janitor": "^1.0.0",
     "vuepress-plugin-reading-time": "^0.1.1",

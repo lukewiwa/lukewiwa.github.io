@@ -29,14 +29,8 @@ jobs:
     steps:
       - checkout:
       - run:
-        name: clear-source-files
-        command: rm -r ./node_modules ./src package.json package-lock.json README.md
-      - run:
-        name: prepare-deploy
-        command: mv ./public/* ./ && rm -r ./public
-      - run:
-        name: git-push
-        command: git push -f origin master
+        name: deploy-to-gh-pages
+        command: npm run deploy
 workflows:
   version: 2
   Build:
