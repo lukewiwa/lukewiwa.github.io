@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: circleci/node:12
     steps:
-      - checkout:
+      - checkout
       - run:
           name: update-npm
           command: 'sudo npm install -g npm@latest'
@@ -27,6 +27,7 @@ jobs:
     docker:
       - image: circleci/node:12
     steps:
+      - checkout
       - run:
           name: deploy-to-gh-pages
           command: npm run deploy
@@ -35,6 +36,7 @@ jobs:
     docker:
       - image: circleci/node:12
     steps:
+      - checkout
       - run:
           name: stuff
           command: npm run stuff
