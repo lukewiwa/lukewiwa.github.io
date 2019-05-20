@@ -31,7 +31,6 @@ jobs:
           name: deploy-to-gh-pages
           command: npm run deploy
   stuff:
-    working_directory: ~/blog
     docker:
       - image: circleci/node:12
     steps:
