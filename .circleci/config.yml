@@ -1,6 +1,7 @@
 version: 2
 jobs:
-  build_blog:
+  deploy_blog:
+    working_directory: ~/project
     docker:
       - image: circleci/node:12
     steps:
@@ -21,42 +22,14 @@ jobs:
       - run:
           name: build-blog
           command: npm run build
-  deploy_blog:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
       - run:
           name: deploy-to-gh-pages
           command: npm run deploy
-  stuff:
-    docker:
-      - image: circleci/node:12
-    steps:
-      - checkout
-      - run:
-          name: stuff
-          command: npm run stuff
 workflows:
   version: 2
-  Build:
-    jobs:
-      - build_blog:
-          filters:
-            branches:
-              ignore: deploy
-      - stuff:
-          requires:
-            - build_blog
   Build_And_Deploy:
     jobs:
-      - build_blog:
-          filters:
-            branches:
-              only: deploy
       - deploy_blog:
-          requires:
-            - build_blog
           filters:
             branches:
               only: deploy
