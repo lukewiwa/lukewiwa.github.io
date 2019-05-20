@@ -18,12 +18,11 @@ jobs:
       - save_cache: # special step to save the dependency cache
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
-            - ./node_modules
+            - node_modules
       - run:
           name: build-blog
           command: npm run build
   deploy_blog:
-    working_directory: ~/blog
     docker:
       - image: circleci/node:12
     steps:
