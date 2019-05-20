@@ -1,11 +1,10 @@
 <template>
   <div class="blog">
     <div class="blog__header">
+      <h1>{{ $page.title }}</h1>
       <p class="publish-date">
         <time :datetime="$frontmatter.date">{{ publishDate }}</time>
       </p>
-      <p v-if="$page.readingTime">Time to read: {{ $page.readingTime.text }}</p>
-      <h1>{{ $page.title }}</h1>
     </div>
 
     <Content class="custom"/>
