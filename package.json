@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vuepress dev src",
     "build": "vuepress build src",
-    "deploy": "gh-pages -b master --message '[skip ci] Updates' --dist public"
+    "deploy": "gh-pages -b master --message '[skip ci] Updates' --dist public",
+    "stuff": "echo stuff"
   },
   "dependencies": {
     "csvtojson": "^2.0.8",
