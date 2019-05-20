@@ -7,21 +7,21 @@ jobs:
     steps:
       - checkout:
       - run:
-        name: update-npm
-        command: 'sudo npm install -g npm@latest'
+          name: update-npm
+          command: 'sudo npm install -g npm@latest'
       - restore_cache: # special step to restore the dependency cache
         # Read about caching dependencies: https://circleci.com/docs/2.0/caching/
         key: dependency-cache-{{ checksum "package.json" }}
       - run:
-        name: install-npm-dependencies
-        command: npm install
+          name: install-npm-dependencies
+          command: npm install
       - save_cache: # special step to save the dependency cache
-        key: dependency-cache-{{ checksum "package.json" }}
-        paths:
-          - ./node_modules
+          key: dependency-cache-{{ checksum "package.json" }}
+          paths:
+            - ./node_modules
       - run:
-        name: build-blog
-        command: npm run build
+          name: build-blog
+          command: npm run build
   deploy_blog:
     working_directory: ~/blog
     docker:
@@ -29,8 +29,8 @@ jobs:
     steps:
       - checkout:
       - run:
-        name: deploy-to-gh-pages
-        command: npm run deploy
+          name: deploy-to-gh-pages
+          command: npm run deploy
 workflows:
   version: 2
   Build:
