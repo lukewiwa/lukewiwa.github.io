@@ -35,7 +35,10 @@ workflows:
   version: 2
   Build:
     jobs:
-      - build_blog
+      - build_blog:
+          filters:
+            branches:
+              ignore: deploy
   Build_And_Deploy:
     jobs:
       - build_blog:
