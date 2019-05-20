@@ -1,5 +1,6 @@
 <template>
   <vuetable ref="vuetable" v-if="table.length" :api-mode="false" :data="table" :fields="fields"></vuetable>
+  <p v-else>Loading...</p>
 </template>
 
 <script>
