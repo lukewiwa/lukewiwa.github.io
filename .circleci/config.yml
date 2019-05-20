@@ -1,7 +1,6 @@
 version: 2
 jobs:
   build_blog:
-    working_directory: ~/blog
     docker:
       - image: circleci/node:12
     steps:
