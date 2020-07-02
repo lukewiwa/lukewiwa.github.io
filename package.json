@@ -1,27 +1,44 @@
 {
-  "name": "lukewiwa.com",
-  "description": "This is a basic template to use VuePress as your blogging platform",
-  "version": "0.11.0-beta",
-  "license": "MIT",
+  "name": "lukewiwa.github.io",
+  "version": "1.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vuepress dev src",
-    "build": "vuepress build src",
-    "deploy": "gh-pages -b master --message '[skip ci] Updates' --dist public",
-    "stuff": "gh-pages --help"
+    "dev": "nuxt",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "export": "nuxt-ts export",
+    "serve": "nuxt-ts serve",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint": "npm run lint:js",
+    "test": "jest"
   },
   "dependencies": {
-    "csvtojson": "^2.0.8",
-    "vue-feather-icons": "^4.10.0",
-    "vue-tweet-embed": "^2.3.0",
-    "vuetable-2": "^2.0.0-beta.4"
+    "@nuxt/content": "^1.3.2",
+    "@nuxt/typescript-runtime": "^0.4.10",
+    "@nuxtjs/pwa": "^3.0.0-beta.20",
+    "nuxt": "^2.13.0",
+    "vue-feather-icons": "^5.0.0"
   },
   "devDependencies": {
-    "@vuepress/plugin-google-analytics": "^1.0.0-alpha.0",
-    "gh-pages": "^2.0.1",
-    "vuepress": "^1.0.0-alpha.30",
-    "vuepress-plugin-janitor": "^1.0.0",
-    "vuepress-plugin-reading-time": "^0.1.1",
-    "vuepress-plugin-rss": "^2.0.0",
-    "yaml-front-matter": "^4.0.0"
+    "@nuxt/typescript-build": "^1.0.3",
+    "@nuxtjs/eslint-config": "^3.0.0",
+    "@nuxtjs/eslint-config-typescript": "^2.0.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/tailwindcss": "^2.0.0",
+    "@types/vue-feather-icons": "^5.0.0",
+    "@vue/composition-api": "^1.0.0-beta.1",
+    "@vue/test-utils": "^1.0.3",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.0.1",
+    "eslint": "^7.2.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "ts-jest": "^26.1.0",
+    "vue-jest": "^3.0.4",
+    "vue-property-decorator": "^9.0.0"
   }
 }
