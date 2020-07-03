@@ -13,17 +13,17 @@ I decided to map the distribution of skills across value and element groups usin
 1. A concentrated distribution at and above values of C, since most routines will be made up by these skills.
 2. A more uniform distribution across element groups, since this will encourage variety with lots of skills to choose from.
 
-![Floor Exercise](./graphs/fx.svg)
+![Floor Exercise](/graphs/fx.svg)
 
-![Pommel Horse](./graphs/ph.svg)
+![Pommel Horse](/graphs/ph.svg)
 
-![Rings](./graphs/sr.svg)
+![Rings](/graphs/sr.svg)
 
-![Vault](./graphs/vt.svg)
+![Vault](/graphs/vt.svg)
 
-![Parallel Bars](./graphs/pb.svg)
+![Parallel Bars](/graphs/pb.svg)
 
-![High Bar](./graphs/hb.svg)
+![High Bar](/graphs/hb.svg)
 
 My predictions looking at these charts are:
 

@@ -2,13 +2,12 @@
   <div class="container mx-auto p-4 space-y-10">
     <section
       class="flex flex-col space-y-2"
-      v-for="post in blogPosts"
+      v-for="post in posts"
       :key="post.slug"
     >
       <nuxt-link :to="post.path" class="text-lg font-semibold">{{
         post.title
       }}</nuxt-link>
-      <div class="font-medium">{{ printDate(post.date) }}</div>
       <p v-if="post.excerpt">{{ post.excerpt }}</p>
     </section>
   </div>
@@ -16,18 +15,13 @@
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
-import { printDate } from "@/utils/datetime";
 
 export default defineComponent({
   async asyncData({ $content }) {
-    const blogPosts = await $content("blog")
-      .only(["title", "slug", "path", "date", "excerpt"])
-      .sortBy("date", "desc")
+    const posts = await $content("gymnastics")
+      .only(["title", "slug", "path", "excerpt"])
       .fetch();
-    return { blogPosts };
-  },
-  methods: {
-    printDate,
+    return { posts };
   },
   setup() {
     return {};

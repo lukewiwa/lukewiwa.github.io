@@ -10,6 +10,6 @@ After trying a few different text editors out, from the standard of gedit, to su
 
 There was however one bug bear of mine which irritated me somewhat when using it. I love the **Vibrant Ink** theme and there is an extension available, however the available theme does not have markdown support and I spend a lot of my time punching in notes using the markdown syntax. As such I attempted to do some tweaking of the Vibrant Ink theme but I wasn't happy with the results. I decided to eventually start from scratch.
 
-![Dark Wiwa](./img/dark_wiwa.png)
+![Dark Wiwa](/img/dark_wiwa.png)
 
 I made use of Microsoft's [Yeoman](http://yeoman.io/) to generate a scaffold theme and then used a great [generator](https://github.com/Tyriar/vscode-theme-generator) to populate that scaffold with a basic colour scheme and added my own tweaks. My choice of colours ended up looking very festive. I've put the theme up on [Github](https://github.com/lukewiwa/dark_wiwa).

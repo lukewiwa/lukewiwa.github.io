@@ -1,18 +1,22 @@
 <template>
-  <article class="container mx-auto">
-    <h1 class="font-bold my-3">{{ post.title }}</h1>
-    <span>{{ post.date }}</span>
+  <article class="container mx-auto p-4">
+    <h1 class="font-semibold mb-4">{{ post.title }}</h1>
+    <div class="mb-3 font-medium">{{ printDate(post.date) }}</div>
     <nuxt-content :document="post" />
   </article>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "@vue/composition-api";
+import { printDate } from "@/utils/datetime";
 
 export default defineComponent({
   async asyncData({ $content, params }) {
     const post = await $content("blog", params.slug).fetch();
     return { post };
+  },
+  methods: {
+    printDate,
   },
 });
 </script>
