@@ -1,14 +1,16 @@
 <template>
-  <div class="container mx-auto p-4 space-y-10">
+  <div class="max-w-screen-md mx-auto p-4 space-y-10">
     <section
       class="flex flex-col space-y-2"
       v-for="post in blogPosts"
       :key="post.slug"
     >
-      <nuxt-link :to="post.path" class="text-lg font-semibold">{{
-        post.title
-      }}</nuxt-link>
-      <div class="font-medium">{{ printDate(post.date) }}</div>
+      <div>
+        <span class="font-normal mr-2">{{ printDate(post.date) }}</span>
+        <nuxt-link :to="post.path" class="bloglist-title"
+          ><span>{{ post.title }}</span>
+        </nuxt-link>
+      </div>
       <p v-if="post.excerpt">{{ post.excerpt }}</p>
     </section>
   </div>

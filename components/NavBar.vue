@@ -1,16 +1,16 @@
 <template>
   <nav class="h-16 shadow-sm z-20 border-b border-gray-300">
     <div
-      class="container mx-auto flex flex-row items-stretch h-full justify-between align-middle px-4"
+      class="container mx-auto h-full flex flex-row items-center justify-between px-4"
     >
-      <div class="h-full">
-        <nuxt-link to="/">
+      <div class="flex flex-row items-center">
+        <nuxt-link to="/" class="navlink">
           Wiwa
         </nuxt-link>
       </div>
-      <div class="h-full flex flex-row">
-        <nuxt-link to="/blog">Blog</nuxt-link>
-        <nuxt-link to="/gymnastics">Gymnastics</nuxt-link>
+      <div class="flex flex-row items-center space-x-4">
+        <nuxt-link to="/blog" class="navlink">Blog</nuxt-link>
+        <nuxt-link to="/gymnastics" class="navlink">Gymnastics</nuxt-link>
       </div>
     </div>
   </nav>

@@ -2,6 +2,7 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
+/* Basic element defaults */
 h1 {
     @apply text-2xl;
 }
@@ -20,4 +21,31 @@ a:hover {
 }
 p {
     @apply mb-4;
+    @apply font-light;
+}
+
+
+/* Custom classes */
+
+.navlink {
+    @apply text-lg;
+    @apply font-light;
+    @apply text-gray-800;
+    @apply no-underline;
+    @apply border-b-2;
+    @apply border-transparent;
+}
+.navlink:hover {
+    @apply text-gray-800;
+    @apply border-teal-500;
+}
+
+.bloglist-title {
+    @apply text-lg;
+    @apply font-medium;
+    @apply text-teal-600;
+    @apply no-underline;
+}
+.bloglist-title:hover {
+    @apply text-teal-800;
 }

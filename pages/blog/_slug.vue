@@ -1,5 +1,5 @@
 <template>
-  <article class="container mx-auto p-4">
+  <article class="max-w-screen-md mx-auto px-6 mt-10">
     <h1 class="font-semibold mb-4">{{ post.title }}</h1>
     <div class="mb-3 font-medium">{{ printDate(post.date) }}</div>
     <nuxt-content :document="post" />
