@@ -19,8 +19,7 @@
         </h2>
         <p>
           Australian Representative for 15 years. 2010 Delhi Commonwealth Games
-          Gold Medal winner. Various small projects revolving around
-          <nuxt-link to="/gymnastics">gymnastics</nuxt-link>.
+          Gold Medal winner.
         </p>
       </div>
       <div>

@@ -12,6 +12,6 @@ On that note I truly think that the FIG needs to consider making the Code of Poi
 
 In addition to this the way that most people will read the Code nowadays is on a digital device of some kind. I'd personally prefer a format which is responsive to the device you are reading it on. PDF does not lend itself well to this use case.
 
-A few fun things I've done with the data can be found at my [gymnastics](/gymnastics) page.
+A few fun things I've done with the data can be found at my [projects](/projects) page.
 
 

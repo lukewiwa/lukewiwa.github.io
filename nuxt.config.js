@@ -58,6 +58,7 @@ export default {
     "@nuxtjs/pwa",
     // Doc: https://github.com/nuxt/content
     "@nuxt/content",
+    "@nuxtjs/feed",
   ],
   /*
    ** Content module configuration
@@ -69,4 +70,40 @@ export default {
    ** See https://nuxtjs.org/api/configuration-build/
    */
   build: {},
+  feed() {
+    const baseUrlArticles = "https://lukewiwa.com/blog";
+    const baseLinkFeedArticles = "/feed/blog";
+    const feedFormats = {
+      rss: { type: "rss2", file: "rss.xml" },
+      atom: { type: "atom1", file: "atom.xml" },
+      json: { type: "json1", file: "feed.json" },
+    };
+    const { $content } = require("@nuxt/content");
+
+    const createFeedArticles = async function (feed) {
+      feed.options = {
+        title: "My Blog",
+        description: "",
+        link: baseUrlArticles,
+      };
+      const articles = await $content("blog").fetch();
+
+      articles.forEach((article) => {
+        const url = `${baseUrlArticles}/${article.slug}`;
+        feed.addItem({
+          title: article.title,
+          id: url,
+          link: url,
+          date: new Date(article.date),
+          description: article.excerpt,
+        });
+      });
+    };
+
+    return Object.values(feedFormats).map(({ file, type }) => ({
+      path: `${baseLinkFeedArticles}/${file}`,
+      type,
+      create: createFeedArticles,
+    }));
+  },
 };
