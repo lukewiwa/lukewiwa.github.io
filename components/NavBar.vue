@@ -10,7 +10,7 @@
       </div>
       <div class="flex flex-row items-center space-x-4">
         <nuxt-link to="/blog" class="navlink">Blog</nuxt-link>
-        <nuxt-link to="/gymnastics" class="navlink">Gymnastics</nuxt-link>
+        <nuxt-link to="/projects" class="navlink">Projects</nuxt-link>
       </div>
     </div>
   </nav>

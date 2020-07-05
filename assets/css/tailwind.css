@@ -5,12 +5,22 @@
 /* Basic element defaults */
 h1 {
     @apply text-2xl;
+    @apply mt-4;
+    @apply mb-2;
 }
 h2 {
     @apply text-xl;
+    @apply mt-4;
+    @apply mb-2;
 }
 h3 {
     @apply text-lg;
+    @apply mt-4;
+    @apply mb-2;
+}
+h4 {
+    @apply mt-4;
+    @apply mb-2;
 }
 a {
     @apply text-teal-600;
@@ -20,7 +30,7 @@ a:hover {
     @apply text-teal-800;
 }
 p {
-    @apply mb-4;
+    @apply mb-6;
     @apply font-light;
 }
 
@@ -41,7 +51,7 @@ p {
 }
 
 .bloglist-title {
-    @apply text-lg;
+    @apply text-xl;
     @apply font-medium;
     @apply text-teal-600;
     @apply no-underline;

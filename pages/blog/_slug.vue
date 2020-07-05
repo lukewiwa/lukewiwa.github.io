@@ -1,7 +1,7 @@
 <template>
-  <article class="max-w-screen-md mx-auto px-6 mt-10">
+  <article class="max-w-screen-md mx-auto px-6 mt-10 mb-20">
     <h1 class="font-semibold mb-4">{{ post.title }}</h1>
-    <div class="mb-3 font-medium">{{ printDate(post.date) }}</div>
+    <div class="mb-3 font-normal">{{ printDate(post.date) }}</div>
     <nuxt-content :document="post" />
   </article>
 </template>
