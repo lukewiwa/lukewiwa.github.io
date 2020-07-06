@@ -31,6 +31,9 @@ export default defineComponent({
   methods: {
     printDate,
   },
+  head() {
+    return { title: "Wiwa - Blog" };
+  },
   setup() {
     return {};
   },

@@ -18,5 +18,9 @@ export default defineComponent({
   methods: {
     printDate,
   },
+  head() {
+    // @ts-ignore
+    return { title: `Wiwa - ${this.post.title}` };
+  },
 });
 </script>

@@ -31,5 +31,8 @@ export default defineComponent({
   setup() {
     return {};
   },
+  head() {
+    return { title: "Wiwa - Projects" };
+  },
 });
 </script>
