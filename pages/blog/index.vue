@@ -1,9 +1,9 @@
 <template>
   <div class="max-w-screen-md mx-auto p-4 space-y-10">
     <section
-      class="flex flex-col space-y-2"
       v-for="post in blogPosts"
       :key="post.slug"
+      class="flex flex-col space-y-2"
     >
       <div>
         <span class="font-normal mr-2">{{ printDate(post.date) }}</span>
@@ -30,6 +30,9 @@ export default defineComponent({
   },
   methods: {
     printDate,
+  },
+  head() {
+    return { title: "Wiwa - Blog" };
   },
   setup() {
     return {};

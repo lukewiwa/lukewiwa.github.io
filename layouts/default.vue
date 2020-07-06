@@ -11,5 +11,8 @@ import NavBar from "@/components/NavBar.vue";
 
 export default defineComponent({
   components: { NavBar },
+  head() {
+    return { title: "Wiwa" };
+  },
 });
 </script>

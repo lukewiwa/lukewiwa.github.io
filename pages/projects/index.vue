@@ -1,7 +1,7 @@
 <template>
-  <div class="container mx-auto p-4 space-y-10">
+  <div class="max-w-screen-md mx-auto p-4 space-y-10">
     <section class="flex flex-col space-y-2">
-      <nuxt-link to="/projects/code-of-points" class="text-lg font-semibold">
+      <nuxt-link to="/projects/code-of-points" class="bloglist-title">
         Code of Points
       </nuxt-link>
       <p>
@@ -13,7 +13,7 @@
       </p>
     </section>
     <section class="flex flex-col space-y-2">
-      <nuxt-link to="/projects/twitter-bot" class="text-lg font-semibold">
+      <nuxt-link to="/projects/twitter-bot" class="bloglist-title">
         Twitter Bot
       </nuxt-link>
       <p>
@@ -30,6 +30,9 @@ import { defineComponent } from "@vue/composition-api";
 export default defineComponent({
   setup() {
     return {};
+  },
+  head() {
+    return { title: "Wiwa - Projects" };
   },
 });
 </script>
