@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0">
+    <channel>
+        <title>My Blog</title>
+        <link>https://lukewiwa.com/blog</link>
+        <description></description>
+        <lastBuildDate>Mon, 06 Jul 2020 02:57:35 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/nuxt-community/feed-module</generator>
+        <item>
+            <title><![CDATA[A Good Year]]></title>
+            <link>https://lukewiwa.com/blog/a_good_year</link>
+            <guid>https://lukewiwa.com/blog/a_good_year</guid>
+            <pubDate>Fri, 29 Dec 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[It's that time to take stock of another year in my life]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Does Driving Performance Degrade Or Improve With Increased Automation]]></title>
+            <link>https://lukewiwa.com/blog/automation_and_driving_performance</link>
+            <guid>https://lukewiwa.com/blog/automation_and_driving_performance</guid>
+            <pubDate>Fri, 18 Aug 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here's an essay which I wrote answering the question "Does Driving Performance Degrade Or Improve With Increased Automation"]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Bottle URL Redirect]]></title>
+            <link>https://lukewiwa.com/blog/bottle_url</link>
+            <guid>https://lukewiwa.com/blog/bottle_url</guid>
+            <pubDate>Tue, 23 May 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[The little documented url method in bottle.py]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The “We Say You Do” Model Of Code Review Is Broken]]></title>
+            <link>https://lukewiwa.com/blog/broken_code_review</link>
+            <guid>https://lukewiwa.com/blog/broken_code_review</guid>
+            <pubDate>Wed, 24 Feb 2016 00:00:00 GMT</pubDate>
+            <description><![CDATA[With the review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Dark Wiwa Published]]></title>
+            <link>https://lukewiwa.com/blog/dark_wiwa_published</link>
+            <guid>https://lukewiwa.com/blog/dark_wiwa_published</guid>
+            <pubDate>Mon, 20 May 2019 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[A Dumping Ground]]></title>
+            <link>https://lukewiwa.com/blog/dumping_ground</link>
+            <guid>https://lukewiwa.com/blog/dumping_ground</guid>
+            <pubDate>Fri, 03 Mar 2017 00:00:00 GMT</pubDate>
+        </item>
+        <item>
+            <title><![CDATA[JavaScript Remains The Best Deployment Target]]></title>
+            <link>https://lukewiwa.com/blog/ease_of_deployment</link>
+            <guid>https://lukewiwa.com/blog/ease_of_deployment</guid>
+            <pubDate>Sat, 10 Nov 2018 00:00:00 GMT</pubDate>
+            <description><![CDATA[It is abundantly clear that targeting the web, even as a Single Page App with heavy JavaScript, hits that sweet spot of development time, availability and cost.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The Case Against Gymnastics Teams]]></title>
+            <link>https://lukewiwa.com/blog/gymnastics_teams_suck</link>
+            <guid>https://lukewiwa.com/blog/gymnastics_teams_suck</guid>
+            <pubDate>Fri, 03 Mar 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The Code Of Points Format]]></title>
+            <link>https://lukewiwa.com/blog/machine_readable_code</link>
+            <guid>https://lukewiwa.com/blog/machine_readable_code</guid>
+            <pubDate>Sat, 08 Apr 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[The format of the Code of Points needs to be published in better more modern formats.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[How To Link Your MyGov Account To Centrelink After A Name Change]]></title>
+            <link>https://lukewiwa.com/blog/mygov_centrelink_name_change</link>
+            <guid>https://lukewiwa.com/blog/mygov_centrelink_name_change</guid>
+            <pubDate>Sun, 10 Feb 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[As always, working with MyGov continues to be a nightmare]]></description>
+        </item>
+        <item>
+            <title><![CDATA[New Text Editor and Syntax Colour Scheme]]></title>
+            <link>https://lukewiwa.com/blog/new_text_editor_theme</link>
+            <guid>https://lukewiwa.com/blog/new_text_editor_theme</guid>
+            <pubDate>Wed, 06 Dec 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[I'm A Visual Studio Code convert and here's a new syntax highlighting theme to celebrate]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Pinocchio]]></title>
+            <link>https://lukewiwa.com/blog/pinocchio</link>
+            <guid>https://lukewiwa.com/blog/pinocchio</guid>
+            <pubDate>Wed, 18 Apr 2018 00:00:00 GMT</pubDate>
+            <description><![CDATA[My siblings and I, when growing up, had a VHS tape of Pinocchio which we would watch on occasion. The interesting thing about it was that this was a very particular adaptation, not the one made famous by Disney but a decidedly creepier and more disturbing version.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The 2020 Code of Points: What we might expect]]></title>
+            <link>https://lukewiwa.com/blog/the_2020_code_predictions</link>
+            <guid>https://lukewiwa.com/blog/the_2020_code_predictions</guid>
+            <pubDate>Mon, 05 Jun 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[The Code of Points for the 2020 Olympic cycle is official. The time has come to make some wild speculations about the consequences of these code changes.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Toyplot - A Simple Python Plotting Library]]></title>
+            <link>https://lukewiwa.com/blog/toyplot</link>
+            <guid>https://lukewiwa.com/blog/toyplot</guid>
+            <pubDate>Wed, 12 Jul 2017 00:00:00 GMT</pubDate>
+            <description><![CDATA[My previous attempts at using python for plotting saw me use the massive and widely used library of Matplotlib. I managed to produce some workable plots which I exported to jpeg and used on one of my medium articles. Although extremely customisable and functional I began the search for a plotting library with a nicer API that would export to more web friendly formats such as html and SVG.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Importing Rootfs Ubuntu Images into WSL2]]></title>
+            <link>https://lukewiwa.com/blog/wsl2_import_ubuntu_image</link>
+            <guid>https://lukewiwa.com/blog/wsl2_import_ubuntu_image</guid>
+            <pubDate>Tue, 26 May 2020 00:00:00 GMT</pubDate>
+            <description><![CDATA[I've been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it's integration between the windows desktop and the underlying linux kernel.]]></description>
+        </item>
+    </channel>
+</rss>
