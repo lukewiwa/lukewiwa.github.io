@@ -28,14 +28,11 @@ export default defineComponent({
       .fetch();
     return { blogPosts };
   },
-  methods: {
-    printDate,
-  },
   head() {
     return { title: "Wiwa - Blog" };
   },
   setup() {
-    return {};
+    return { printDate };
   },
 });
 </script>
