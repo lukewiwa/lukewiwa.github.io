@@ -15,8 +15,8 @@ export default defineComponent({
     const post = await $content("blog", params.slug).fetch();
     return { post };
   },
-  methods: {
-    printDate,
+  setup() {
+    return { printDate };
   },
   head() {
     // @ts-ignore

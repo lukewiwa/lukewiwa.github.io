@@ -28,9 +28,6 @@
 import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-  setup() {
-    return {};
-  },
   head() {
     return { title: "Wiwa - Projects" };
   },
