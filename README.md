@@ -1,4 +1,6 @@
-# lukewiwa.github.io
+# lukewiwa.com
+
+The Ramblings of Wiwa
 
 ## Build Setup
 

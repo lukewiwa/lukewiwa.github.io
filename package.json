@@ -1,6 +1,7 @@
 {
   "name": "lukewiwa.github.io",
   "version": "1.0.0",
+  "description": "The ramblings of Wiwa",
   "private": true,
   "scripts": {
     "dev": "nuxt-ts",
