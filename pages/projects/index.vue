@@ -21,6 +21,12 @@
         code is quite simple and available on github.
       </p>
     </section>
+    <section class="flex flex-col space-y-2">
+      <nuxt-link to="/projects/amp-story" class="bloglist-title">
+        Amp Story
+      </nuxt-link>
+      <p>Experimental</p>
+    </section>
   </div>
 </template>
 

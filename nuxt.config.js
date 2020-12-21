@@ -1,9 +1,9 @@
 export default {
   /*
    ** Nuxt rendering mode
-   ** See https://nuxtjs.org/api/configuration-mode
+   ** See https://nuxtjs.org/docs/2.x/configuration-glossary/configuration-ssr
    */
-  mode: "universal",
+  ssr: false,
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -56,6 +56,7 @@ export default {
    */
   modules: [
     "@nuxtjs/pwa",
+    "@nuxtjs/amp",
     // Doc: https://github.com/nuxt/content
     "@nuxt/content",
     "@nuxtjs/feed",
@@ -105,5 +106,8 @@ export default {
       type,
       create: createFeedArticles,
     }));
+  },
+  amp: {
+    origin: "http://localhost:3000",
   },
 };
