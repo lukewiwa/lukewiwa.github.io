@@ -54,7 +54,7 @@
 </template>
 
 <script lang="ts">
-import Vue from "vue";
+import { defineComponent } from "@nuxtjs/composition-api";
 import {
   LinkedinIcon,
   SmartphoneIcon,
@@ -64,7 +64,7 @@ import {
   TwitterIcon,
 } from "vue-feather-icons";
 
-export default Vue.extend({
+export default defineComponent({
   components: {
     LinkedinIcon,
     SmartphoneIcon,

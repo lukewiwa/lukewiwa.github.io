@@ -2,12 +2,13 @@
 title: A Good Year
 type: post
 date: 2017-12-29
-excerpt: It's that time to take stock of another year in my life
 blog: true
 ---
 
 
 It's that time to take stock of another year in my life and I think it's worthy of a blog post. Professionally and personally a lot has happened and I'm hoping the next year can be very much like it.
+
+<!--more-->
 
 Starting with the personal, I cemented my partnership with my bestie Megan by finally tying the knot. I can definitively say we (she mostly) organised a damn good wedding and we had a ton of fun celebrating with the special people in our lives. I have no desire to have another one any time soon. On that note my peers and friends have had their own special moments including marriage and kids and I'm privileged to have been a small part of these.
 

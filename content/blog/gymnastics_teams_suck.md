@@ -3,10 +3,11 @@ title: The Case Against Gymnastics Teams
 blog: true
 type: post
 date: 2017-03-03
-excerpt: There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical.
 ---
 
 There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical. **Abolish all gymnastics teams**. Get rid of them. Really reform the system. This is a radical solution I’ll admit but let me outline some reasons as to why this option may actually be very appealing.
+
+<!--more-->
 
 1. Gymnastics team events are essentially shoehorning an individual event into a team format. Gymnastics is not basketball, volleyball or football, it’s not a sport which requires two teams face each other. The sport can’t even pretend to be a team sport like relay events in swimming or athletics where individual athletes do their individual performance directly after each other. Stop pretending gymnastics is something that it’s not.
 

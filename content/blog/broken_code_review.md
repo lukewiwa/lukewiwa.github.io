@@ -3,10 +3,11 @@ title: The “We Say You Do” Model Of Code Review Is Broken
 blog: true
 type: post
 date: 2016-02-24
-excerpt: With the review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.
 ---
 
 With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.
+
+<!--more-->
 
 I have been attending athletes meetings at every World Championships since 2011 and I can say they it has been important and useful method to communicate ideas and feedback between the athletes and the FIG about many issues. The consultations last year concerning the new code changes, however, were underwhelming and it has taken me a long time to really unpack why that was. To be clear these are criticisms about the process of the Code review rather than criticisms of the final draft.
 

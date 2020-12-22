@@ -3,10 +3,11 @@ title: "The 2020 Code of Points: What we might expect"
 blog: true
 type: post
 date: 2017-06-05
-excerpt: The Code of Points for the 2020 Olympic cycle is official. The time has come to make some wild speculations about the consequences of these code changes.
 ---
 
 The Code of Points for the 2020 Olympic cycle is official. The time has come to make some wild speculations about the consequences of these code changes.
+
+<!--more-->
 
 I decided to map the distribution of skills across value and element groups using a heatmap type graph. Not extremely complex but enough to get an idea of where skills are concentrated in certain values and element groups. The darker the colour, the more occurrences of that skill. To see more varied and, in my opinion, interesting routines I’m willing to speculate we need two things from these graphs:
 

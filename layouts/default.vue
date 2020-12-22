@@ -6,13 +6,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, useMeta } from "@nuxtjs/composition-api";
 import NavBar from "@/components/NavBar.vue";
 
 export default defineComponent({
   components: { NavBar },
-  head() {
-    return { title: "Wiwa" };
+  head: {},
+  setup() {
+    useMeta({ title: "Wiwa" });
   },
 });
 </script>
