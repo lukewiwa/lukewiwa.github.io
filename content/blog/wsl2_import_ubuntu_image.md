@@ -2,11 +2,12 @@
 title: Importing Rootfs Ubuntu Images into WSL2
 type: post
 date: 2020-05-26
-excerpt: I've been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it's integration between the windows desktop and the underlying linux kernel.
 blog: true
 ---
 
 I've been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it's integration between the windows desktop and the underlying linux kernel.
+
+<!--more-->
 
 I did notice on a [talk by one of the main devs](https://www.youtube.com/watch?v=UCAid-NQwWU&feature=youtu.be) that you could manually import and export linux and container images. This seemed like a nice idea if you wanted to separate dev environments or perhaps have separate work or personal accounts. The demonstration showed exporting and importing docker containers and linux tarballs using the Cool New `wsl` command in powershell. My dilemma was that I had already setup one Ubuntu environment and wanted a clean one from scratch. So I did a little digging and managed to get one working with a few hiccups along the way.
 

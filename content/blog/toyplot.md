@@ -2,10 +2,11 @@
 title: Toyplot - A Simple Python Plotting Library
 blog: true
 date: 2017-07-12
-excerpt: My previous attempts at using python for plotting saw me use the massive and widely used library of Matplotlib. I managed to produce some workable plots which I exported to jpeg and used on one of my medium articles. Although extremely customisable and functional I began the search for a plotting library with a nicer API that would export to more web friendly formats such as html and SVG.
 ---
 
 My previous attempts at using python for plotting saw me use the massive and widely used library of [Matplotlib](https://matplotlib.org). I managed to produce some workable plots which I exported to jpeg and used on one of my [medium articles](https://medium.com/@lukewiwa/the-2020-code-of-points-what-we-might-expect-28afdab4b095). Although extremely customisable and functional I began the search for a plotting library with a nicer API that would export to more web friendly formats such as html and SVG.
+
+<!--more-->
 
 After some searching I stumbled upon [toyplot](http://toyplot.readthedocs.io) which I've been quite happy with. I went ahead and updated the plots from my medium article using the library and uploaded the results to where I've mirrored that medium article [here](/blog/the_2020_code_predictions). The format options are various but I decided to export to an html/css/js format and simply copied and pasted into my static site generator.
 

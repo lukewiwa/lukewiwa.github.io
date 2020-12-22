@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-screen-md mx-auto p-4 space-y-10">
+  <div class="max-w-screen-md mx-auto p-4 space-y-5">
     <section
       v-for="post in blogPosts"
       :key="post.slug"
@@ -11,27 +11,27 @@
           ><span>{{ post.title }}</span>
         </nuxt-link>
       </div>
-      <p v-if="post.excerpt">{{ post.excerpt }}</p>
+      <nuxt-content v-if="post.excerpt" :document="{ body: post.excerpt }" />
+      <p v-else-if="post.description">{{ post.description }}</p>
     </section>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "@vue/composition-api";
+import { defineComponent, useMeta } from "@nuxtjs/composition-api";
 import { printDate } from "@/utils/datetime";
 
 export default defineComponent({
   async asyncData({ $content }) {
     const blogPosts = await $content("blog")
-      .only(["title", "slug", "path", "date", "excerpt"])
+      .only(["title", "slug", "path", "date", "excerpt", "description"])
       .sortBy("date", "desc")
       .fetch();
     return { blogPosts };
   },
-  head() {
-    return { title: "Wiwa - Blog" };
-  },
+  head: {},
   setup() {
+    useMeta({ title: "Wiwa - Blog" });
     return { printDate };
   },
 });

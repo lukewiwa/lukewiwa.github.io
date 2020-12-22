@@ -1,9 +1,5 @@
 export default {
-  /*
-   ** Nuxt rendering mode
-   ** See https://nuxtjs.org/api/configuration-mode
-   */
-  mode: "universal",
+  ssr: false,
   /*
    ** Nuxt target
    ** See https://nuxtjs.org/api/configuration-target
@@ -34,10 +30,7 @@ export default {
    ** Plugins to load before mounting the App
    ** https://nuxtjs.org/guide/plugins
    */
-  plugins: [
-    "@/plugins/composition-api",
-    { src: "@/plugins/vue-good-table", mode: "client" },
-  ],
+  plugins: [{ src: "@/plugins/vue-good-table", mode: "client" }],
   /*
    ** Auto import components
    ** See https://nuxtjs.org/api/configuration-components
@@ -50,6 +43,7 @@ export default {
     "@nuxt/typescript-build",
     // Doc: https://github.com/nuxt-community/nuxt-tailwindcss
     "@nuxtjs/tailwindcss",
+    "@nuxtjs/composition-api",
   ],
   /*
    ** Nuxt.js modules
@@ -71,8 +65,8 @@ export default {
    */
   build: {},
   feed() {
-    const baseUrlArticles = "https://lukewiwa.com/blog";
-    const baseLinkFeedArticles = "/feed/blog";
+    const baseUrlPosts = "https://lukewiwa.com/blog";
+    const baseLinkFeedPosts = "/feed/blog";
     const feedFormats = {
       rss: { type: "rss2", file: "rss.xml" },
       atom: { type: "atom1", file: "atom.xml" },
@@ -84,24 +78,24 @@ export default {
       feed.options = {
         title: "My Blog",
         description: "",
-        link: baseUrlArticles,
+        link: baseUrlPosts,
       };
-      const articles = await $content("blog").fetch();
+      const blogPosts = await $content("blog").fetch();
 
-      articles.forEach((article) => {
-        const url = `${baseUrlArticles}/${article.slug}`;
+      blogPosts.forEach((post) => {
+        const url = `${baseUrlPosts}/${post.slug}`;
         feed.addItem({
-          title: article.title,
+          title: post.title,
           id: url,
           link: url,
-          date: new Date(article.date),
-          description: article.excerpt,
+          date: new Date(post.date),
+          description: post.description,
         });
       });
     };
 
     return Object.values(feedFormats).map(({ file, type }) => ({
-      path: `${baseLinkFeedArticles}/${file}`,
+      path: `${baseLinkFeedPosts}/${file}`,
       type,
       create: createFeedArticles,
     }));

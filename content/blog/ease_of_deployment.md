@@ -3,7 +3,7 @@ title: JavaScript Remains The Best Deployment Target
 blog: true
 type: post
 date: 2018-11-10
-excerpt: It is abundantly clear that targeting the web, even as a Single Page App with heavy JavaScript, hits that sweet spot of development time, availability and cost.
+description: It is abundantly clear that targeting the web, even as a Single Page App with heavy JavaScript, hits that sweet spot of development time, availability and cost.
 ---
 
 I have finally got to the point where I can throw together a single purpose web app over the course of a weekend. I recently was in need of a quick utility that could translate the session times of the recent Gymnastics World Championships, being held in Doha, into my own timezone. I also thought this was a problem that more people probably had so I started thinking about the quickest, easiest and cheapest way to share that utility with others.

@@ -3,10 +3,11 @@ title: Dark Wiwa Published
 blog: true
 type: post
 date: 2019-05-20
-excerpt:
 ---
 
 I've been using my self made [theme for Visual Studio Code](/blog/new_text_editor_theme) for some time now. With every new installation of vscode I've had to manually copy and paste the project directory into the proper extensions directory. Couple this with the fact that I am now using the excellent [Settings Sync](https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync) extension to synchronise my setup between machines this manual copypasta becomes tiresome.
+
+<!--more-->
 
 ![Dark Wiwa](/img/dark_wiwa.png)
 

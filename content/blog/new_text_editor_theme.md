@@ -3,10 +3,11 @@ title: New Text Editor and Syntax Colour Scheme
 blog: true
 type: post
 date: 2017-12-06
-excerpt: I'm A Visual Studio Code convert and here's a new syntax highlighting theme to celebrate
 ---
 
 After trying a few different text editors out, from the standard of gedit, to sublime text and even attempts at nano, I've standardised on Visual Studio Code which seems to be a standout for a few reasons. I'm not exactly an advanced programmer but when I am punching in a few crummy lines of python or writing some markdown notes I've reached for VSCode time and again. It seems to be both extremely flexible, as well as fairly intuitive. The VSCode's extension ecosystem and the git interface is straight forward and easy to use.
+
+<!--more-->
 
 There was however one bug bear of mine which irritated me somewhat when using it. I love the **Vibrant Ink** theme and there is an extension available, however the available theme does not have markdown support and I spend a lot of my time punching in notes using the markdown syntax. As such I attempted to do some tweaking of the Vibrant Ink theme but I wasn't happy with the results. I decided to eventually start from scratch.
 

@@ -3,10 +3,11 @@ title: Does Driving Performance Degrade Or Improve With Increased Automation
 blog: true
 type: post
 date: 2017-08-18
-excerpt: During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here's an essay which I wrote answering the question "Does Driving Performance Degrade Or Improve With Increased Automation"
 ---
 
-*During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here's an essay which I wrote answering the question "Does Driving Performance Degrade Or Improve With Increased Automation".*
+During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here's an essay which I wrote answering the question "Does Driving Performance Degrade Or Improve With Increased Automation".
+
+<!--more-->
 
 How is driving performance affected by the introduction of automated systems? It appears the answer is more complex than a simple more or less. There has been increased research into the automation of the tasks involved with driving (Cottrell &amp; Barton, 2013; Merat &amp; Lee, 2012). Coupled with this there is increased study into how these automation’s affect the driver of the vehicle and the safety and reliability of the car in general. Adoption of these automation systems is very much dependant on the willingness of the general driving population to use them (Cottrell &amp; Barton, 2013; Merat &amp; Lee, 2012) and how they interact with the system (Carsten, Lai, Barnard, Jamson, &amp; Merat, 2012; Larsson, 2012; Young &amp; Stanton, 2002; Muhrer, Reinprecht, &amp; Vollrath, 2012). In that sense human factors in driving automation is an important area of study. It can be argued that driving performance increases up to the point of the confines that the automated system works under, however as the system fails and control of the vehicle is handed over to the driver driving performance degrades to a point greater than manual operation.
 

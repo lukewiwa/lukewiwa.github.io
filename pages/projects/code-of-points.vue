@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from "@vue/composition-api";
+import { defineComponent, ref } from "@nuxtjs/composition-api";
 import csv from "csvtojson";
 
 export default defineComponent({
