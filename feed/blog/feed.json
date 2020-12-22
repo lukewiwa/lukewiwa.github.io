@@ -25,6 +25,13 @@
             "date_modified": "2017-05-23T00:00:00.000Z"
         },
         {
+            "id": "https://lukewiwa.com/blog/broken_code_review",
+            "url": "https://lukewiwa.com/blog/broken_code_review",
+            "title": "The “We Say You Do” Model Of Code Review Is Broken",
+            "summary": "With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.",
+            "date_modified": "2016-02-24T00:00:00.000Z"
+        },
+        {
             "id": "https://lukewiwa.com/blog/dark_wiwa_published",
             "url": "https://lukewiwa.com/blog/dark_wiwa_published",
             "title": "Dark Wiwa Published",
@@ -99,13 +106,6 @@
             "title": "Importing Rootfs Ubuntu Images into WSL2",
             "summary": "I've been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it's integration between the windows desktop and the underlying linux kernel.",
             "date_modified": "2020-05-26T00:00:00.000Z"
-        },
-        {
-            "id": "https://lukewiwa.com/blog/broken_code_review",
-            "url": "https://lukewiwa.com/blog/broken_code_review",
-            "title": "The “We Say You Do” Model Of Code Review Is Broken",
-            "summary": "With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.",
-            "date_modified": "2016-02-24T00:00:00.000Z"
         }
     ]
 }

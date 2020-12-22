@@ -4,7 +4,7 @@
         <title>My Blog</title>
         <link>https://lukewiwa.com/blog</link>
         <description></description>
-        <lastBuildDate>Tue, 22 Dec 2020 03:30:53 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 22 Dec 2020 03:38:53 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/nuxt-community/feed-module</generator>
         <item>
@@ -27,6 +27,13 @@
             <guid>https://lukewiwa.com/blog/bottle_url</guid>
             <pubDate>Tue, 23 May 2017 00:00:00 GMT</pubDate>
             <description><![CDATA[The little documented url method in bottle.py]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The “We Say You Do” Model Of Code Review Is Broken]]></title>
+            <link>https://lukewiwa.com/blog/broken_code_review</link>
+            <guid>https://lukewiwa.com/blog/broken_code_review</guid>
+            <pubDate>Wed, 24 Feb 2016 00:00:00 GMT</pubDate>
+            <description><![CDATA[With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.]]></description>
         </item>
         <item>
             <title><![CDATA[Dark Wiwa Published]]></title>
@@ -103,13 +110,6 @@
             <guid>https://lukewiwa.com/blog/wsl2_import_ubuntu_image</guid>
             <pubDate>Tue, 26 May 2020 00:00:00 GMT</pubDate>
             <description><![CDATA[I've been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it's integration between the windows desktop and the underlying linux kernel.]]></description>
-        </item>
-        <item>
-            <title><![CDATA[The “We Say You Do” Model Of Code Review Is Broken]]></title>
-            <link>https://lukewiwa.com/blog/broken_code_review</link>
-            <guid>https://lukewiwa.com/blog/broken_code_review</guid>
-            <pubDate>Wed, 24 Feb 2016 00:00:00 GMT</pubDate>
-            <description><![CDATA[With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.]]></description>
         </item>
     </channel>
 </rss>
