@@ -65,8 +65,8 @@ export default {
    */
   build: {},
   feed() {
-    const baseUrlArticles = "https://lukewiwa.com/blog";
-    const baseLinkFeedArticles = "/feed/blog";
+    const baseUrlPosts = "https://lukewiwa.com/blog";
+    const baseLinkFeedPosts = "/feed/blog";
     const feedFormats = {
       rss: { type: "rss2", file: "rss.xml" },
       atom: { type: "atom1", file: "atom.xml" },
@@ -78,24 +78,24 @@ export default {
       feed.options = {
         title: "My Blog",
         description: "",
-        link: baseUrlArticles,
+        link: baseUrlPosts,
       };
-      const articles = await $content("blog").fetch();
+      const blogPosts = await $content("blog").fetch();
 
-      articles.forEach((article) => {
-        const url = `${baseUrlArticles}/${article.slug}`;
+      blogPosts.forEach((post) => {
+        const url = `${baseUrlPosts}/${post.slug}`;
         feed.addItem({
-          title: article.title,
+          title: post.title,
           id: url,
           link: url,
-          date: new Date(article.date),
-          description: article.excerpt,
+          date: new Date(post.date),
+          description: post.description,
         });
       });
     };
 
     return Object.values(feedFormats).map(({ file, type }) => ({
-      path: `${baseLinkFeedArticles}/${file}`,
+      path: `${baseLinkFeedPosts}/${file}`,
       type,
       create: createFeedArticles,
     }));
