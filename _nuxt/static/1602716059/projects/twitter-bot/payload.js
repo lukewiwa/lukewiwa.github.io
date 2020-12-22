@@ -1,1 +1,0 @@
-__NUXT_JSONP__("/projects/twitter-bot", {data:[{}],fetch:[],mutations:void 0});

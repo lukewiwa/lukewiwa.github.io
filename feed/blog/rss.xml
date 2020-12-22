@@ -4,7 +4,7 @@
         <title>My Blog</title>
         <link>https://lukewiwa.com/blog</link>
         <description></description>
-        <lastBuildDate>Wed, 14 Oct 2020 22:54:22 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 22 Dec 2020 03:30:53 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/nuxt-community/feed-module</generator>
         <item>
@@ -12,14 +12,14 @@
             <link>https://lukewiwa.com/blog/a_good_year</link>
             <guid>https://lukewiwa.com/blog/a_good_year</guid>
             <pubDate>Fri, 29 Dec 2017 00:00:00 GMT</pubDate>
-            <description><![CDATA[It's that time to take stock of another year in my life]]></description>
+            <description><![CDATA[It's that time to take stock of another year in my life and I think it's worthy of a blog post. Professionally and personally a lot has happened and I'm hoping the next year can be very much like it.]]></description>
         </item>
         <item>
             <title><![CDATA[Does Driving Performance Degrade Or Improve With Increased Automation]]></title>
             <link>https://lukewiwa.com/blog/automation_and_driving_performance</link>
             <guid>https://lukewiwa.com/blog/automation_and_driving_performance</guid>
             <pubDate>Fri, 18 Aug 2017 00:00:00 GMT</pubDate>
-            <description><![CDATA[During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here's an essay which I wrote answering the question "Does Driving Performance Degrade Or Improve With Increased Automation"]]></description>
+            <description><![CDATA[During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here's an essay which I wrote answering the question "Does Driving Performance Degrade Or Improve With Increased Automation".]]></description>
         </item>
         <item>
             <title><![CDATA[Bottle URL Redirect]]></title>
@@ -29,17 +29,11 @@
             <description><![CDATA[The little documented url method in bottle.py]]></description>
         </item>
         <item>
-            <title><![CDATA[The “We Say You Do” Model Of Code Review Is Broken]]></title>
-            <link>https://lukewiwa.com/blog/broken_code_review</link>
-            <guid>https://lukewiwa.com/blog/broken_code_review</guid>
-            <pubDate>Wed, 24 Feb 2016 00:00:00 GMT</pubDate>
-            <description><![CDATA[With the review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.]]></description>
-        </item>
-        <item>
             <title><![CDATA[Dark Wiwa Published]]></title>
             <link>https://lukewiwa.com/blog/dark_wiwa_published</link>
             <guid>https://lukewiwa.com/blog/dark_wiwa_published</guid>
             <pubDate>Mon, 20 May 2019 00:00:00 GMT</pubDate>
+            <description><![CDATA[I've been using my self made theme for Visual Studio Code for some time now. With every new installation of vscode I've had to manually copy and paste the project directory into the proper extensions directory. Couple this with the fact that I am now using the excellent Settings Sync extension to synchronise my setup between machines this manual copypasta becomes tiresome.]]></description>
         </item>
         <item>
             <title><![CDATA[A Dumping Ground]]></title>
@@ -59,35 +53,35 @@
             <link>https://lukewiwa.com/blog/gymnastics_teams_suck</link>
             <guid>https://lukewiwa.com/blog/gymnastics_teams_suck</guid>
             <pubDate>Fri, 03 Mar 2017 00:00:00 GMT</pubDate>
-            <description><![CDATA[There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical.]]></description>
+            <description><![CDATA[There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical. Abolish all gymnastics teams. Get rid of them. Really reform the system. This is a radical solution I’ll admit but let me outline some reasons as to why this option may actually be very appealing.]]></description>
         </item>
         <item>
             <title><![CDATA[The Code Of Points Format]]></title>
             <link>https://lukewiwa.com/blog/machine_readable_code</link>
             <guid>https://lukewiwa.com/blog/machine_readable_code</guid>
             <pubDate>Sat, 08 Apr 2017 00:00:00 GMT</pubDate>
-            <description><![CDATA[The format of the Code of Points needs to be published in better more modern formats.]]></description>
+            <description><![CDATA[For my own purposes I wanted to do some analysis of the Code of Points and I had little option but to scrape the important information from the current MAG Code of Points PDF file. I appreciate that the Code is now freely available online however if one wants to do any sort of analysis of the Code the PDF format is one of the more annoying formats to work with. As such I've made my scraping efforts available on github to anyone who would like to download it or make changes.]]></description>
         </item>
         <item>
             <title><![CDATA[How To Link Your MyGov Account To Centrelink After A Name Change]]></title>
             <link>https://lukewiwa.com/blog/mygov_centrelink_name_change</link>
             <guid>https://lukewiwa.com/blog/mygov_centrelink_name_change</guid>
             <pubDate>Sun, 10 Feb 2019 00:00:00 GMT</pubDate>
-            <description><![CDATA[As always, working with MyGov continues to be a nightmare]]></description>
+            <description><![CDATA[My wife and I are about to have a baby, as such my wife is applying for paid parental leave which is painfully done through the Centrelink system. We also got married in the intervening years between us being on Centrelink regularly and now, and she subsequently decided to take my last name after our marriage. This has caused a headache linking accounts in her MyGov account since the information doesn't match and the system refuses to move forward. We eventually found a solution after tearing our hair out. I thought I would leave it here for any other lost souls who need this guidance.]]></description>
         </item>
         <item>
             <title><![CDATA[New Text Editor and Syntax Colour Scheme]]></title>
             <link>https://lukewiwa.com/blog/new_text_editor_theme</link>
             <guid>https://lukewiwa.com/blog/new_text_editor_theme</guid>
             <pubDate>Wed, 06 Dec 2017 00:00:00 GMT</pubDate>
-            <description><![CDATA[I'm A Visual Studio Code convert and here's a new syntax highlighting theme to celebrate]]></description>
+            <description><![CDATA[After trying a few different text editors out, from the standard of gedit, to sublime text and even attempts at nano, I've standardised on Visual Studio Code which seems to be a standout for a few reasons. I'm not exactly an advanced programmer but when I am punching in a few crummy lines of python or writing some markdown notes I've reached for VSCode time and again. It seems to be both extremely flexible, as well as fairly intuitive. The VSCode's extension ecosystem and the git interface is straight forward and easy to use.]]></description>
         </item>
         <item>
             <title><![CDATA[Pinocchio]]></title>
             <link>https://lukewiwa.com/blog/pinocchio</link>
             <guid>https://lukewiwa.com/blog/pinocchio</guid>
             <pubDate>Wed, 18 Apr 2018 00:00:00 GMT</pubDate>
-            <description><![CDATA[My siblings and I, when growing up, had a VHS tape of Pinocchio which we would watch on occasion. The interesting thing about it was that this was a very particular adaptation, not the one made famous by Disney but a decidedly creepier and more disturbing version.]]></description>
+            <description><![CDATA[My siblings and I, when growing up, had a VHS tape of Pinocchio which we would watch on occasion. The interesting thing about it was that this was a very particular adaptation, not the one made famous by Disney but a decidedly creepier and more disturbing version. It left such a mark on us that it became a frequent topic of conversation when meeting for family events as adults. We described it with such disdain that our friends and significant others seemed sceptical as to how bad it could be. It appeared no amount of googling could find this mythical portrayal, until now.]]></description>
         </item>
         <item>
             <title><![CDATA[The 2020 Code of Points: What we might expect]]></title>
@@ -109,6 +103,13 @@
             <guid>https://lukewiwa.com/blog/wsl2_import_ubuntu_image</guid>
             <pubDate>Tue, 26 May 2020 00:00:00 GMT</pubDate>
             <description><![CDATA[I've been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it's integration between the windows desktop and the underlying linux kernel.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[The “We Say You Do” Model Of Code Review Is Broken]]></title>
+            <link>https://lukewiwa.com/blog/broken_code_review</link>
+            <guid>https://lukewiwa.com/blog/broken_code_review</guid>
+            <pubDate>Wed, 24 Feb 2016 00:00:00 GMT</pubDate>
+            <description><![CDATA[With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.]]></description>
         </item>
     </channel>
 </rss>
