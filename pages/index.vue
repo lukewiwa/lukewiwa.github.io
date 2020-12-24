@@ -1,9 +1,7 @@
 <template>
   <div class="">
     <header class="flex flex-col pt-10 pb-20 space-y-4 bg-teal-100">
-      <h1 class="text-center text-5xl">
-        Luke Wiwatowski
-      </h1>
+      <h1 class="text-center text-5xl">Luke Wiwatowski</h1>
       <div class="text-center text-2xl text-gray-600 font-light">
         Gymnastics Engineering Miscellaneous
       </div>
@@ -43,7 +41,7 @@
           >
         </h2>
         <p>You can connect with me on the line using many different urls.</p>
-        <p class="flex">
+        <p class="flex space-x-2">
           <a href="https://www.linkedin.com/in/lukewiwa/"><LinkedinIcon /></a>
           <a href="https://github.com/lukewiwa/"><GithubIcon /></a>
           <a href="https://twitter.com/lukewiwa/"><TwitterIcon /></a>
