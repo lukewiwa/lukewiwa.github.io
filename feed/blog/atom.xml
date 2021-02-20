@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id/>
     <title>My Blog</title>
-    <updated>2020-12-24T02:54:48.695Z</updated>
+    <updated>2021-02-20T04:57:58.104Z</updated>
     <generator>https://github.com/nuxt-community/feed-module</generator>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <entry>
@@ -59,6 +59,13 @@
         <link href="https://lukewiwa.com/blog/gymnastics_teams_suck"/>
         <updated>2017-03-03T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical. Abolish all gymnastics teams. Get rid of them. Really reform the system. This is a radical solution I’ll admit but let me outline some reasons as to why this option may actually be very appealing.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Local AWS API Gateway]]></title>
+        <id>https://lukewiwa.com/blog/local_aws_api_gateway</id>
+        <link href="https://lukewiwa.com/blog/local_aws_api_gateway"/>
+        <updated>2021-02-20T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Many smart people both inside and outside of Amazon has been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[The Code Of Points Format]]></title>
