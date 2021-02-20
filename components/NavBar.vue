@@ -4,9 +4,7 @@
       class="container mx-auto h-full flex flex-row items-center justify-between px-4"
     >
       <div class="flex flex-row items-center">
-        <nuxt-link to="/" class="navlink">
-          Wiwa
-        </nuxt-link>
+        <nuxt-link to="/" class="navlink">Wiwa</nuxt-link>
       </div>
       <div class="flex flex-row items-center space-x-4">
         <nuxt-link to="/blog" class="navlink">Blog</nuxt-link>
