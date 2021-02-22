@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id/>
     <title>My Blog</title>
-    <updated>2021-02-20T06:00:27.821Z</updated>
+    <updated>2021-02-22T06:25:09.691Z</updated>
     <generator>https://github.com/nuxt-community/feed-module</generator>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <entry>
@@ -65,7 +65,7 @@
         <id>https://lukewiwa.com/blog/local_aws_api_gateway</id>
         <link href="https://lukewiwa.com/blog/local_aws_api_gateway"/>
         <updated>2021-02-20T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Many smart people both inside and outside of Amazon has been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.]]></summary>
+        <summary type="html"><![CDATA[Many smart people both inside and outside of Amazon have been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[The Code Of Points Format]]></title>

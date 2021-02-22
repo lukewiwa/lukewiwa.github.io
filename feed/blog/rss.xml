@@ -4,7 +4,7 @@
         <title>My Blog</title>
         <link>https://lukewiwa.com/blog</link>
         <description></description>
-        <lastBuildDate>Sat, 20 Feb 2021 06:00:27 GMT</lastBuildDate>
+        <lastBuildDate>Mon, 22 Feb 2021 06:25:09 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/nuxt-community/feed-module</generator>
         <item>
@@ -67,7 +67,7 @@
             <link>https://lukewiwa.com/blog/local_aws_api_gateway</link>
             <guid>https://lukewiwa.com/blog/local_aws_api_gateway</guid>
             <pubDate>Sat, 20 Feb 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[Many smart people both inside and outside of Amazon has been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.]]></description>
+            <description><![CDATA[Many smart people both inside and outside of Amazon have been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.]]></description>
         </item>
         <item>
             <title><![CDATA[The Code Of Points Format]]></title>

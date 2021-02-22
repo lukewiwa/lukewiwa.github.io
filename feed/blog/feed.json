@@ -62,7 +62,7 @@
             "id": "https://lukewiwa.com/blog/local_aws_api_gateway",
             "url": "https://lukewiwa.com/blog/local_aws_api_gateway",
             "title": "Local AWS API Gateway",
-            "summary": "Many smart people both inside and outside of Amazon has been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.",
+            "summary": "Many smart people both inside and outside of Amazon have been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.",
             "date_modified": "2021-02-20T00:00:00.000Z"
         },
         {
