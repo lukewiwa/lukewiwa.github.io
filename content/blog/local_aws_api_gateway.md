@@ -5,7 +5,7 @@ type: post
 date: 2021-02-20
 ---
 
-Many smart people both inside and outside of Amazon has been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.
+Many smart people both inside and outside of Amazon have been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.
 
 <!--more-->
 
