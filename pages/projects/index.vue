@@ -1,7 +1,7 @@
 <template>
   <div class="max-w-screen-md mx-auto p-4 space-y-8">
     <section class="flex flex-col space-y-2">
-      <a href="https://lukewiwa.com/judge-of-character/" class="bloglist-title">
+      <a href="https://judgeofcharacter.xyz" class="bloglist-title">
         Judge of Character
       </a>
       <p>
@@ -26,9 +26,7 @@
       </p>
     </section>
     <section class="flex flex-col space-y-2">
-      <a href="https://lukewiwa.com/shout/" class="bloglist-title">
-        Shout!
-      </a>
+      <a href="https://lukewiwa.com/shout/" class="bloglist-title"> Shout! </a>
       <p>
         A proof of concept for the most basic Progressive Web App using React.
         Make text BIGGER.
