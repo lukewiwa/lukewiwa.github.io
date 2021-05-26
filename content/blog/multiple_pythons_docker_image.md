@@ -5,7 +5,7 @@ type: post
 date: 2021-05-26
 ---
 
-Not sure whether this has been done before but I created a [docker container with four (4) Python installs](https://hub.docker.com/repository/docker/lukewiwa/pythons). To get there I heavily abused [Docker multistage builds from external images](https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage). You can check out the [repo](https://github.com/lukewiwa/pythons) for the gory details. Now I'm not insane there is a specific reason why I did this.
+Not sure whether this has been done before but I created a [docker container with four (4) Python installs](https://hub.docker.com/r/lukewiwa/pythons). To get there I heavily abused [Docker multistage builds from external images](https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage). You can check out the [repo](https://github.com/lukewiwa/pythons) for the gory details. Now I'm not insane there is a specific reason why I did this.
 
 <!--more-->
 
