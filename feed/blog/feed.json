@@ -80,6 +80,13 @@
             "date_modified": "2017-04-08T00:00:00.000Z"
         },
         {
+            "id": "https://lukewiwa.com/blog/multiple_pythons_docker_image",
+            "url": "https://lukewiwa.com/blog/multiple_pythons_docker_image",
+            "title": "Docker Image With Multiple Python Installs",
+            "summary": "Not sure whether this has been done before but I created a docker container with four (4) Python installs. To get there I heavily abused Docker multistage builds from external images. You can check out the repo for the gory details. Now I'm not insane there is a specific reason why I did this.",
+            "date_modified": "2021-05-26T00:00:00.000Z"
+        },
+        {
             "id": "https://lukewiwa.com/blog/mygov_centrelink_name_change",
             "url": "https://lukewiwa.com/blog/mygov_centrelink_name_change",
             "title": "How To Link Your MyGov Account To Centrelink After A Name Change",

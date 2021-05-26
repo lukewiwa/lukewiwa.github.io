@@ -4,7 +4,7 @@
         <title>My Blog</title>
         <link>https://lukewiwa.com/blog</link>
         <description></description>
-        <lastBuildDate>Sun, 25 Apr 2021 04:04:42 GMT</lastBuildDate>
+        <lastBuildDate>Wed, 26 May 2021 07:14:31 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/nuxt-community/feed-module</generator>
         <item>
@@ -82,6 +82,13 @@
             <guid>https://lukewiwa.com/blog/machine_readable_code</guid>
             <pubDate>Sat, 08 Apr 2017 00:00:00 GMT</pubDate>
             <description><![CDATA[For my own purposes I wanted to do some analysis of the Code of Points and I had little option but to scrape the important information from the current MAG Code of Points PDF file. I appreciate that the Code is now freely available online however if one wants to do any sort of analysis of the Code the PDF format is one of the more annoying formats to work with. As such I've made my scraping efforts available on github to anyone who would like to download it or make changes.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Docker Image With Multiple Python Installs]]></title>
+            <link>https://lukewiwa.com/blog/multiple_pythons_docker_image</link>
+            <guid>https://lukewiwa.com/blog/multiple_pythons_docker_image</guid>
+            <pubDate>Wed, 26 May 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Not sure whether this has been done before but I created a docker container with four (4) Python installs. To get there I heavily abused Docker multistage builds from external images. You can check out the repo for the gory details. Now I'm not insane there is a specific reason why I did this.]]></description>
         </item>
         <item>
             <title><![CDATA[How To Link Your MyGov Account To Centrelink After A Name Change]]></title>
