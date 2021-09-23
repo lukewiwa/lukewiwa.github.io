@@ -1,6 +1,21 @@
 <template>
   <div class="max-w-screen-md mx-auto p-4 space-y-8">
     <section class="flex flex-col space-y-2">
+      <a href="https://github.com/lukewiwa/privatise" class="bloglist-title">
+        Privatise Browser Extension
+      </a>
+      <p>
+        A browser extension that does exactly one thing, adds an item to the
+        context menu that will open the current tab in a new private window. I
+        use this to get around soft paywalls. Available at the
+        <a
+          href="https://microsoftedge.microsoft.com/addons/detail/privatise/kfconhabclnbnnjaapmdhnacnlonhgkl"
+        >
+          Edge Extension Store</a
+        >.
+      </p>
+    </section>
+    <section class="flex flex-col space-y-2">
       <a href="https://judgeofcharacter.xyz" class="bloglist-title">
         Judge of Character
       </a>
