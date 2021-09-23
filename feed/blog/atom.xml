@@ -2,22 +2,22 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id/>
     <title>My Blog</title>
-    <updated>2021-05-26T09:42:19.830Z</updated>
+    <updated>2021-09-23T05:55:18.246Z</updated>
     <generator>https://github.com/nuxt-community/feed-module</generator>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
-    <entry>
-        <title type="html"><![CDATA[A Good Year]]></title>
-        <id>https://lukewiwa.com/blog/a_good_year</id>
-        <link href="https://lukewiwa.com/blog/a_good_year"/>
-        <updated>2017-12-29T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[It's that time to take stock of another year in my life and I think it's worthy of a blog post. Professionally and personally a lot has happened and I'm hoping the next year can be very much like it.]]></summary>
-    </entry>
     <entry>
         <title type="html"><![CDATA[Add the AWS CLI to a Dockerfile]]></title>
         <id>https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile</id>
         <link href="https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile"/>
         <updated>2021-04-25T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Using the magic of multi-stage builds using external images and Amazon's official aws cli docker image it's actually pretty easy to add the AWS CLI to a huge amount of containers.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[A Good Year]]></title>
+        <id>https://lukewiwa.com/blog/a_good_year</id>
+        <link href="https://lukewiwa.com/blog/a_good_year"/>
+        <updated>2017-12-29T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[It's that time to take stock of another year in my life and I think it's worthy of a blog post. Professionally and personally a lot has happened and I'm hoping the next year can be very much like it.]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[Does Driving Performance Degrade Or Improve With Increased Automation]]></title>
