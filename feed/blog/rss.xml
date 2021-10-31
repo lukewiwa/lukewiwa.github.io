@@ -4,22 +4,22 @@
         <title>My Blog</title>
         <link>https://lukewiwa.com/blog</link>
         <description></description>
-        <lastBuildDate>Thu, 23 Sep 2021 05:55:18 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 31 Oct 2021 05:03:37 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/nuxt-community/feed-module</generator>
-        <item>
-            <title><![CDATA[Add the AWS CLI to a Dockerfile]]></title>
-            <link>https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile</link>
-            <guid>https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile</guid>
-            <pubDate>Sun, 25 Apr 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[Using the magic of multi-stage builds using external images and Amazon's official aws cli docker image it's actually pretty easy to add the AWS CLI to a huge amount of containers.]]></description>
-        </item>
         <item>
             <title><![CDATA[A Good Year]]></title>
             <link>https://lukewiwa.com/blog/a_good_year</link>
             <guid>https://lukewiwa.com/blog/a_good_year</guid>
             <pubDate>Fri, 29 Dec 2017 00:00:00 GMT</pubDate>
             <description><![CDATA[It's that time to take stock of another year in my life and I think it's worthy of a blog post. Professionally and personally a lot has happened and I'm hoping the next year can be very much like it.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Add the AWS CLI to a Dockerfile]]></title>
+            <link>https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile</link>
+            <guid>https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile</guid>
+            <pubDate>Sun, 25 Apr 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Using the magic of multi-stage builds using external images and Amazon's official aws cli docker image it's actually pretty easy to add the AWS CLI to a huge amount of containers.]]></description>
         </item>
         <item>
             <title><![CDATA[Does Driving Performance Degrade Or Improve With Increased Automation]]></title>
