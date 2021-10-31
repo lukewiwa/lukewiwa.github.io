@@ -12,6 +12,11 @@
           href="https://microsoftedge.microsoft.com/addons/detail/privatise/kfconhabclnbnnjaapmdhnacnlonhgkl"
         >
           Edge Extension Store</a
+        >
+        and the
+        <a
+          href="https://chrome.google.com/webstore/detail/privatise/hpiaebncpllkfbejofkbacblnnldcbgk"
+          >Chrome Extension Store</a
         >.
       </p>
     </section>
