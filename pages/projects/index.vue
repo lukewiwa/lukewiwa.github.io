@@ -31,7 +31,7 @@
     </section>
     <section class="flex flex-col space-y-2">
       <a
-        href="https://lukewiwa.com/pwa-share-target-data-revealer/"
+        href="https://pwa-share-target-revealer.lukewiwa.com/"
         class="bloglist-title"
       >
         PWA Share Target Data Revealer
