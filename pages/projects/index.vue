@@ -46,7 +46,7 @@
       </p>
     </section>
     <section class="flex flex-col space-y-2">
-      <a href="https://lukewiwa.com/shout/" class="bloglist-title"> Shout! </a>
+      <a href="https://shout.lukewiwa.com" class="bloglist-title"> Shout! </a>
       <p>
         A proof of concept for the most basic Progressive Web App using React.
         Make text BIGGER.
