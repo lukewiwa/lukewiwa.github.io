@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id/>
     <title>My Blog</title>
-    <updated>2022-01-05T02:05:16.521Z</updated>
+    <updated>2022-01-21T23:09:32.537Z</updated>
     <generator>https://github.com/nuxt-community/feed-module</generator>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <entry>
@@ -59,6 +59,13 @@
         <link href="https://lukewiwa.com/blog/ease_of_deployment"/>
         <updated>2018-11-10T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[It is abundantly clear that targeting the web, even as a Single Page App with heavy JavaScript, hits that sweet spot of development time, availability and cost.]]></summary>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[Fortune Teller by Xavier Rudd - Guitar Tabs]]></title>
+        <id>https://lukewiwa.com/blog/guitar_tabs_fortune_teller</id>
+        <link href="https://lukewiwa.com/blog/guitar_tabs_fortune_teller"/>
+        <updated>2022-01-22T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[There are no good tabs for this track online so I finally figured it out and created them.]]></summary>
     </entry>
     <entry>
         <title type="html"><![CDATA[The Case Against Gymnastics Teams]]></title>

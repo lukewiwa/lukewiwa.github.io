@@ -4,7 +4,7 @@
         <title>My Blog</title>
         <link>https://lukewiwa.com/blog</link>
         <description></description>
-        <lastBuildDate>Wed, 05 Jan 2022 02:05:16 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 21 Jan 2022 23:09:32 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/nuxt-community/feed-module</generator>
         <item>
@@ -61,6 +61,13 @@
             <guid>https://lukewiwa.com/blog/ease_of_deployment</guid>
             <pubDate>Sat, 10 Nov 2018 00:00:00 GMT</pubDate>
             <description><![CDATA[It is abundantly clear that targeting the web, even as a Single Page App with heavy JavaScript, hits that sweet spot of development time, availability and cost.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Fortune Teller by Xavier Rudd - Guitar Tabs]]></title>
+            <link>https://lukewiwa.com/blog/guitar_tabs_fortune_teller</link>
+            <guid>https://lukewiwa.com/blog/guitar_tabs_fortune_teller</guid>
+            <pubDate>Sat, 22 Jan 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[There are no good tabs for this track online so I finally figured it out and created them.]]></description>
         </item>
         <item>
             <title><![CDATA[The Case Against Gymnastics Teams]]></title>
