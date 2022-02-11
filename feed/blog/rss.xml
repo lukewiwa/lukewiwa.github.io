@@ -4,7 +4,7 @@
         <title>My Blog</title>
         <link>https://lukewiwa.com/blog</link>
         <description></description>
-        <lastBuildDate>Sun, 30 Jan 2022 06:30:49 GMT</lastBuildDate>
+        <lastBuildDate>Fri, 11 Feb 2022 08:33:43 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/nuxt-community/feed-module</generator>
         <item>
@@ -110,6 +110,13 @@
             <guid>https://lukewiwa.com/blog/new_text_editor_theme</guid>
             <pubDate>Wed, 06 Dec 2017 00:00:00 GMT</pubDate>
             <description><![CDATA[After trying a few different text editors out, from the standard of gedit, to sublime text and even attempts at nano, I've standardised on Visual Studio Code which seems to be a standout for a few reasons. I'm not exactly an advanced programmer but when I am punching in a few crummy lines of python or writing some markdown notes I've reached for VSCode time and again. It seems to be both extremely flexible, as well as fairly intuitive. The VSCode's extension ecosystem and the git interface is straight forward and easy to use.]]></description>
+        </item>
+        <item>
+            <title><![CDATA[Personal Notifications Using AWS]]></title>
+            <link>https://lukewiwa.com/blog/notification_service_aws</link>
+            <guid>https://lukewiwa.com/blog/notification_service_aws</guid>
+            <pubDate>Fri, 11 Feb 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[I've found quite a few used for recurring and scheduled scripts in my personal life. In days gone by I would have run these in a cron job on a server somewhere but as I've gotten into the weeds of AWS infrastructure I've leant on some AWS services more for these little personal conveniences. My preference nowadays is to use AWS Lambda as my first point of call and integrate other services as I need them. I'm very confident that AWS won't be deprecating their Lambda platform and they connect well to Cloudwatch, meaning I don't have to worry about creating a logging solution. Additionally now that I'm pretty confident with the AWS CDK for spinning up infrastructure it's a breeze to connect other services to assist with any other needs. Today I'll go through one example which provided a flexible and cheap solution to my problem.]]></description>
         </item>
         <item>
             <title><![CDATA[Pinocchio]]></title>
