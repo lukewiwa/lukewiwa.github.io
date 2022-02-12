@@ -5,7 +5,7 @@ date: 2022-02-11
 blog: true
 ---
 
-I've found quite a few used for recurring and scheduled scripts in my personal life. In days gone by I would have run these in a cron job on a server somewhere but as I've gotten into the weeds of AWS infrastructure I've leant on some AWS services more for these little personal conveniences. My preference nowadays is to use AWS Lambda as my first point of call and integrate other services as I need them. I'm very confident that AWS won't be deprecating their Lambda platform and they connect well to Cloudwatch, meaning I don't have to worry about creating a logging solution. Additionally now that I'm pretty confident with the AWS CDK for spinning up infrastructure it's a breeze to connect other services to assist with any other needs. Today I'll go through one example which provided a flexible and **cheap** solution to my problem.
+I've found quite a few uses for recurring and scheduled scripts in my personal life. In days gone by I would have run these in a cron job on a server somewhere but as I've gotten into the weeds of AWS infrastructure I've leant on some AWS services more for these little personal conveniences. My preference nowadays is to use AWS Lambda as my first point of call and integrate other services as I need them. I'm very confident that AWS won't be deprecating their Lambda platform and they connect well to Cloudwatch, meaning I don't have to worry about creating a logging solution. Additionally now that I'm pretty confident with the AWS CDK for spinning up infrastructure it's a breeze to connect other services to assist with any other needs. Today I'll go through one example which provided a flexible and **cheap** solution to my problem.
 
 <!--more-->
 
