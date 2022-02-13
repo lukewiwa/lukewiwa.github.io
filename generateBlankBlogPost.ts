@@ -6,9 +6,10 @@ const template = ({ title = "Title" }) => {
   const date = new Date().toISOString().split("T")[0];
   return `---
 title: ${title}
-type: post
+
 date: ${date}
-blog: true
+tags: blog
+layout: layouts/Blog.tsx
 ---
 
 Opening Paragraph
@@ -21,7 +22,7 @@ const writeBlogTemplate = async () => {
   const templateString = template({});
   await writeFile(
     path.join(__dirname, "content", "blog", "new_blank_post.md"),
-    templateString
+    templateString,
   );
 };
 
