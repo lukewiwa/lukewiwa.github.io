@@ -4,6 +4,7 @@ import { Page } from "lume/core/filesystem.ts";
 
 export interface LumeDataProps {
   search: Search;
+  url: string;
 }
 
 export interface LumeFilterProps {

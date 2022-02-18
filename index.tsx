@@ -1,20 +1,21 @@
 import React from "react";
+import { Award, GitHub, Linkedin, Settings, Smartphone } from "react-feather";
 
 export const layout = "layouts/Base.tsx";
 
 export default () => (
-  <div>
-    <header className="flex flex-col pt-10 pb-20 space-y-4 bg-teal-100">
-      <h1 className="text-center text-5xl">Luke Wiwatowski</h1>
-      <div className="text-center text-2xl text-gray-600 font-light">
+  <>
+    <section>
+      <h1>Luke Wiwatowski</h1>
+      <div>
         Gymnastics Engineering Miscellaneous
       </div>
-    </header>
-    <div className="grid grid-flow-row grid-rows-auto sm:grid-cols-1 md:grid-cols-3 gap-3 p-4 container mx-auto text-gray-600 font-light">
+    </section>
+    <div>
       <div>
-        <h2 className="flex">
-          {/* <AwardIcon /> */}
-          <span className="text-lg ml-2 mb-4 font-medium text-gray-700">
+        <h2>
+          <Award />
+          <span>
             Gymnastics
           </span>
         </h2>
@@ -24,9 +25,9 @@ export default () => (
         </p>
       </div>
       <div>
-        <h2 className="flex">
-          {/* <SettingsIcon /> */}
-          <span className="text-lg ml-2 mb-4 font-medium text-gray-700">
+        <h2>
+          <Settings />
+          <span>
             Engineering
           </span>
         </h2>
@@ -37,22 +38,22 @@ export default () => (
         </p>
       </div>
       <div>
-        <h2 className="flex">
-          {/* <SmartphoneIcon /> */}
-          <span className="text-lg ml-2 mb-4 font-medium text-gray-700">
+        <h2>
+          <Smartphone />
+          <span>
             Online
           </span>
         </h2>
-        <p>You can connect with me on the line using many different urls.</p>
-        <p className="flex space-x-2">
+        <p>
+          You can connect with me on the line using many different urls.{" "}
           <a href="https://www.linkedin.com/in/lukewiwa/">
-            {/* <LinkedinIcon /> */}
+            <Linkedin />
           </a>
           <a href="https://github.com/lukewiwa/">
-            {/* <GithubIcon /> */}
+            <GitHub />
           </a>
         </p>
       </div>
     </div>
-  </div>
+  </>
 );

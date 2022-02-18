@@ -1,7 +1,10 @@
 import React from "react";
-import { LumeDataProps, LumeFilterProps } from "../types.ts";
+import { LumeDataProps, LumeFilterProps } from "../_types.ts";
 import { printDate } from "../_utils/datetime.ts";
 import { Data } from "lume/core/filesystem.ts";
+
+export const layout = "layouts/Base.tsx";
+export const title = "Blog";
 
 interface BlogData extends Data {
   title: string;
@@ -11,29 +14,33 @@ interface BlogData extends Data {
   description?: string;
 }
 
-export const layout = "layouts/Base.tsx";
-export const title = "Wiwa's Blog";
+const Preview = (
+  { description, preview }: { description?: string; preview: string },
+) => {
+  if (description) {
+    return <p dangerouslySetInnerHTML={{ __html: description }} />;
+  }
+  return <div dangerouslySetInnerHTML={{ __html: preview }} />;
+};
 
 export default ({ search }: LumeDataProps, { md }: LumeFilterProps) => {
   return (
-    <div className="max-w-screen-md mx-auto p-4 space-y-5">
+    <>
       {search.pages("blog", "date=desc").map(({ data }) => {
         const { url, date, title, content, description } = data as BlogData;
         const preview = md(content.split("<!--more-->")[0]);
         return (
-          <section>
-            <div>
-              <span className="font-normal mr-2">{printDate(date)}</span>
-              <a href={url} className="bloglist-title">
-                <span>{title}</span>
+          <section className="pb2">
+            <h3>
+              <a href={url}>
+                {title}
               </a>
-            </div>
-            {description
-              ? <p>{description}</p>
-              : <p dangerouslySetInnerHTML={{ __html: preview }} />}
+            </h3>
+            <time className="db gray mb1">{printDate(date)}</time>
+            <Preview description={description} preview={preview} />
           </section>
         );
       })}
-    </div>
+    </>
   );
 };

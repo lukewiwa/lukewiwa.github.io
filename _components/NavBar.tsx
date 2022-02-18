@@ -1,15 +1,25 @@
 import React from "react";
 
-export default () => (
-  <nav className="h-16 shadow-sm z-20 border-b border-gray-300">
-    <div className="container mx-auto h-full flex flex-row items-center justify-between px-4">
-      <div className="flex flex-row items-center">
-        <a href="/" className="navlink">Wiwa</a>
+const NavLink = ({ href, title, url }: Record<string, string>) => {
+  const currentPageHeader = url.startsWith(href);
+  const classString = `link gray hover-moon-gray f6 f5-ns dib mr3 mr4-ns ${
+    currentPageHeader ? "b" : ""
+  }`;
+  return (
+    <a href={href} className={classString}>
+      {title}
+    </a>
+  );
+};
+
+export default ({ url }: { url: string }) => (
+  <header>
+    <nav className="flex flex-row items-center justify-between">
+      <a href="/" className="link black hover-gray dtc w-25 f3">Wiwa</a>
+      <div className="dtc v-mid w-75 tr">
+        <NavLink href="/blog" title="Blog" url={url} />
+        <NavLink href="/projects" title="Projects" url={url} />
       </div>
-      <div className="flex flex-row items-center space-x-4">
-        <a href="/blog" className="navlink">Blog</a>
-        <a href="/projects" className="navlink">Projects</a>
-      </div>
-    </div>
-  </nav>
+    </nav>
+  </header>
 );
