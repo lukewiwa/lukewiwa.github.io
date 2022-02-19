@@ -22,7 +22,7 @@ interface Feed {
 
 export default function (
   { site, search }: LumeDataProps,
-  { md, url, date, htmlUrl }: Record<string, Helper>,
+  { md, url, printDate, htmlUrl }: Record<string, Helper>,
 ) {
   const feed: Feed = {
     version: "https://jsonfeed.org/version/1",
@@ -41,7 +41,7 @@ export default function (
       url: url(blogUrl, true),
       title: title,
       content_html: htmlUrl(md(content), true),
-      date_modified: date(blogDate, "ATOM"),
+      date_modified: printDate(blogDate, "ATOM"),
     });
   }
 

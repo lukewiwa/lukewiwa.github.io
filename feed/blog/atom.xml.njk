@@ -5,7 +5,7 @@
     <title>{{ site.title }}</title>
     <subtitle>{{ site.description }}</subtitle>
     {% set lastPage = search.pages() | last %}
-    <updated>{{ lastPage.data.date | date("ATOM") }}</updated>
+    <updated>{{ lastPage.data.date | printDate("ATOM") }}</updated>
     <link href="{{ url | url(true) }}" rel="self"/>
     <link rel="alternate" href="{{ "/blog" | url(true) }}"/>
     <id>{{ "/" | url(true) }}</id>
@@ -14,7 +14,7 @@
         <title>{{ post.data.title }}</title>
         <id>{{ post.data.url | url(true) }}</id>
         <link href="{{ post.data.url | url(true) }}"/>
-        <updated>{{ post.data.date | date("ATOM") }}</updated>
+        <updated>{{ post.data.date | printDate("ATOM") }}</updated>
         <content type="html">{{ post.data.content | md | htmlUrl(true) }}</content>
     </entry>
     {%- endfor %}

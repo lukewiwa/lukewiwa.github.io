@@ -1,6 +1,5 @@
 import React from "react";
 import { BlogPostData, LumeDataProps } from "../_types.ts";
-import { printDate } from "../_utils/datetime.ts";
 import { Helper } from "lume/core.ts";
 
 export const layout = "layouts/Base.tsx";
@@ -15,7 +14,10 @@ const Preview = (
   return <div dangerouslySetInnerHTML={{ __html: preview }} />;
 };
 
-export default ({ search }: LumeDataProps, { md }: Record<string, Helper>) => {
+export default (
+  { search }: LumeDataProps,
+  { md, printDate }: Record<string, Helper>,
+) => {
   return (
     <>
       {search.pages("blog", "date=desc").map(({ data }) => {

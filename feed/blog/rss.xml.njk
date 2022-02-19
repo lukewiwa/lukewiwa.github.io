@@ -6,14 +6,14 @@
         <link href="{{ url | url(true) }}" />
         <description>{{ site.description }}</description>
         {% set lastPage = search.pages() | last %}
-        <lastBuildDate>{{ lastPage.data.date | date("ATOM") }}</lastBuildDate>
+        <lastBuildDate>{{ lastPage.data.date | printDate("ATOM") }}</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         {%- for post in search.pages("blog", "date=desc") %}
         <item>
             <title>{{ post.data.title }}</title>
             <link href="{{ post.data.url | url(true) }}"/>
             <guid>{{ post.data.url | url(true) }}</guid>
-            <pubDate>{{ post.data.date | date("ATOM") }}</pubDate>
+            <pubDate>{{ post.data.date | printDate("ATOM") }}</pubDate>
             <description><![CDATA[
                     {{ post.data.content | md | htmlUrl(true) }}
                 ]]>

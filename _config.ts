@@ -4,9 +4,17 @@ import parcel_css from "lume/plugins/parcel_css.ts";
 import jsx from "lume/plugins/jsx.ts";
 import postcss from "lume/plugins/postcss.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
-import bundler from "lume/plugins/bundler.ts";
 
 const site = lume();
+
+site.use(code_highlight());
+site.use(jsx());
+site.use(parcel_css());
+site.use(date({ name: "printDate" }));
+site.use(postcss());
+
+site.copy("_static", ".");
+site.ignore("README.md");
 
 site.script("blankPost", async () => {
   const date = new Date().toISOString().split("T")[0];
@@ -27,15 +35,5 @@ Opening Paragraph
     templateString,
   );
 });
-
-site.use(bundler());
-site.use(code_highlight());
-site.use(jsx());
-site.use(parcel_css());
-site.use(date());
-site.use(postcss());
-
-site.copy("_static", ".");
-site.ignore("README.md");
 
 export default site;

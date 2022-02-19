@@ -1,5 +1,5 @@
 import React from "react";
-import { printDate } from "../../_utils/datetime.ts";
+import { Helper } from "lume/core.ts";
 
 interface BlogProps {
   title: string;
@@ -10,11 +10,12 @@ export const layout = "layouts/Base.tsx";
 
 export default (
   { children, title, date }: React.PropsWithChildren<BlogProps>,
+  { printDate }: Record<string, Helper>,
 ) => {
   return (
     <article>
       <h1 className="f2">{title}</h1>
-      <time className="db gray mb1">{printDate(date)}</time>
+      <time className="db mb1">{printDate(date)}</time>
       {children}
     </article>
   );
