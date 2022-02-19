@@ -14,10 +14,7 @@
             <link href="{{ post.data.url | url(true) }}"/>
             <guid>{{ post.data.url | url(true) }}</guid>
             <pubDate>{{ post.data.date | printDate("ATOM") }}</pubDate>
-            <description><![CDATA[
-                    {{ post.data.content | md | htmlUrl(true) }}
-                ]]>
-            </description>
+            <description>{{ post.data.content | md | htmlUrl(true) }}</description>
         </item>
         {%- endfor %}
     </channel>
