@@ -1,4 +1,5 @@
 import lume from "lume/mod.ts";
+import date from "lume/plugins/date.ts";
 import parcel_css from "lume/plugins/parcel_css.ts";
 import jsx from "lume/plugins/jsx.ts";
 import postcss from "lume/plugins/postcss.ts";
@@ -31,6 +32,7 @@ site.use(bundler());
 site.use(code_highlight());
 site.use(jsx());
 site.use(parcel_css());
+site.use(date());
 site.use(postcss());
 
 site.copy("_static", ".");

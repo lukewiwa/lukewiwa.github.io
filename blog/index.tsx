@@ -1,18 +1,10 @@
 import React from "react";
-import { LumeDataProps, LumeFilterProps } from "../_types.ts";
+import { BlogPostData, LumeDataProps } from "../_types.ts";
 import { printDate } from "../_utils/datetime.ts";
-import { Data } from "lume/core/filesystem.ts";
+import { Helper } from "lume/core.ts";
 
 export const layout = "layouts/Base.tsx";
 export const title = "Blog";
-
-interface BlogData extends Data {
-  title: string;
-  url: string;
-  date: Date;
-  content: string;
-  description?: string;
-}
 
 const Preview = (
   { description, preview }: { description?: string; preview: string },
@@ -23,11 +15,11 @@ const Preview = (
   return <div dangerouslySetInnerHTML={{ __html: preview }} />;
 };
 
-export default ({ search }: LumeDataProps, { md }: LumeFilterProps) => {
+export default ({ search }: LumeDataProps, { md }: Record<string, Helper>) => {
   return (
     <>
       {search.pages("blog", "date=desc").map(({ data }) => {
-        const { url, date, title, content, description } = data as BlogData;
+        const { url, date, title, content, description } = data as BlogPostData;
         const preview = md(content.split("<!--more-->")[0]);
         return (
           <section className="pb2">
