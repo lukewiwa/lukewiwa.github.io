@@ -5,7 +5,7 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-02-19T12:21:54Z</updated>
+    <updated>2022-02-19T12:26:48Z</updated>
     <link href="http://localhost/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="http://localhost/blog"/>
     <id>http://localhost/</id>
@@ -14,7 +14,7 @@
         <id>http://localhost/blog/another_refresh/</id>
         <link href="http://localhost/blog/another_refresh/"/>
         <updated>2022-02-19T00:00:00Z</updated>
-        <content type="html">&lt;p&gt;I finally found the space to do my semi regular migration to a new static site generator for this site. I thought it was time to step away from Vue and try something new, partly out of curiosity and partly because I really like JSX as a templating language.&lt;/p&gt;
+        <content type="html">&lt;p&gt;I finally found the time and space to do my semi regular migration to a new static site generator. I thought it was time to step away from Vue and try something new, partly out of curiosity and partly because I really like JSX as a templating language. And frankly I&#39;m just not really up for the migration from Vue 2 to Vue 3.&lt;/p&gt;
 &lt;!--more--&gt;
 &lt;p&gt;This site is now generated using &lt;a href=&quot;https://lumeland.github.io/&quot;&gt;lume&lt;/a&gt;. Lume is a static site generator built on top of the &lt;a href=&quot;https://deno.land/&quot;&gt;Deno&lt;/a&gt; programming language. I&#39;ve been somewhat enamoured with Deno when it came out. It&#39;s pretty fantastic to download a single binary and it&#39;s got everything I need for compilation, formatting and typechecking.&lt;/p&gt;
 &lt;p&gt;I&#39;ve used Deno for a few small scripts (which I think it excels at) and I wanted to get into a deeper project with it. Additionally I love JSX as a templating language and was wondering whether there was anything out there that would build static web sites using it. I mean particularly calling the &lt;code&gt;renderToStaticMarkup&lt;/code&gt; method in react at build time and leaving just HTML files to serve. I wanted to steer clear of tools like Gatsby and Next.js, just pure HTML in the end.&lt;/p&gt;
