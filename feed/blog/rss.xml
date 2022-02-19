@@ -6,7 +6,7 @@
         <link href="http://localhost/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2022-02-19T05:07:04Z</lastBuildDate>
+        <lastBuildDate>2022-02-19T05:35:37Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>Personal Notifications Using AWS</title>
