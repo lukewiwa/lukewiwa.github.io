@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<rss version="2.0">
+    <channel>
+        <title>{{ site.title }}</title>
+        <link href="{{ url | url(true) }}" />
+        <description>{{ site.description }}</description>
+        {% set lastPage = search.pages() | last %}
+        <lastBuildDate>{{ lastPage.data.date | date("ATOM") }}</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        {%- for post in search.pages("blog", "date=desc") %}
+        <item>
+            <title>{{ post.data.title }}</title>
+            <link href="{{ post.data.url | url(true) }}"/>
+            <guid>{{ post.data.url | url(true) }}</guid>
+            <pubDate>{{ post.data.date | date("ATOM") }}</pubDate>
+            <description><![CDATA[
+                    {{ post.data.content | md | htmlUrl(true) }}
+                ]]>
+            </description>
+        </item>
+        {%- endfor %}
+    </channel>
+</rss>

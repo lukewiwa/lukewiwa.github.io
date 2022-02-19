@@ -9,23 +9,19 @@ jobs:
   build-deploy:
     runs-on: ubuntu-18.04
     steps:
-      - uses: actions/checkout@v1
-
-      - name: Use Node.js 14.4.0
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: denoland/setup-deno@v1
         with:
-          node-version: 14.4.0
+          deno-version: "1.18.2"
 
-      - name: Install
-        run: npm ci
+      - name: Install & Build
+        run: deno run -A https://deno.land/x/lume/ci.ts -- --import-map=import_map.json
 
-      - name: Build
-        run: npm run generate
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: master
-          publish_dir: ./dist
+          publish_dir: ./_site
           cname: lukewiwa.com
