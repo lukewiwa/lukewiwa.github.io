@@ -1,147 +1,586 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
+
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id/>
     <title>My Blog</title>
-    <updated>2022-02-12T05:06:26.457Z</updated>
-    <generator>https://github.com/nuxt-community/feed-module</generator>
-    <link rel="alternate" href="https://lukewiwa.com/blog"/>
+    <subtitle>The Ramblings of Wiwa</subtitle>
+    
+    <updated>2022-02-19T05:07:04Z</updated>
+    <link href="http://localhost/feed/blog/atom.xml" rel="self"/>
+    <link rel="alternate" href="http://localhost/blog"/>
+    <id>http://localhost/</id>
     <entry>
-        <title type="html"><![CDATA[A Good Year]]></title>
-        <id>https://lukewiwa.com/blog/a_good_year</id>
-        <link href="https://lukewiwa.com/blog/a_good_year"/>
-        <updated>2017-12-29T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[It's that time to take stock of another year in my life and I think it's worthy of a blog post. Professionally and personally a lot has happened and I'm hoping the next year can be very much like it.]]></summary>
+        <title>Personal Notifications Using AWS</title>
+        <id>http://localhost/blog/notification_service_aws/</id>
+        <link href="http://localhost/blog/notification_service_aws/"/>
+        <updated>2022-02-11T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I&#39;ve found quite a few uses for recurring and scheduled scripts in my personal life. In days gone by I would have run these in a cron job on a server somewhere but as I&#39;ve gotten into the weeds of AWS infrastructure I&#39;ve leant on some AWS services more for these little personal conveniences. My preference nowadays is to use AWS Lambda as my first point of call and integrate other services as I need them. I&#39;m very confident that AWS won&#39;t be deprecating their Lambda platform and they connect well to Cloudwatch, meaning I don&#39;t have to worry about creating a logging solution. Additionally now that I&#39;m pretty confident with the AWS CDK for spinning up infrastructure it&#39;s a breeze to connect other services to assist with any other needs. Today I&#39;ll go through one example which provided a flexible and &lt;strong&gt;cheap&lt;/strong&gt; solution to my problem.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;It can be quite difficult to find a good sports massage service and I&#39;ve recently been very lucky to find a fantastic one. Of course they are booked out months in advance, which doesn&#39;t bother me too much but sometimes after a big training session I&#39;ll need something worked on sooner rather than later. Appointments do pop up from time to time due to cancellations but I didn&#39;t really want to keep checking their website throughout the day. So it made sense to automate the process somewhat.&lt;/p&gt;
+&lt;p&gt;Firstly the code for the lambda. Fairly easy to test locally (minus the SNS dispatch), I&#39;ve abridged a few things here but you get the idea. Basically it performs a GET request to the API endpoint for appointments available, if the response array has anything in it send an SMS message to all subscribers.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;import axios from &amp;quot;axios&amp;quot;;
+import { DateTime } from &amp;quot;luxon&amp;quot;;
+import { PublishCommand, SNSClient } from &amp;quot;@aws-sdk/client-sns&amp;quot;;
+import { URL, URLSearchParams } from &amp;quot;url&amp;quot;;
+import { EventBridgeHandler } from &amp;quot;aws-lambda&amp;quot;;
+
+interface MonthYearProps {
+  month: number;
+  year: number;
+  days?: number[];
+}
+
+interface ResponseAppointment {
+  day: number;
+  day_parts: 1 | 2 | 3;
+}
+
+const region = process.env.AWS_REGION;
+const TopicArn = process.env.TOPIC_ARN;
+const apiEndpointUrl = process.env.API_ENDPOINT_URL
+
+const nextMonths = Array(2)
+  .fill(DateTime.now().setZone(&amp;quot;Australia/Canberra&amp;quot;))
+  .map((date: DateTime, index) =&amp;gt; date.plus({ months: index }));
+
+const apiEndpoint = ({ month, year }: MonthYearProps) =&amp;gt; {
+  const endpoint = new URL(apiEndpointUrl);
+  const searchParams = new URLSearchParams({
+    month: month.toString(),
+    year: year.toString(),
+  });
+  endpoint.search = searchParams.toString();
+
+  return endpoint.href;
+};
+
+const sendNotification = async ({ month, year, days }: MonthYearProps) =&amp;gt; {
+  const client = new SNSClient({ region });
+  const dates = days.map((day) =&amp;gt; `${day}/${month}/${year}`).join(&amp;quot;, &amp;quot;);
+  const message = `Appointments available: ${dates}`;
+  const command = new PublishCommand({
+    Subject: &amp;quot;Appointments available&amp;quot;,
+    Message: message,
+    TopicArn,
+  });
+  await client.send(command);
+};
+
+export const handler: EventBridgeHandler&amp;lt;string, unknown, void&amp;gt; = () =&amp;gt; {
+  nextMonths.forEach(async ({ month, year }) =&amp;gt; {
+    try {
+      const { data }: { data: ResponseAppointment[] } = await axios.get(
+        apiEndpoint({ month, year })
+      );
+      if (data.length !== 0) {
+        const days = data.map(({ day }) =&amp;gt; day);
+        await sendNotification({ month, year, days });
+      } else {
+        console.log(`No appointments found on ${month}/${year}`);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  });
+};
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now let&#39;s build the infrastructure around it. I&#39;ve pretty much standardised on AWS CDK for deployment since it does a great job of holding your hand and creating a lot of the interlinking IAM permissions for you. There&#39;s only a few things going on here.&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Create an SNS topic.&lt;/li&gt;
+&lt;li&gt;Create a lambda function and point it to the above code, we need to wait for the SNS topic to finish being created since we&#39;re sending the SNS topic ARN to the lambda function in the form of an environment variable.&lt;/li&gt;
+&lt;li&gt;Grant permissions using the convenience method &lt;code&gt;grantPublish&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Subscribe any emails (mine) to the topic.&lt;/li&gt;
+&lt;li&gt;Schedule the lambda on a recurring basis. I chose once every hour during business hours to not spam either my own email or the booking website.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&quot;language-ts&quot;&gt;import {
+  Stack,
+  StackProps,
+  aws_sns as sns,
+  aws_lambda as lambda,
+  aws_logs as logs,
+  aws_sns_subscriptions as subscriptions,
+  aws_events as events,
+  aws_events_targets as targets,
+} from &amp;quot;aws-cdk-lib&amp;quot;;
+import { NodejsFunction } from &amp;quot;aws-cdk-lib/aws-lambda-nodejs&amp;quot;;
+import { Construct } from &amp;quot;constructs&amp;quot;;
+import * as path from &amp;quot;path&amp;quot;;
+
+export class InfraStack extends Stack {
+  constructor(scope: Construct, id: string, props?: StackProps) {
+    super(scope, id, props);
+
+    const emails = process.env.EMAILS?.split(&amp;quot;,&amp;quot;) ?? [];
+
+    const topic = new sns.Topic(this, &amp;quot;WiwaNotificationsTopic&amp;quot;, {
+      displayName: &amp;quot;Available Appointments&amp;quot;,
+    });
+
+    const fn = new NodejsFunction(this, &amp;quot;WiwaNotificationsLambda&amp;quot;, {
+      entry: path.join(__dirname, &amp;quot;..&amp;quot;, &amp;quot;..&amp;quot;, &amp;quot;src&amp;quot;, &amp;quot;index.ts&amp;quot;),
+      description: &amp;quot;Check booking site for open appointments&amp;quot;,
+      environment: {
+        TOPIC_ARN: topic.topicArn,
+      },
+      runtime: lambda.Runtime.NODEJS_14_X,
+      logRetention: logs.RetentionDays.ONE_WEEK,
+    });
+
+    fn.node.addDependency(topic);
+    topic.grantPublish(fn);
+
+    emails.forEach((email) =&amp;gt; {
+      topic.addSubscription(new subscriptions.EmailSubscription(email));
+    });
+
+    const rule = new events.Rule(
+      this,
+      &amp;quot;WiwaNotificationsScheduleRule&amp;quot;,
+      {
+        schedule: events.Schedule.cron({ minute: &amp;quot;24&amp;quot;, hour: &amp;quot;0-8,20-23&amp;quot; }),
+        description: &amp;quot;Check every hour during the day&amp;quot;,
+      }
+    );
+    rule.addTarget(new targets.LambdaFunction(fn));
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And that&#39;s it! This now sends me open bookings which probably pop up once or twice a week. It&#39;s a nice little piece of functionality which lives well within the free tier limits of AWS.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Add the AWS CLI to a Dockerfile]]></title>
-        <id>https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile</id>
-        <link href="https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile"/>
-        <updated>2021-04-25T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Using the magic of multi-stage builds using external images and Amazon's official aws cli docker image it's actually pretty easy to add the AWS CLI to a huge amount of containers.]]></summary>
+        <title>Fortune Teller by Xavier Rudd - Guitar Tabs</title>
+        <id>http://localhost/blog/guitar_tabs_fortune_teller/</id>
+        <link href="http://localhost/blog/guitar_tabs_fortune_teller/"/>
+        <updated>2022-01-22T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;There are no good tabs for this track online so I finally figured it out and created them.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;iframe style=&quot;border-radius:12px&quot; src=&quot;https://open.spotify.com/embed/track/5CDEX5cmjHeYhkj7u9zcbo?utm_source=generator&quot; width=&quot;100%&quot; height=&quot;80&quot; frameBorder=&quot;0&quot; allowfullscreen=&quot;&quot; allow=&quot;autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture&quot;&gt;&lt;/iframe&gt;
+&lt;p&gt;For the authentic key you can uptune 2 half steps or put a capo on the second fret.&lt;/p&gt;
+&lt;h2&gt;Verse&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;E|--------------------|--------------------|
+B|--------------------|--------------------|
+G|--------------------|--------------------|
+D|--------2h3p2p0-----|---------0h3-3--0h3-|
+A|-----0h3-------0h3/5|----0h3p2-----------|
+D|-0------------------|---------0h3-3--0h3-|
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h2&gt;Pre-Chorus&lt;/h2&gt;
+&lt;pre&gt;&lt;code&gt;E|--------------------|--------------------|
+B|--------------------|--------------------|
+G|--------------------|--------------------|
+D|--------2h3---------|--------2h3---------|
+A|-----0h3------0h3---|-----0h3------0h3---|
+D|-0----------------3-|-0----------------3-|
+
+E|--------------------|--------------------|
+B|--------------------|--------------------|
+G|--------------------|--------------------|
+D|--------2h3---------|---5--3--2-3-2------|
+A|-----0h3------0h3---|--------------------|
+D|-0----------------3-|---5--3--2-3-2------|
+&lt;/code&gt;&lt;/pre&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Does Driving Performance Degrade Or Improve With Increased Automation]]></title>
-        <id>https://lukewiwa.com/blog/automation_and_driving_performance</id>
-        <link href="https://lukewiwa.com/blog/automation_and_driving_performance"/>
-        <updated>2017-08-18T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here's an essay which I wrote answering the question "Does Driving Performance Degrade Or Improve With Increased Automation".]]></summary>
+        <title>Docker Image With Multiple Python Installs</title>
+        <id>http://localhost/blog/multiple_pythons_docker_image/</id>
+        <link href="http://localhost/blog/multiple_pythons_docker_image/"/>
+        <updated>2021-05-26T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;Not sure whether this has been done before but I created a &lt;a href=&quot;https://hub.docker.com/r/lukewiwa/pythons&quot;&gt;docker container with four (4) Python installs&lt;/a&gt;. To get there I heavily abused &lt;a href=&quot;https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage&quot;&gt;Docker multistage builds from external images&lt;/a&gt;. You can check out the &lt;a href=&quot;https://github.com/lukewiwa/pythons&quot;&gt;repo&lt;/a&gt; for the gory details. Now I&#39;m not insane there is a specific reason why I did this.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;I&#39;m pretty all in on Visual Studio Code dev containers and I also like having sensible CI pipelines to catch things. I recently wrote a little library that I diligently tested against multiple python versions using &lt;a href=&quot;https://tox.readthedocs.io/en/latest/index.html&quot;&gt;tox&lt;/a&gt;. I like to be able to test and debug this locally and not rely on the pipeline specific syntax. So the challenge was to create an environment locally and in the pipeline where a single &lt;code&gt;tox&lt;/code&gt; command would kick start all my tests. This seems to be the solution that satisfies this criteria.&lt;/p&gt;
+&lt;p&gt;Here&#39;s an example using Github Actions:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;name: tests
+on: push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    container:
+      image: lukewiwa/pythons:latest
+    steps:
+      - name: tox
+        run: tox
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And one for bitbucket pipelines:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;image: lukewiwa/pythons
+
+pipelines:
+  default:
+    - step:
+        script:
+            - tox
+&lt;/code&gt;&lt;/pre&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Bottle URL Redirect]]></title>
-        <id>https://lukewiwa.com/blog/bottle_url</id>
-        <link href="https://lukewiwa.com/blog/bottle_url"/>
-        <updated>2017-05-23T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[The little documented url method in bottle.py]]></summary>
+        <title>Add the AWS CLI to a Dockerfile</title>
+        <id>http://localhost/blog/add_the_aws_cli_to_a_dockerfile/</id>
+        <link href="http://localhost/blog/add_the_aws_cli_to_a_dockerfile/"/>
+        <updated>2021-04-25T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;Using the magic of multi-stage builds using &lt;a href=&quot;https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage&quot;&gt;external images&lt;/a&gt; and Amazon&#39;s official aws cli &lt;a href=&quot;https://hub.docker.com/r/amazon/aws-cli&quot;&gt;docker image&lt;/a&gt; it&#39;s actually pretty easy to add the AWS CLI to a huge amount of containers.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;I haven&#39;t tested this on every single docker image out there but for my needs this is a quick and easy way to add the AWS CLI. Configuration can be done using environment variables so no need for mucking around with config files.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;ARG IMAGE
+FROM ${IMAGE}
+
+# Install AWS CLI
+COPY --from=amazon/aws-cli:latest /usr/local/aws-cli/ /usr/local/aws-cli/
+RUN ln -s /usr/local/aws-cli/v2/current/bin/aws \
+        /usr/local/bin/aws &amp;amp;&amp;amp; \
+    ln -s /usr/local/aws-cli/v2/current/bin/aws_completer \
+        /usr/local/bin/aws_completer
+&lt;/code&gt;&lt;/pre&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[The “We Say You Do” Model Of Code Review Is Broken]]></title>
-        <id>https://lukewiwa.com/blog/broken_code_review</id>
-        <link href="https://lukewiwa.com/blog/broken_code_review"/>
-        <updated>2016-02-24T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.]]></summary>
+        <title>Local AWS API Gateway</title>
+        <id>http://localhost/blog/local_aws_api_gateway/</id>
+        <link href="http://localhost/blog/local_aws_api_gateway/"/>
+        <updated>2021-02-20T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;Many smart people both inside and outside of Amazon have been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;There are tools to make AWS lambda functions work locally and also to mock an AWS API Gateway request and response. The most prominent being the &lt;a href=&quot;https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-using-start-api.html&quot;&gt;AWS SAM local commands&lt;/a&gt; (interestingly implemented using a local flask server) and the &lt;a href=&quot;https://www.serverless.com/plugins/serverless-offline/&quot;&gt;serverless framework offline plugins&lt;/a&gt; (this one uses a hapi server). They do a pretty good job but it does mean that you have to buy in to the entire ecosystem of those tools. On the other side of the coin AWS has started supporting lambda functions in docker containers and even made &lt;a href=&quot;https://docs.aws.amazon.com/lambda/latest/dg/images-test.html&quot;&gt;local testing possible&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;These tools are great but they definitely become cumbersome if you want to add resources that don&#39;t have the requisite plugins. I prefer to use a docker-compose file to run resources locally for testing and there doesn&#39;t seem to be any containers that will mock this relationship between API Gateway and lambda functions (tweet me if I&#39;m wrong about this). So I made my own.&lt;/p&gt;
+&lt;p&gt;I created a &lt;a href=&quot;https://hub.docker.com/repository/docker/lukewiwa/local-lambda-api-gateway&quot;&gt;AWS API Gateway container&lt;/a&gt; to mock a simple HTTP Proxy call. It basically mimics what a default integration will output for you if you were to create this lambda and API Gateway route via clickops. Admittedly this is a real kludge and I&#39;m happy to accept any PRs or issues at the &lt;a href=&quot;https://github.com/lukewiwa/local-lambda-api-gateway&quot;&gt;github repo&lt;/a&gt;. Below is an example of how you might plug this docker container into a docker-compose file.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;version: &amp;quot;3&amp;quot;
+
+services:
+
+  frontend:
+    image: node
+    # Extra args
+
+  api-gateway:
+    image: local-lambda-api-gateway
+    environment:
+      LAMBDA_HOST: cloud-function
+      LAMBDA_PORT: 8080
+
+  cloud-function:
+    image: public.ecr.aws/lambda/nodejs
+    command: /lambda-entrypoint.sh index.handler
+    # extra args
+&lt;/code&gt;&lt;/pre&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Dark Wiwa Published]]></title>
-        <id>https://lukewiwa.com/blog/dark_wiwa_published</id>
-        <link href="https://lukewiwa.com/blog/dark_wiwa_published"/>
-        <updated>2019-05-20T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[I've been using my self made theme for Visual Studio Code for some time now. With every new installation of vscode I've had to manually copy and paste the project directory into the proper extensions directory. Couple this with the fact that I am now using the excellent Settings Sync extension to synchronise my setup between machines this manual copypasta becomes tiresome.]]></summary>
+        <title>Importing Rootfs Ubuntu Images into WSL2</title>
+        <id>http://localhost/blog/wsl2_import_ubuntu_image/</id>
+        <link href="http://localhost/blog/wsl2_import_ubuntu_image/"/>
+        <updated>2020-05-26T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I&#39;ve been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it&#39;s integration between the windows desktop and the underlying linux kernel.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;I did notice on a &lt;a href=&quot;https://www.youtube.com/watch?v=UCAid-NQwWU&amp;amp;feature=youtu.be&quot;&gt;talk by one of the main devs&lt;/a&gt; that you could manually import and export linux and container images. This seemed like a nice idea if you wanted to separate dev environments or perhaps have separate work or personal accounts. The demonstration showed exporting and importing docker containers and linux tarballs using the Cool New &lt;code&gt;wsl&lt;/code&gt; command in powershell. My dilemma was that I had already setup one Ubuntu environment and wanted a clean one from scratch. So I did a little digging and managed to get one working with a few hiccups along the way.&lt;/p&gt;
+&lt;h1&gt;1. Download The Latest Rootfs Image&lt;/h1&gt;
+&lt;p&gt;The Ubuntu wiki has a very neat &lt;a href=&quot;https://wiki.ubuntu.com/WSL#Installing_Ubuntu_on_WSL_via_rootfs&quot;&gt;guide&lt;/a&gt; on how to import an image. Be sure to download the nightly image with the &lt;code&gt;-wsl.rootfs.tar.gz&lt;/code&gt; suffix.&lt;/p&gt;
+&lt;h1&gt;2. Import The Image&lt;/h1&gt;
+&lt;p&gt;As in the Ubuntu wiki run the command below. I decided to keep the image location in my home directory, in a &lt;code&gt;distro&lt;/code&gt; folder.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;wsl --import &amp;lt;DistributionName&amp;gt; &amp;lt;InstallLocation&amp;gt; &amp;lt;FileName&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;3. Create A User&lt;/h1&gt;
+&lt;p&gt;Drop into the wsl2 instance by running the name of the distribution as a command in powershell, or by using the excellent new Windows Terminal app. By default the only user in the image is the root user. While the stock standard Ubuntu image you install from the Microsoft Store prompts you to create a user at startup we&#39;ll have to do the prompting ourselves here. The &lt;code&gt;adduser&lt;/code&gt; command should get you what you need. &lt;strong&gt;Be sure to add your new user to the sudo group&lt;/strong&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-shell&quot;&gt;adduser &amp;lt;username&amp;gt; --ingroup sudo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h1&gt;4. Change The Default User&lt;/h1&gt;
+&lt;p&gt;Now that we have created the user we would like it to be the default user whenever you start a new shell. This is a little tricky and there&#39;s a &lt;a href=&quot;https://github.com/Microsoft/WSL/issues/3974&quot;&gt;github issue&lt;/a&gt; outlining this pain point and some possible work arounds. I went with the powershell option but pick your poison.&lt;/p&gt;
+&lt;p&gt;And that&#39;s it, enjoy separating those concerns.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[A Dumping Ground]]></title>
-        <id>https://lukewiwa.com/blog/dumping_ground</id>
-        <link href="https://lukewiwa.com/blog/dumping_ground"/>
-        <updated>2017-03-03T00:00:00.000Z</updated>
+        <title>Dark Wiwa Published</title>
+        <id>http://localhost/blog/dark_wiwa_published/</id>
+        <link href="http://localhost/blog/dark_wiwa_published/"/>
+        <updated>2019-05-20T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I&#39;ve been using my self made &lt;a href=&quot;http://localhost/blog/new_text_editor_theme&quot;&gt;theme for Visual Studio Code&lt;/a&gt; for some time now. With every new installation of vscode I&#39;ve had to manually copy and paste the project directory into the proper extensions directory. Couple this with the fact that I am now using the excellent &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync&quot;&gt;Settings Sync&lt;/a&gt; extension to synchronise my setup between machines this manual copypasta becomes tiresome.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/img/dark_wiwa.png&quot; alt=&quot;Dark Wiwa&quot;&gt;&lt;/p&gt;
+&lt;p&gt;Well no more because I have now published that theme for all to enjoy and/or &lt;a href=&quot;https://github.com/lukewiwa/dark_wiwa/issues/new&quot;&gt;criticise&lt;/a&gt;. Check out the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=lukewiwa.dark-wiwa&quot;&gt;Marketplace page&lt;/a&gt; or if you like or install it from the command line:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;code --install-extension lukewiwa.dark-wiwa
+&lt;/code&gt;&lt;/pre&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[JavaScript Remains The Best Deployment Target]]></title>
-        <id>https://lukewiwa.com/blog/ease_of_deployment</id>
-        <link href="https://lukewiwa.com/blog/ease_of_deployment"/>
-        <updated>2018-11-10T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[It is abundantly clear that targeting the web, even as a Single Page App with heavy JavaScript, hits that sweet spot of development time, availability and cost.]]></summary>
+        <title>How To Link Your MyGov Account To Centrelink After A Name Change</title>
+        <id>http://localhost/blog/mygov_centrelink_name_change/</id>
+        <link href="http://localhost/blog/mygov_centrelink_name_change/"/>
+        <updated>2019-02-10T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;My wife and I are about to have a baby, as such my wife is applying for paid parental leave which is painfully done through the Centrelink system. We also got married in the intervening years between us being on Centrelink regularly and now, and she subsequently decided to take my last name after our marriage. This has caused a headache linking accounts in her MyGov account since the information doesn&#39;t match and the system refuses to move forward. We eventually found a solution after tearing our hair out. I thought I would leave it here for any other lost souls who need this guidance.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Unlink all your accounts! This will allow you to link your Centrelink account. Yes you will have to relink your other accounts if you wish but this is probably a small price to pay versus being on hold with Centrelink for an interminably long amount of time.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Fortune Teller by Xavier Rudd - Guitar Tabs]]></title>
-        <id>https://lukewiwa.com/blog/guitar_tabs_fortune_teller</id>
-        <link href="https://lukewiwa.com/blog/guitar_tabs_fortune_teller"/>
-        <updated>2022-01-22T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[There are no good tabs for this track online so I finally figured it out and created them.]]></summary>
+        <title>JavaScript Remains The Best Deployment Target</title>
+        <id>http://localhost/blog/ease_of_deployment/</id>
+        <link href="http://localhost/blog/ease_of_deployment/"/>
+        <updated>2018-11-10T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I have finally got to the point where I can throw together a single purpose web app over the course of a weekend. I recently was in need of a quick utility that could translate the session times of the recent Gymnastics World Championships, being held in Doha, into my own timezone. I also thought this was a problem that more people probably had so I started thinking about the quickest, easiest and cheapest way to share that utility with others.&lt;/p&gt;
+&lt;p&gt;Just by shear chance that I work mostly on Python and Javascript projects, and deciding I needed to brush up on my React skills I chose a Single Page App as my distribution method of choice. So I rolled up my sleeves and built a &lt;a href=&quot;https://lukewiwa.com/dohagym2018&quot;&gt;web app that did just that&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Much as I&#39;ve wanted to expand into learning a bit of Android development, on this occasion my lack of knowledge and time constraints pushed me towards the languages and platforms that I already know. What is abundantly clear though is that targeting the web, even as a Single Page App with heavy JavaScript, clearly hits that sweet spot of development time, availability and cost.&lt;/p&gt;
+&lt;h1&gt;Advantages&lt;/h1&gt;
+&lt;h2&gt;Development Time&lt;/h2&gt;
+&lt;p&gt;Javascript is ugly as hell but with modern JavaScript libraries like React and Vue, among others, and their requisite cli commands for bootstrapping a boilerplate app, developing for the current web is pretty nice in the scheme of things. It&#39;s easy to iterate, there are plenty of resources out there to help with most issues and there is a metric tonne of helper libraries and components just a quick NPM install away. It truly is a matter of gluing a few pieces together.&lt;/p&gt;
+&lt;h2&gt;Availability&lt;/h2&gt;
+&lt;p&gt;Nothing has more reach than the Web at this point in time. No app store or packaged app is anywhere near as easy as to share as a URL with anybody and everybody. Additionally there is no wait times for app auditing or to register as a developer. There are dozens of services that will host your static files.&lt;/p&gt;
+&lt;h2&gt;Cost&lt;/h2&gt;
+&lt;p&gt;Not only are there dozens of static hosting services but the vast majority of them are free. No registration fees, plenty don&#39;t even ask for a credit card number. I was amazed at how simple it is to push a bunch of static files up to a service and grab a URL.&lt;/p&gt;
+&lt;h1&gt;Disadvantages&lt;/h1&gt;
+&lt;h2&gt;Monetisation&lt;/h2&gt;
+&lt;p&gt;Charging for Web Apps, especially small, single purpose utility ones is notoriously hard to do. This is the strength of an App Store where the user is more conditioned to pay for an app (although I&#39;m not so sure about that anymore). I didn&#39;t need to monetise my app but if you do care about pulling in a bit of spare change perhaps the current web isn&#39;t your best bet.&lt;/p&gt;
+&lt;h2&gt;Further Building&lt;/h2&gt;
+&lt;p&gt;If you ever get to the point where you need to start building more features on top of your app or you start needing a database to back it then you are looking at a bit of rebuilding and rethinking your strategy.&lt;/p&gt;
+&lt;h1&gt;Conclusion&lt;/h1&gt;
+&lt;p&gt;All in all I was pretty happy that I could build a utility that did exactly what I needed in pretty quick time, and that I could share with the world easily and freely.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[The Case Against Gymnastics Teams]]></title>
-        <id>https://lukewiwa.com/blog/gymnastics_teams_suck</id>
-        <link href="https://lukewiwa.com/blog/gymnastics_teams_suck"/>
-        <updated>2017-03-03T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical. Abolish all gymnastics teams. Get rid of them. Really reform the system. This is a radical solution I’ll admit but let me outline some reasons as to why this option may actually be very appealing.]]></summary>
+        <title>Pinocchio</title>
+        <id>http://localhost/blog/pinocchio/</id>
+        <link href="http://localhost/blog/pinocchio/"/>
+        <updated>2018-04-18T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;My siblings and I, when growing up, had a VHS tape of Pinocchio which we would watch on occasion. The interesting thing about it was that this was a very particular adaptation, not the one made famous by Disney but a decidedly creepier and more disturbing version. It left such a mark on us that it became a frequent topic of conversation when meeting for family events as adults. We described it with such disdain that our friends and significant others seemed sceptical as to how bad it could be. It appeared no amount of googling could find this mythical portrayal, until now.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;The truth is that this Pinocchio adaptation was a BBC series originally airing in 1978. Produced by Barry Letts who famously produced many Doctor Who episodes and various other BBC productions. This version is a darker reading of original text. I found an obscure upload of the entire series of the show on DailyMotion and having rewatched (parts) of it I can definitely say my family&#39;s fears are fully founded.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/img/pinocchio.jpg&quot; alt=&quot;Look at this god damn nightmare&quot;&gt;&lt;/p&gt;
+&lt;p&gt;You could not make a more unsettling version if you tried, the marionette of the title character is terrifying with jet black eyes, a shrill voice and body movements deep within the uncanny valley. The supporting characters are not much better with humans with elaborate face make up playing the fox and the cat, and a whole host of characters who are cruel and unforgiving. Interspersed musical numbers grate the ears and crude green screen techniques round out the package.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/img/pinocchio_cat_fox.jpg&quot; alt=&quot;More nightmares&quot;&gt;&lt;/p&gt;
+&lt;p&gt;If you&#39;re curious enough I&#39;ve linked to the offending videos &lt;a href=&quot;http://www.dailymotion.com/video/x16gdo4&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;http://www.dailymotion.com/video/x16hhk0&quot;&gt;part two here&lt;/a&gt; and you, dear reader, can confirm the absolute skin crawling nature of this imagining of Pinocchio.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Local AWS API Gateway]]></title>
-        <id>https://lukewiwa.com/blog/local_aws_api_gateway</id>
-        <link href="https://lukewiwa.com/blog/local_aws_api_gateway"/>
-        <updated>2021-02-20T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Many smart people both inside and outside of Amazon have been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.]]></summary>
+        <title>A Good Year</title>
+        <id>http://localhost/blog/a_good_year/</id>
+        <link href="http://localhost/blog/a_good_year/"/>
+        <updated>2017-12-29T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;It&#39;s that time to take stock of another year in my life and I think it&#39;s worthy of a blog post. Professionally and personally a lot has happened and I&#39;m hoping the next year can be very much like it.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Starting with the personal, I cemented my partnership with my bestie Megan by finally tying the knot. I can definitively say we (she mostly) organised a damn good wedding and we had a ton of fun celebrating with the special people in our lives. I have no desire to have another one any time soon. On that note my peers and friends have had their own special moments including marriage and kids and I&#39;m privileged to have been a small part of these.&lt;/p&gt;
+&lt;p&gt;I&#39;ve always been a late starter to professional work but this year was the one in which I took small steps into a larger world. A rocky start to the year saw my work experience in controls engineering not flourish into a career. For various reasons my internship was not seen valuable enough to move me into the team proper however I learnt a lot from the experience.&lt;/p&gt;
+&lt;p&gt;My few months of work experience did see me fulfil the criteria for graduation and after ten long years chipping away I can finally call myself a graduate! Thanks to my gymnastics career this was a very slow burn which sometimes left me wondering whether I&#39;d even finish but this year I finally have closure on this chapter of my life.&lt;/p&gt;
+&lt;p&gt;Finally I was extremely lucky to get a graduate engineering role in civil engineering. I am excited for the future and I seem to be working with a pretty good group of people.&lt;/p&gt;
+&lt;p&gt;All in all I&#39;m hoping for more years like this one.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[The Code Of Points Format]]></title>
-        <id>https://lukewiwa.com/blog/machine_readable_code</id>
-        <link href="https://lukewiwa.com/blog/machine_readable_code"/>
-        <updated>2017-04-08T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[For my own purposes I wanted to do some analysis of the Code of Points and I had little option but to scrape the important information from the current MAG Code of Points PDF file. I appreciate that the Code is now freely available online however if one wants to do any sort of analysis of the Code the PDF format is one of the more annoying formats to work with. As such I've made my scraping efforts available on github to anyone who would like to download it or make changes.]]></summary>
+        <title>New Text Editor and Syntax Colour Scheme</title>
+        <id>http://localhost/blog/new_text_editor_theme/</id>
+        <link href="http://localhost/blog/new_text_editor_theme/"/>
+        <updated>2017-12-06T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;After trying a few different text editors out, from the standard of gedit, to sublime text and even attempts at nano, I&#39;ve standardised on Visual Studio Code which seems to be a standout for a few reasons. I&#39;m not exactly an advanced programmer but when I am punching in a few crummy lines of python or writing some markdown notes I&#39;ve reached for VSCode time and again. It seems to be both extremely flexible, as well as fairly intuitive. The VSCode&#39;s extension ecosystem and the git interface is straight forward and easy to use.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;There was however one bug bear of mine which irritated me somewhat when using it. I love the &lt;strong&gt;Vibrant Ink&lt;/strong&gt; theme and there is an extension available, however the available theme does not have markdown support and I spend a lot of my time punching in notes using the markdown syntax. As such I attempted to do some tweaking of the Vibrant Ink theme but I wasn&#39;t happy with the results. I decided to eventually start from scratch.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/img/dark_wiwa.png&quot; alt=&quot;Dark Wiwa&quot;&gt;&lt;/p&gt;
+&lt;p&gt;I made use of Microsoft&#39;s &lt;a href=&quot;http://yeoman.io/&quot;&gt;Yeoman&lt;/a&gt; to generate a scaffold theme and then used a great &lt;a href=&quot;https://github.com/Tyriar/vscode-theme-generator&quot;&gt;generator&lt;/a&gt; to populate that scaffold with a basic colour scheme and added my own tweaks. My choice of colours ended up looking very festive. I&#39;ve put the theme up on &lt;a href=&quot;https://github.com/lukewiwa/dark_wiwa&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Docker Image With Multiple Python Installs]]></title>
-        <id>https://lukewiwa.com/blog/multiple_pythons_docker_image</id>
-        <link href="https://lukewiwa.com/blog/multiple_pythons_docker_image"/>
-        <updated>2021-05-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[Not sure whether this has been done before but I created a docker container with four (4) Python installs. To get there I heavily abused Docker multistage builds from external images. You can check out the repo for the gory details. Now I'm not insane there is a specific reason why I did this.]]></summary>
+        <title>Does Driving Performance Degrade Or Improve With Increased Automation</title>
+        <id>http://localhost/blog/automation_and_driving_performance/</id>
+        <link href="http://localhost/blog/automation_and_driving_performance/"/>
+        <updated>2017-08-18T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here&#39;s an essay which I wrote answering the question &amp;quot;Does Driving Performance Degrade Or Improve With Increased Automation&amp;quot;.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;How is driving performance affected by the introduction of automated systems? It appears the answer is more complex than a simple more or less. There has been increased research into the automation of the tasks involved with driving (Cottrell &amp;amp; Barton, 2013; Merat &amp;amp; Lee, 2012). Coupled with this there is increased study into how these automation’s affect the driver of the vehicle and the safety and reliability of the car in general. Adoption of these automation systems is very much dependant on the willingness of the general driving population to use them (Cottrell &amp;amp; Barton, 2013; Merat &amp;amp; Lee, 2012) and how they interact with the system (Carsten, Lai, Barnard, Jamson, &amp;amp; Merat, 2012; Larsson, 2012; Young &amp;amp; Stanton, 2002; Muhrer, Reinprecht, &amp;amp; Vollrath, 2012). In that sense human factors in driving automation is an important area of study. It can be argued that driving performance increases up to the point of the confines that the automated system works under, however as the system fails and control of the vehicle is handed over to the driver driving performance degrades to a point greater than manual operation.&lt;/p&gt;
+&lt;p&gt;What is automation and how is it implemented? Driving and operating a vehicle is a complex task which involves many physical and cognitive tasks, often times concurrently (Carsten et al., 2012). Automation systems aim to control a selection of these tasks, or even sometimes all of these tasks, thereby relieving the driver of some cognitive load and increasing the driving performance of the vehicle. The primary tasks of driving can be broken down into longitudinal and latitudinal patterns (Carsten et al., 2012), which basically mean the throttling and steering respectively. As such there has been an effort to cut away some of these tasks and subtasks by using automated systems. These automated systems often look to take care of mundane or repetitive tasks which would allow the driver to concentrate on the higher level tasks associated with operating a vehicle (Larsson, 2012).&lt;/p&gt;
+&lt;p&gt;A lower level automation system is the automation of a single task which can be coupled with warning systems. Such an example is the forward collision warning (FCW) and forward collision warning plus braking system (FCW+) (Muhrer et al., 2012). This system indicates to a driver that he/she should take action to avoid a forward collision, the plus braking component initiates the braking for the driver in the event of an imminent collision. This system also gives both visual and audio cues in an increasingly attention grabbing sequence to indicate the threat of collision. Additionally it can also be turned off by the driver allowing full manual control.&lt;/p&gt;
+&lt;p&gt;Some higher level examples include the, already commercially available Active Cruise Control (ACC) and Active Braking (AB), automated lane keeping and automated highway driving (Larsson, 2012; Muhrer et al., 2012). These automation systems operate in different ways and have different visual and auditory cues depending on the task. In the case of ACC it is engaged by the driver of the vehicle and has a visual cue on the dashboard to indicate that the system is running. The system works in tandem with the driver rather than taking over an entire task. To deactivate there are several ways, the driver can simply hit the brakes, or turn it off at the control point or the system will disengage itself when outside its boundaries of use (Larsson, 2012).&lt;/p&gt;
+&lt;p&gt;In some circumstances however there has been a focused push on automating the entire vehicle and taking the control away from the driver to the point of simply being an observer rather than an active participant in the operation of the vehicle, the so called ”driverless car” (Merat &amp;amp; Lee, 2012). In this circumstance the driver does not have any role and the system makes all the decisions.&lt;/p&gt;
+&lt;p&gt;Why does automation matter and what are the advantages? Automation from a high level is seen as an improvement to the current limitations of manual operation of a vehicle. The advantages include increased sensitivity to road and traffic conditions (Muhrer et al., 2012), more efficiency and better assistance and comfort to drivers, especially with low driving skills (Merat &amp;amp; Lee, 2012). Automation is also proposed as a solution to reducing congestion by increasing road capacity (Merat &amp;amp; Lee, 2012). In addition to these advantages automation systems allow the abstraction away of mundane or low level tasks allowing access to vehicle driving to a wider population. Ultimately the entire automation of the vehicle could possibly allow huge advantages to many people. These can include the accessibility to driving a large population that previously couldn’t. This includes the disabled, such as blind or physically incapable of driving, will have a level of mobility not previously accessible to them. For all these reasons automation is a sought after technology by car manufacturers and as such can require intense human factors study.&lt;/p&gt;
+&lt;p&gt;Some more specific advantages can be seem in human factors studies. Within the limitations of the automation systems they are extremely effective and reduce risk on the road (Muhrer et al., 2012). Automated systems have distinct advantages to human drivers. Some include the inability of automated systems to get distracted, automated systems use sensors which is outside the scope of human senses and automated systems sense multidirectionally. Automated systems also are able to carry out several tasks at once which humans struggle at. In addition to this the reaction time of automated systems are well above that of the average driver (Muhrer et al., 2012). Additionally automated systems do not suffer from fatigue, meaning they stay much more resilient than regular drivers.&lt;/p&gt;
+&lt;p&gt;What are the potential drawbacks of these automated systems? As automation increases there come some drawbacks which can affect the adoption and safety of these systems. One drawback is the edge cases and limitations of the system for which it was not designed for. A good example of this is for automatic throttling (ACC) the systems forward radar loses contact with the forward car due to a sharp bend in the road (Larsson, 2012). As the system starts to reach its operating limits the system has to make a decision as to when to fail and also how to fail and hand back control to the driver (Merat &amp;amp; Lee, 2012). At the system limitations the system has to be intelligent enough to know when and how to do this otherwise it remains a bad system. Additionally automated systems suffer from another seemingly widespread drawback, that is that with increased automation the awareness of the driver drops and increases the reaction time, and therefore risk, in situations where the system fails and the driver has to take over operation of the vehicle (Cottrell &amp;amp; Barton, 2013; Merat &amp;amp; Lee, 2012; Young &amp;amp; Stanton, 2002). Although countering the last point, if the driver is given more time and education with the system to learn its limitations and quirks, the reaction times and acceptance increases reducing the risk in the changeover of control (Larsson, 2012). This can be demonstrated by (Larsson, 2012) that as time and experience with the ACC increases the driver is more aware of the limitations and the situations in which ACC fails, such as bends and roundabouts, and therefore the awareness in these situations increases.&lt;/p&gt;
+&lt;p&gt;There is also another argument that many of these automated systems can be disparate and piecemeal which can hinder education and acceptance of these automated systems (Merat &amp;amp; Lee, 2012).&lt;/p&gt;
+&lt;p&gt;Another interesting drawback is if the system is only a warning system than the drivers reaction time may decrease even with the warnings in place (Muhrer et al., 2012). This is particularly interesting as it indicates a seemingly unique issue of under automation. The system does not take over enough from the driver and hence puts the driver at a larger risk.&lt;/p&gt;
+&lt;p&gt;On top of these drawbacks there is also the a specific human factor drawback of acceptance of the automation systems. As automation systems are introduced to a vehicle it necessitates an adoption by the driver. Acceptance and trust must be given by the driver to the system. This can prove difficult. Often the driver must learn new and different behaviours which creates a barrier to entry. Often times drivers can be slow to learn these new behaviours, sometimes to the point where drivers may give up and not use them (Larsson, 2012). Conversely when the driver learns the behaviours and limitations of an automation system then the acceptance and trust raises (Larsson, 2012). In this particular study as experience with the system increased so did the acceptance of the system.&lt;/p&gt;
+&lt;p&gt;How can we interpret the results of human factors studies and determine how driving performance is affected? So we have automated systems that create a safer and better driving experience within the limitations of the system. But when the limitations are breached there remains a larger risk and loss of driver awareness and reaction time due to the inattention these systems allow (Cottrell &amp;amp; Barton, 2013; Merat &amp;amp; Lee, 2012). We also have a gap of education due to unfamiliarity with the system of the driver and the drivers knowledge of its limitations. However as this education gap is overcome the risk and awareness gap shrink as well (Larsson, 2012). It appears a gap of education is a barrier to entry for the adoption of these vehicle systems and we therefore have a vicious cycle of adoption and awareness of the system limitations. To keep driving performance at a desirable level there seem to be a few strategies in relation to these automated systems. The simplest strategy is to simply not automate the driving of a vehicle at all and keep all the tasks the responsibility of the driver (Muhrer et al., 2012). There are some advantages to this, in that the driver is always in control and always comfortable with the control he/she has of the vehicle. This allows for quicker awareness in emergency situations. Countering this though the more mundane tasks of regular driving can reduce the awareness of the driver to the tasks and subtasks needed for regular operation (Young &amp;amp; Stanton, 2002). This results in higher stress overall but within the confines of an acceptable and sometimes optimal level of stress for the operation of a vehicle (Cottrell &amp;amp; Barton, 2013).&lt;/p&gt;
+&lt;p&gt;To the ultimate conclusion of full automation it seems we eliminate this gap of risk and inattention. If the fully automated car is capable and indeed possibly better than a driver at all the tasks needed for operating a vehicle than the elimination of the driver and thus the gap of inattention and risk driving performance should be completely improved. The only drawback to the driverless car is that acceptance is very low as drivers prefer to have the illusion of control (Merat &amp;amp; Lee, 2012). But to counter this drivers enjoy a more integrated approach to rather than piecemeal implementations of various disparate automation systems (Merat &amp;amp; Lee, 2012), therefore if the driverless car has an appealing automated experience than adoption may well remain high despite the removal of driver control.&lt;/p&gt;
+&lt;p&gt;There are however some points to make about the research and testing currently available. Many of the studies are done within the confines of a simulated environment (Young &amp;amp; Stanton, 2002; Muhrer et al., 2012; Carsten et al., 2012) which is a limitation of the studies. One which possibly must be put up with due to health and safety concerns of undertaking these tests on the open road. It is possible that participants in these tests behave differently in a simulator as opposed to how they act on the open road. One study was able to research drivers in the real world (Larsson, 2012) via a survey. However the sample size remains small with all the respondents electing to pay extra to have the automated system installed, thereby possibly introducing some confirmation bias into the study results. The final two papers (Cottrell &amp;amp; Barton, 2013; Merat &amp;amp; Lee, 2012) being meta analyses of various papers the conclusions drawn can be trustworthy provided the papers these analyses have drawn from are reliable. So it is clear that more than just these papers must be taken into account for a more rigorous understanding of drivers reaction to automation and how this affects performance on the road.&lt;/p&gt;
+&lt;p&gt;The overall takeaway from these studies can be as follows. Under the management of an automated system driving performance improves. Sometimes it even improves significantly. However when the system fails or returns control to the driver there is a period of time where driving performance degrades to a point lower than with manual operation. After this period performance is restored. There seems to an antidote to this problem, with increased education and familiarity this gulf of performance can be overcome. The challenge is to implement more standardised systems which cultivate familiarity and keep the driver educated about these systems and their quirks and limitations.&lt;/p&gt;
+&lt;p&gt;In conclusion using automation systems to take over driving tasks has many advantages and car manufacturers seem to be moving in the direction of offering these systems to drivers more and more. However as driving becomes more and more automated there tends to be a moving gap of acceptance and safety as drivers have to learn to operate and understand these systems and limitations. As such driving does improve with automation within the confines of the systems limitations. Outside of these limitations driving performance can degrade for a critical amount of time, but with education and awareness of system limitations this gap may be minimised. As such we tend to trend towards fully automated systems where the system is inherently more capable than the driver and hence driving performance improves with automation, but with a moving gap of driver-system interface.&lt;/p&gt;
+&lt;h2&gt;References:&lt;/h2&gt;
+&lt;p&gt;Carsten, O., Lai, F. C., Barnard, Y., Jamson, A. H., &amp;amp; Merat, N. (2012). Control task substitution in semiautomated driving does it matter what aspects are automated? Human Factors: The Journal of the Human Factors and Ergonomics Society, 54(5), 747–761.&lt;/p&gt;
+&lt;p&gt;Cottrell, N. D. &amp;amp; Barton, B. K. (2013). The role of automation in reducing stress and negative affect while driving. Theoretical Issues in Ergonomics Science, 14 (1), 53– 68.&lt;/p&gt;
+&lt;p&gt;Larsson, A. F. (2012). Driver usage and understanding of adaptive cruise control. Applied ergonomics, 43(3), 501–506.&lt;/p&gt;
+&lt;p&gt;Merat, N. &amp;amp; Lee, J. D. (2012). Preface to the special section on human factors and automation in vehicles designing highly automated vehicles with the driver in mind. Human Factors: The Journal of the Human Factors and Ergonomics Society, 54(5), 681–686.&lt;/p&gt;
+&lt;p&gt;Muhrer, E., Reinprecht, K., &amp;amp; Vollrath, M. (2012). Driving with a partially autonomous forward collision warning system how do drivers react? Human Factors: The Journal of the Human Factors and Ergonomics Society, 54 (5), 698–708.&lt;/p&gt;
+&lt;p&gt;Young, M. S. &amp;amp; Stanton, N. A. (2002). Malleable attentional resources theory: a new explanation for the effects of mental underload on performance. Human Factors: The Journal of the Human Factors and Ergonomics Society, 44 (3), 365–375.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[How To Link Your MyGov Account To Centrelink After A Name Change]]></title>
-        <id>https://lukewiwa.com/blog/mygov_centrelink_name_change</id>
-        <link href="https://lukewiwa.com/blog/mygov_centrelink_name_change"/>
-        <updated>2019-02-10T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[My wife and I are about to have a baby, as such my wife is applying for paid parental leave which is painfully done through the Centrelink system. We also got married in the intervening years between us being on Centrelink regularly and now, and she subsequently decided to take my last name after our marriage. This has caused a headache linking accounts in her MyGov account since the information doesn't match and the system refuses to move forward. We eventually found a solution after tearing our hair out. I thought I would leave it here for any other lost souls who need this guidance.]]></summary>
+        <title>Toyplot - A Simple Python Plotting Library</title>
+        <id>http://localhost/blog/toyplot/</id>
+        <link href="http://localhost/blog/toyplot/"/>
+        <updated>2017-07-12T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;My previous attempts at using python for plotting saw me use the massive and widely used library of &lt;a href=&quot;https://matplotlib.org/&quot;&gt;Matplotlib&lt;/a&gt;. I managed to produce some workable plots which I exported to jpeg and used on one of my &lt;a href=&quot;https://medium.com/@lukewiwa/the-2020-code-of-points-what-we-might-expect-28afdab4b095&quot;&gt;medium articles&lt;/a&gt;. Although extremely customisable and functional I began the search for a plotting library with a nicer API that would export to more web friendly formats such as html and SVG.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;After some searching I stumbled upon &lt;a href=&quot;http://toyplot.readthedocs.io/&quot;&gt;toyplot&lt;/a&gt; which I&#39;ve been quite happy with. I went ahead and updated the plots from my medium article using the library and uploaded the results to where I&#39;ve mirrored that medium article &lt;a href=&quot;http://localhost/blog/the_2020_code_predictions&quot;&gt;here&lt;/a&gt;. The format options are various but I decided to export to an html/css/js format and simply copied and pasted into my static site generator.&lt;/p&gt;
+&lt;p&gt;The API is quite straight forward, it boils down to a single &lt;code&gt;Canvas&lt;/code&gt; object which you can then add different attributes to. It&#39;s a nice way to block together the things you want. It doesn&#39;t seem to have hard opinions about what plot you are building to begin with which for me is nice as it generalises my code across different graph types. You tend to always begin the same way. Here&#39;s a quick snippet of the heat map plots I produced with it.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;import pandas as pd
+import toyplot
+import toyplot.html
+
+# initialise a pandas dataframe of the code of points
+with open(csv, &#39;r&#39;) as f:
+    data = pd.read_csv(f)
+
+# Produce heat map matrix. I chose Rings
+app_name = &#39;Rings&#39;
+matrix = pd.crosstab(
+    data[data.app==app_name].value,
+    data.eg,
+)
+
+# Some variables to make the plot pretty
+domain_min = matrix.values.min()
+domain_max = matrix.values.max()
+tlocator=toyplot.locator.Explicit(labels=list(matrix))
+llocator=toyplot.locator.Explicit(labels=list(matrix.index))
+width = 500
+height = 600
+label = app_name
+tlabel = &amp;quot;Element Group&amp;quot;
+llabel = &amp;quot;Value&amp;quot;
+colormap = toyplot.color.brewer.map(
+    &amp;quot;Greens&amp;quot;,
+    reverse=True,
+    domain_min=domain_min,
+    domain_max=domain_max,
+)
+
+# initialise the Canvas object with variables above
+app_canvas, app_table = toyplot.matrix(
+    (matrix, colormap),
+    tlocator=tlocator,
+    llocator=llocator,
+    width=width,
+    height=height,
+    label=label,
+    tlabel=tlabel,
+    llabel=llabel,
+)
+
+# Clean up the Canvas, give it a name and render in html
+app_table.body.grid.hlines[[0,-1],...] = &amp;quot;single&amp;quot;
+app_table.body.grid.vlines[...,[0,-1]] = &amp;quot;single&amp;quot;
+plot_name = &amp;quot;{}.html&amp;quot;.format(app_name)
+toyplot.html.render(
+    app_canvas,
+    plot_name,
+)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The output is a rather nice looking plot based on html, css and javascript. The result is below.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/sr.svg&quot; alt=&quot;cool graph&quot;&gt;&lt;/p&gt;
+&lt;p&gt;The full code is available on &lt;a href=&quot;https://github.com/lukewiwa/matrix_plots_code_of_points&quot;&gt;Github&lt;/a&gt; for anybody interested.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[New Text Editor and Syntax Colour Scheme]]></title>
-        <id>https://lukewiwa.com/blog/new_text_editor_theme</id>
-        <link href="https://lukewiwa.com/blog/new_text_editor_theme"/>
-        <updated>2017-12-06T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[After trying a few different text editors out, from the standard of gedit, to sublime text and even attempts at nano, I've standardised on Visual Studio Code which seems to be a standout for a few reasons. I'm not exactly an advanced programmer but when I am punching in a few crummy lines of python or writing some markdown notes I've reached for VSCode time and again. It seems to be both extremely flexible, as well as fairly intuitive. The VSCode's extension ecosystem and the git interface is straight forward and easy to use.]]></summary>
+        <title>The 2020 Code of Points: What we might expect</title>
+        <id>http://localhost/blog/the_2020_code_predictions/</id>
+        <link href="http://localhost/blog/the_2020_code_predictions/"/>
+        <updated>2017-06-05T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;The Code of Points for the 2020 Olympic cycle is official. The time has come to make some wild speculations about the consequences of these code changes.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;I decided to map the distribution of skills across value and element groups using a heatmap type graph. Not extremely complex but enough to get an idea of where skills are concentrated in certain values and element groups. The darker the colour, the more occurrences of that skill. To see more varied and, in my opinion, interesting routines I’m willing to speculate we need two things from these graphs:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;A concentrated distribution at and above values of C, since most routines will be made up by these skills.&lt;/li&gt;
+&lt;li&gt;A more uniform distribution across element groups, since this will encourage variety with lots of skills to choose from.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/fx.svg&quot; alt=&quot;Floor Exercise&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/ph.svg&quot; alt=&quot;Pommel Horse&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/sr.svg&quot; alt=&quot;Rings&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/vt.svg&quot; alt=&quot;Vault&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/pb.svg&quot; alt=&quot;Parallel Bars&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/hb.svg&quot; alt=&quot;High Bar&quot;&gt;&lt;/p&gt;
+&lt;p&gt;My predictions looking at these charts are:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Floor will be tend towards similarity as there are few skills to choose. Routines will trend towards the same skills and combinations in slightly varying order.&lt;/li&gt;
+&lt;li&gt;Pommel and Rings routines may have some difference and flair with a good number of skills available to construct differing combinations. Although in saying that there will be a core set of skills which almost all routines will contain.&lt;/li&gt;
+&lt;li&gt;Parallel Bars and Horizontal Bar will be where we see the most variety in routine construction with a large range of skills on offer over different element groups. Gymnasts will be able to play to their strengths more and routines will be more unique.&lt;/li&gt;
+&lt;/ul&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Personal Notifications Using AWS]]></title>
-        <id>https://lukewiwa.com/blog/notification_service_aws</id>
-        <link href="https://lukewiwa.com/blog/notification_service_aws"/>
-        <updated>2022-02-11T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[I've found quite a few uses for recurring and scheduled scripts in my personal life. In days gone by I would have run these in a cron job on a server somewhere but as I've gotten into the weeds of AWS infrastructure I've leant on some AWS services more for these little personal conveniences. My preference nowadays is to use AWS Lambda as my first point of call and integrate other services as I need them. I'm very confident that AWS won't be deprecating their Lambda platform and they connect well to Cloudwatch, meaning I don't have to worry about creating a logging solution. Additionally now that I'm pretty confident with the AWS CDK for spinning up infrastructure it's a breeze to connect other services to assist with any other needs. Today I'll go through one example which provided a flexible and cheap solution to my problem.]]></summary>
+        <title>Bottle URL Redirect</title>
+        <id>http://localhost/blog/bottle_url/</id>
+        <link href="http://localhost/blog/bottle_url/"/>
+        <updated>2017-05-23T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I&#39;ve been making a little web app for my partner and I. I decided to use the &lt;a href=&quot;https://bottlepy.org/docs/0.12/&quot;&gt;Bottle&lt;/a&gt; framework as opposed to &lt;a href=&quot;http://flask.pocoo.org/docs/0.12/&quot;&gt;Flask&lt;/a&gt; since I&#39;ve always liked the lightness of Bottle and my little app has no need for scaling.&lt;/p&gt;
+&lt;p&gt;Flask and Bottle seem have much the same features but there&#39;s one pattern in particular that is done easily in Flask but wasn&#39;t obvious in Bottle. In many flask tutorials a simple redirect to a url, usually after an authentication seems easily done.&lt;/p&gt;
+&lt;p&gt;In Flask it&#39;s basically implemented like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from flask import route, redirect, url_for
+
+@route(&#39;/&#39;)
+def root():
+    return &#39;home&#39;
+
+@route(&#39;/redirected&#39;)
+def redirected():
+    return redirect(url_for(&#39;root&#39;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In Bottle this can be done with the little documented &lt;code&gt;url&lt;/code&gt; method, however it works a little bit differently. The route needs to be named using a keyword argument, but then the rest is much the same.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from bottle import route, redirect, url
+
+@route(&#39;/&#39;, name=&#39;home&#39;)
+def root():
+    return &#39;home&#39;
+
+@route(&#39;/redirected&#39;)
+def redirected():
+    return redirect(url(&#39;home&#39;))
+&lt;/code&gt;&lt;/pre&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Pinocchio]]></title>
-        <id>https://lukewiwa.com/blog/pinocchio</id>
-        <link href="https://lukewiwa.com/blog/pinocchio"/>
-        <updated>2018-04-18T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[My siblings and I, when growing up, had a VHS tape of Pinocchio which we would watch on occasion. The interesting thing about it was that this was a very particular adaptation, not the one made famous by Disney but a decidedly creepier and more disturbing version. It left such a mark on us that it became a frequent topic of conversation when meeting for family events as adults. We described it with such disdain that our friends and significant others seemed sceptical as to how bad it could be. It appeared no amount of googling could find this mythical portrayal, until now.]]></summary>
+        <title>The Code Of Points Format</title>
+        <id>http://localhost/blog/machine_readable_code/</id>
+        <link href="http://localhost/blog/machine_readable_code/"/>
+        <updated>2017-04-08T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;For my own purposes I wanted to do some analysis of the Code of Points and I had little option but to scrape the important information from the current MAG Code of Points PDF file. I appreciate that the Code is now freely available online however if one wants to do any sort of analysis of the Code the PDF format is one of the more annoying formats to work with. As such I&#39;ve made my scraping efforts available on &lt;a href=&quot;https://github.com/lukewiwa/code_of_points_MAG_2020&quot;&gt;github&lt;/a&gt; to anyone who would like to download it or make changes.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;On that note I truly think that the FIG needs to consider making the Code of Points available in a machine readable format. Nowadays more and more of the community is starting to make efforts moving gymnastics and the Code of Points into the digital age. Having the FIG provide that data in a digital friendly format is a great first step into allowing the community to engage more and create interesting things with the data. To be clear when I say machine readable format that can be done in any number of ways. Whether it&#39;s simply a csv file published in tandem with the pdf or a fully fledged public API I don&#39;t honestly care, as long as it can be consumed and manipulated quickly.&lt;/p&gt;
+&lt;p&gt;In addition to this the way that most people will read the Code nowadays is on a digital device of some kind. I&#39;d personally prefer a format which is responsive to the device you are reading it on. PDF does not lend itself well to this use case.&lt;/p&gt;
+&lt;p&gt;A few fun things I&#39;ve done with the data can be found at my &lt;a href=&quot;http://localhost/projects&quot;&gt;projects&lt;/a&gt; page.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[The 2020 Code of Points: What we might expect]]></title>
-        <id>https://lukewiwa.com/blog/the_2020_code_predictions</id>
-        <link href="https://lukewiwa.com/blog/the_2020_code_predictions"/>
-        <updated>2017-06-05T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[The Code of Points for the 2020 Olympic cycle is official. The time has come to make some wild speculations about the consequences of these code changes.]]></summary>
+        <title>The Case Against Gymnastics Teams</title>
+        <id>http://localhost/blog/gymnastics_teams_suck/</id>
+        <link href="http://localhost/blog/gymnastics_teams_suck/"/>
+        <updated>2017-03-03T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical. &lt;strong&gt;Abolish all gymnastics teams&lt;/strong&gt;. Get rid of them. Really reform the system. This is a radical solution I’ll admit but let me outline some reasons as to why this option may actually be very appealing.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Gymnastics team events are essentially shoehorning an individual event into a team format. Gymnastics is not basketball, volleyball or football, it’s not a sport which requires two teams face each other. The sport can’t even pretend to be a team sport like relay events in swimming or athletics where individual athletes do their individual performance directly after each other. Stop pretending gymnastics is something that it’s not.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;We should keep in mind team event rules change all the time, even within the same competition (hello team final vs qualification). How are we to take the team competition seriously when the teams that make the team final do so under different rules compared to the ones they follow competing in the final. Team numbers have been diminishing from 7 members to 6 to 5 and now 4 in the next cycle. Some events, such as the European Games, have experimented with 3 member teams.  The logical conclusion is not hard to see in the distance. 1 member teams!&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;We don’t see the best gymnasts make it to the Olympics currently. The current team qualification system is a large reason why this is not the case. We get gymnasts that fit the small teams of countries under the arbitrary rules that competition decides on. Sometimes even the best gymnasts in the country can miss out on selection for their own team due to strange team structures. Which brings me to my next point.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Given this massive reform this would open up many spots at the Olympics and other events for those who are competitive and deserve to contest at these major competitions. Now I have no huge ideas on the specifics of how to pick the competitors but the numbers would open up room to explore radical new options rather than the tinkering around the edges we see now.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In essence the gymnastics community has been asking itself the wrong questions and we really need to take a hard look at ourselves and decide what we really want from gymnastics in the long term. Granted it takes two medals away from the Olympic Games events but if we really want to be honest with ourselves as a community we should stop beating around the bush and tackle this issue head on.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Toyplot - A Simple Python Plotting Library]]></title>
-        <id>https://lukewiwa.com/blog/toyplot</id>
-        <link href="https://lukewiwa.com/blog/toyplot"/>
-        <updated>2017-07-12T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[My previous attempts at using python for plotting saw me use the massive and widely used library of Matplotlib. I managed to produce some workable plots which I exported to jpeg and used on one of my medium articles. Although extremely customisable and functional I began the search for a plotting library with a nicer API that would export to more web friendly formats such as html and SVG.]]></summary>
+        <title>A Dumping Ground</title>
+        <id>http://localhost/blog/dumping_ground/</id>
+        <link href="http://localhost/blog/dumping_ground/"/>
+        <updated>2017-03-03T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[Importing Rootfs Ubuntu Images into WSL2]]></title>
-        <id>https://lukewiwa.com/blog/wsl2_import_ubuntu_image</id>
-        <link href="https://lukewiwa.com/blog/wsl2_import_ubuntu_image"/>
-        <updated>2020-05-26T00:00:00.000Z</updated>
-        <summary type="html"><![CDATA[I've been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it's integration between the windows desktop and the underlying linux kernel.]]></summary>
+        <title>The “We Say You Do” Model Of Code Review Is Broken</title>
+        <id>http://localhost/blog/broken_code_review/</id>
+        <link href="http://localhost/blog/broken_code_review/"/>
+        <updated>2016-02-24T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;I have been attending athletes meetings at every World Championships since 2011 and I can say they it has been important and useful method to communicate ideas and feedback between the athletes and the FIG about many issues. The consultations last year concerning the new code changes, however, were underwhelming and it has taken me a long time to really unpack why that was. To be clear these are criticisms about the process of the Code review rather than criticisms of the final draft.&lt;/p&gt;
+&lt;h1&gt;Show Me The Data&lt;/h1&gt;
+&lt;p&gt;The biggest change proposed for the upcoming MAG code was the move from 10 to 8 counting skills. There were of course other changes put forward but for the purposes of this discussion I will focus on this issue. This was extensively discussed and &lt;strong&gt;the general consensus was that it would make gymnastics more forgiving on the body, it would possibly improve the overall quality of competitions (especially if gymnasts can discard that one problem skill) and raise the base level of gymnasts.&lt;/strong&gt; There was one thing that really bugged me though and so I asked a question:&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Is there any evidence for these claims?&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;The reaction was mostly shrugged shoulders. The FIG and the Men’s Technical Committee (MTC) have a responsibility to provide the best arguments for and against any Code modifications and on this occasion it didn’t feel like this was the case.&lt;/p&gt;
+&lt;p&gt;A change from 10 to 8 counting skills is not without precedent, The WAG code has been operating with 8 counting skills this Olympic cycle. This should provide a great opportunity to do some real data analysis on some of these claims. Here are just some examples that I thought about off the top of my head that could help with justifying the arguments for Code changes either way.&lt;/p&gt;
+&lt;h2&gt;Injury Frequency&lt;/h2&gt;
+&lt;p&gt;I don’t know what data is collected by the FIG but I have heard they have made an effort recently in collating data for injuries during competition. A demonstration of injury frequency before and after the change for the WAG code could be an invaluable statistic. Now many factors need to line up to correctly obtain this data. The National medical teams need to be willing to participate, reporting of injuries needs to be consistent across the board and the FIG need to collate and analyse this data in a meaningful way. However if this is going to be an argument for modifications based on injury rates these kind of statistics are surely an integral part of that argument.&lt;/p&gt;
+&lt;h2&gt;Average Execution Deductions&lt;/h2&gt;
+&lt;p&gt;To justify whether less counting skills translates to an increase in skill quality we could take execution scores across various competitions and find the average execution deduction per skill before and after the WAG code changes. This eliminates the bias towards 8 counting skills having a higher execution score as would happen if the analysis were to be done per routine.&lt;/p&gt;
+&lt;p&gt;A more basic measure would be to calculate the rate of falls per routine or per skill to see whether, on average, 8 counting skills correlates with less falls. These kind of statistics would, at the least, provide some evidence to support arguments concerning the quality of routines after the changes.&lt;/p&gt;
+&lt;h2&gt;Average Participation Age&lt;/h2&gt;
+&lt;p&gt;Has the average or median participant age increased for major competitions around the World? If longevity is an argument then this may be borne out in the statistics themselves. &lt;em&gt;There are problems, however with this as the minimum age restriction got bumped up to 18 for WAG recently&lt;/em&gt; &lt;strong&gt;Update: I have been reminded this was only on the MAG side.&lt;/strong&gt; Not an insurmountable problem however for statisticians.&lt;/p&gt;
+&lt;h2&gt;Single Data Point Arguments&lt;/h2&gt;
+&lt;p&gt;I’ve heard through the grapevine that a justification for keeping with 10 counting skills was put forward because of the unique situation at Glasgow World Championships where Uneven Bars had a four way tie for first place. The argument follows that this would not happen in a 10 counting skill system. Now this argument could easily be backed up with a little data analysis. Have we had a sudden increase in tie situations in WAG competitions since the introduction of 8 counting skills? This would be fairly easy to justify either way by simply checking back on major competitions and comparing the rate of tied scores before and after the change. &lt;strong&gt;One data point does not an argument make&lt;/strong&gt;.&lt;/p&gt;
+&lt;h1&gt;Conclusions&lt;/h1&gt;
+&lt;p&gt;Without any analysis no real conclusions can be drawn. I’m sure there are many ways to manipulate the data. There are also many smarter people out there who could get more out of the data than I ever could and the FIG and MTC should be embracing these possibilities. I for one would be happy to stay with 10 counting skills or move to 8 if there was something, anything, concrete the FIG and MTC could hang their hat on but so far I am left underwhelmed. Who knows, perhaps some analysis has been done and I am ignorant of it, if so feel free to point me towards it. I really hope that I am wrong.&lt;/p&gt;</content>
     </entry>
 </feed>
