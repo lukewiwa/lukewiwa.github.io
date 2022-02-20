@@ -5,7 +5,7 @@ import jsx from "lume/plugins/jsx.ts";
 import postcss from "lume/plugins/postcss.ts";
 import code_highlight from "lume/plugins/code_highlight.ts";
 
-const site = lume();
+const site = lume({ location: new URL("https://lukewiwa.com/") });
 
 site.use(code_highlight());
 site.use(jsx());
