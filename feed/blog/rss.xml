@@ -3,15 +3,15 @@
 <rss version="2.0">
     <channel>
         <title>My Blog</title>
-        <link href="http://localhost/feed/blog/rss.xml" />
+        <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2022-02-19T12:26:48Z</lastBuildDate>
+        <lastBuildDate>2022-02-20T23:33:57Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>Another Fresh Lick Of Paint</title>
-            <link href="http://localhost/blog/another_refresh/"/>
-            <guid>http://localhost/blog/another_refresh/</guid>
+            <link href="https://lukewiwa.com/blog/another_refresh/"/>
+            <guid>https://lukewiwa.com/blog/another_refresh/</guid>
             <pubDate>2022-02-19T00:00:00Z</pubDate>
             <description>&lt;p&gt;I finally found the time and space to do my semi regular migration to a new static site generator. I thought it was time to step away from Vue and try something new, partly out of curiosity and partly because I really like JSX as a templating language. And frankly I&#39;m just not really up for the migration from Vue 2 to Vue 3.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -19,12 +19,12 @@
 &lt;p&gt;I&#39;ve used Deno for a few small scripts (which I think it excels at) and I wanted to get into a deeper project with it. Additionally I love JSX as a templating language and was wondering whether there was anything out there that would build static web sites using it. I mean particularly calling the &lt;code&gt;renderToStaticMarkup&lt;/code&gt; method in react at build time and leaving just HTML files to serve. I wanted to steer clear of tools like Gatsby and Next.js, just pure HTML in the end.&lt;/p&gt;
 &lt;p&gt;Well turns out lume really scratched that itch. It&#39;s a neat little framework and suits my needs ok. I do enjoy using TailwindCSS but found no clear way to install it using Deno so I ended up using TachyonsCSS which covers similar ground.&lt;/p&gt;
 &lt;p&gt;I&#39;ve also added &lt;a href=&quot;https://newcss.net/&quot;&gt;new.css&lt;/a&gt; for base styles because I&#39;m lazy. It turns out it has a dark mode which I&#39;m not in love with but I&#39;ll take it and hopefully finally learn the particulars of detecting dark mode preferences.&lt;/p&gt;
-&lt;p&gt;So enjoy the different colour scheme, point out the inconsistency in styles and subscribe to my &lt;a href=&quot;http://localhost/feed/blog/rss.xml&quot;&gt;rss&lt;/a&gt; which I&#39;m sure I borked somehow.&lt;/p&gt;</description>
+&lt;p&gt;So enjoy the different colour scheme, point out the inconsistency in styles and subscribe to my &lt;a href=&quot;https://lukewiwa.com/feed/blog/rss.xml&quot;&gt;rss&lt;/a&gt; which I&#39;m sure I borked somehow.&lt;/p&gt;</description>
         </item>
         <item>
             <title>Personal Notifications Using AWS</title>
-            <link href="http://localhost/blog/notification_service_aws/"/>
-            <guid>http://localhost/blog/notification_service_aws/</guid>
+            <link href="https://lukewiwa.com/blog/notification_service_aws/"/>
+            <guid>https://lukewiwa.com/blog/notification_service_aws/</guid>
             <pubDate>2022-02-11T00:00:00Z</pubDate>
             <description>&lt;p&gt;I&#39;ve found quite a few uses for recurring and scheduled scripts in my personal life. In days gone by I would have run these in a cron job on a server somewhere but as I&#39;ve gotten into the weeds of AWS infrastructure I&#39;ve leant on some AWS services more for these little personal conveniences. My preference nowadays is to use AWS Lambda as my first point of call and integrate other services as I need them. I&#39;m very confident that AWS won&#39;t be deprecating their Lambda platform and they connect well to Cloudwatch, meaning I don&#39;t have to worry about creating a logging solution. Additionally now that I&#39;m pretty confident with the AWS CDK for spinning up infrastructure it&#39;s a breeze to connect other services to assist with any other needs. Today I&#39;ll go through one example which provided a flexible and &lt;strong&gt;cheap&lt;/strong&gt; solution to my problem.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -161,8 +161,8 @@ export class InfraStack extends Stack {
         </item>
         <item>
             <title>Fortune Teller by Xavier Rudd - Guitar Tabs</title>
-            <link href="http://localhost/blog/guitar_tabs_fortune_teller/"/>
-            <guid>http://localhost/blog/guitar_tabs_fortune_teller/</guid>
+            <link href="https://lukewiwa.com/blog/guitar_tabs_fortune_teller/"/>
+            <guid>https://lukewiwa.com/blog/guitar_tabs_fortune_teller/</guid>
             <pubDate>2022-01-22T00:00:00Z</pubDate>
             <description>&lt;p&gt;There are no good tabs for this track online so I finally figured it out and created them.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -194,8 +194,8 @@ D|-0----------------3-|---5--3--2-3-2------|
         </item>
         <item>
             <title>Docker Image With Multiple Python Installs</title>
-            <link href="http://localhost/blog/multiple_pythons_docker_image/"/>
-            <guid>http://localhost/blog/multiple_pythons_docker_image/</guid>
+            <link href="https://lukewiwa.com/blog/multiple_pythons_docker_image/"/>
+            <guid>https://lukewiwa.com/blog/multiple_pythons_docker_image/</guid>
             <pubDate>2021-05-26T00:00:00Z</pubDate>
             <description>&lt;p&gt;Not sure whether this has been done before but I created a &lt;a href=&quot;https://hub.docker.com/r/lukewiwa/pythons&quot;&gt;docker container with four (4) Python installs&lt;/a&gt;. To get there I heavily abused &lt;a href=&quot;https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage&quot;&gt;Docker multistage builds from external images&lt;/a&gt;. You can check out the &lt;a href=&quot;https://github.com/lukewiwa/pythons&quot;&gt;repo&lt;/a&gt; for the gory details. Now I&#39;m not insane there is a specific reason why I did this.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -225,8 +225,8 @@ pipelines:
         </item>
         <item>
             <title>Add the AWS CLI to a Dockerfile</title>
-            <link href="http://localhost/blog/add_the_aws_cli_to_a_dockerfile/"/>
-            <guid>http://localhost/blog/add_the_aws_cli_to_a_dockerfile/</guid>
+            <link href="https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile/"/>
+            <guid>https://lukewiwa.com/blog/add_the_aws_cli_to_a_dockerfile/</guid>
             <pubDate>2021-04-25T00:00:00Z</pubDate>
             <description>&lt;p&gt;Using the magic of multi-stage builds using &lt;a href=&quot;https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage&quot;&gt;external images&lt;/a&gt; and Amazon&#39;s official aws cli &lt;a href=&quot;https://hub.docker.com/r/amazon/aws-cli&quot;&gt;docker image&lt;/a&gt; it&#39;s actually pretty easy to add the AWS CLI to a huge amount of containers.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -244,8 +244,8 @@ RUN ln -s /usr/local/aws-cli/v2/current/bin/aws \
         </item>
         <item>
             <title>Local AWS API Gateway</title>
-            <link href="http://localhost/blog/local_aws_api_gateway/"/>
-            <guid>http://localhost/blog/local_aws_api_gateway/</guid>
+            <link href="https://lukewiwa.com/blog/local_aws_api_gateway/"/>
+            <guid>https://lukewiwa.com/blog/local_aws_api_gateway/</guid>
             <pubDate>2021-02-20T00:00:00Z</pubDate>
             <description>&lt;p&gt;Many smart people both inside and outside of Amazon have been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -274,8 +274,8 @@ services:
         </item>
         <item>
             <title>Importing Rootfs Ubuntu Images into WSL2</title>
-            <link href="http://localhost/blog/wsl2_import_ubuntu_image/"/>
-            <guid>http://localhost/blog/wsl2_import_ubuntu_image/</guid>
+            <link href="https://lukewiwa.com/blog/wsl2_import_ubuntu_image/"/>
+            <guid>https://lukewiwa.com/blog/wsl2_import_ubuntu_image/</guid>
             <pubDate>2020-05-26T00:00:00Z</pubDate>
             <description>&lt;p&gt;I&#39;ve been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it&#39;s integration between the windows desktop and the underlying linux kernel.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -296,20 +296,20 @@ services:
         </item>
         <item>
             <title>Dark Wiwa Published</title>
-            <link href="http://localhost/blog/dark_wiwa_published/"/>
-            <guid>http://localhost/blog/dark_wiwa_published/</guid>
+            <link href="https://lukewiwa.com/blog/dark_wiwa_published/"/>
+            <guid>https://lukewiwa.com/blog/dark_wiwa_published/</guid>
             <pubDate>2019-05-20T00:00:00Z</pubDate>
-            <description>&lt;p&gt;I&#39;ve been using my self made &lt;a href=&quot;http://localhost/blog/new_text_editor_theme&quot;&gt;theme for Visual Studio Code&lt;/a&gt; for some time now. With every new installation of vscode I&#39;ve had to manually copy and paste the project directory into the proper extensions directory. Couple this with the fact that I am now using the excellent &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync&quot;&gt;Settings Sync&lt;/a&gt; extension to synchronise my setup between machines this manual copypasta becomes tiresome.&lt;/p&gt;
+            <description>&lt;p&gt;I&#39;ve been using my self made &lt;a href=&quot;https://lukewiwa.com/blog/new_text_editor_theme&quot;&gt;theme for Visual Studio Code&lt;/a&gt; for some time now. With every new installation of vscode I&#39;ve had to manually copy and paste the project directory into the proper extensions directory. Couple this with the fact that I am now using the excellent &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync&quot;&gt;Settings Sync&lt;/a&gt; extension to synchronise my setup between machines this manual copypasta becomes tiresome.&lt;/p&gt;
 &lt;!--more--&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/img/dark_wiwa.png&quot; alt=&quot;Dark Wiwa&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/img/dark_wiwa.png&quot; alt=&quot;Dark Wiwa&quot;&gt;&lt;/p&gt;
 &lt;p&gt;Well no more because I have now published that theme for all to enjoy and/or &lt;a href=&quot;https://github.com/lukewiwa/dark_wiwa/issues/new&quot;&gt;criticise&lt;/a&gt;. Check out the &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=lukewiwa.dark-wiwa&quot;&gt;Marketplace page&lt;/a&gt; or if you like or install it from the command line:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-bash&quot;&gt;code --install-extension lukewiwa.dark-wiwa
 &lt;/code&gt;&lt;/pre&gt;</description>
         </item>
         <item>
             <title>How To Link Your MyGov Account To Centrelink After A Name Change</title>
-            <link href="http://localhost/blog/mygov_centrelink_name_change/"/>
-            <guid>http://localhost/blog/mygov_centrelink_name_change/</guid>
+            <link href="https://lukewiwa.com/blog/mygov_centrelink_name_change/"/>
+            <guid>https://lukewiwa.com/blog/mygov_centrelink_name_change/</guid>
             <pubDate>2019-02-10T00:00:00Z</pubDate>
             <description>&lt;p&gt;My wife and I are about to have a baby, as such my wife is applying for paid parental leave which is painfully done through the Centrelink system. We also got married in the intervening years between us being on Centrelink regularly and now, and she subsequently decided to take my last name after our marriage. This has caused a headache linking accounts in her MyGov account since the information doesn&#39;t match and the system refuses to move forward. We eventually found a solution after tearing our hair out. I thought I would leave it here for any other lost souls who need this guidance.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -317,8 +317,8 @@ services:
         </item>
         <item>
             <title>JavaScript Remains The Best Deployment Target</title>
-            <link href="http://localhost/blog/ease_of_deployment/"/>
-            <guid>http://localhost/blog/ease_of_deployment/</guid>
+            <link href="https://lukewiwa.com/blog/ease_of_deployment/"/>
+            <guid>https://lukewiwa.com/blog/ease_of_deployment/</guid>
             <pubDate>2018-11-10T00:00:00Z</pubDate>
             <description>&lt;p&gt;I have finally got to the point where I can throw together a single purpose web app over the course of a weekend. I recently was in need of a quick utility that could translate the session times of the recent Gymnastics World Championships, being held in Doha, into my own timezone. I also thought this was a problem that more people probably had so I started thinking about the quickest, easiest and cheapest way to share that utility with others.&lt;/p&gt;
 &lt;p&gt;Just by shear chance that I work mostly on Python and Javascript projects, and deciding I needed to brush up on my React skills I chose a Single Page App as my distribution method of choice. So I rolled up my sleeves and built a &lt;a href=&quot;https://lukewiwa.com/dohagym2018&quot;&gt;web app that did just that&lt;/a&gt;.&lt;/p&gt;
@@ -340,21 +340,21 @@ services:
         </item>
         <item>
             <title>Pinocchio</title>
-            <link href="http://localhost/blog/pinocchio/"/>
-            <guid>http://localhost/blog/pinocchio/</guid>
+            <link href="https://lukewiwa.com/blog/pinocchio/"/>
+            <guid>https://lukewiwa.com/blog/pinocchio/</guid>
             <pubDate>2018-04-18T00:00:00Z</pubDate>
             <description>&lt;p&gt;My siblings and I, when growing up, had a VHS tape of Pinocchio which we would watch on occasion. The interesting thing about it was that this was a very particular adaptation, not the one made famous by Disney but a decidedly creepier and more disturbing version. It left such a mark on us that it became a frequent topic of conversation when meeting for family events as adults. We described it with such disdain that our friends and significant others seemed sceptical as to how bad it could be. It appeared no amount of googling could find this mythical portrayal, until now.&lt;/p&gt;
 &lt;!--more--&gt;
 &lt;p&gt;The truth is that this Pinocchio adaptation was a BBC series originally airing in 1978. Produced by Barry Letts who famously produced many Doctor Who episodes and various other BBC productions. This version is a darker reading of original text. I found an obscure upload of the entire series of the show on DailyMotion and having rewatched (parts) of it I can definitely say my family&#39;s fears are fully founded.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/img/pinocchio.jpg&quot; alt=&quot;Look at this god damn nightmare&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/img/pinocchio.jpg&quot; alt=&quot;Look at this god damn nightmare&quot;&gt;&lt;/p&gt;
 &lt;p&gt;You could not make a more unsettling version if you tried, the marionette of the title character is terrifying with jet black eyes, a shrill voice and body movements deep within the uncanny valley. The supporting characters are not much better with humans with elaborate face make up playing the fox and the cat, and a whole host of characters who are cruel and unforgiving. Interspersed musical numbers grate the ears and crude green screen techniques round out the package.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/img/pinocchio_cat_fox.jpg&quot; alt=&quot;More nightmares&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/img/pinocchio_cat_fox.jpg&quot; alt=&quot;More nightmares&quot;&gt;&lt;/p&gt;
 &lt;p&gt;If you&#39;re curious enough I&#39;ve linked to the offending videos &lt;a href=&quot;http://www.dailymotion.com/video/x16gdo4&quot;&gt;here&lt;/a&gt; and &lt;a href=&quot;http://www.dailymotion.com/video/x16hhk0&quot;&gt;part two here&lt;/a&gt; and you, dear reader, can confirm the absolute skin crawling nature of this imagining of Pinocchio.&lt;/p&gt;</description>
         </item>
         <item>
             <title>A Good Year</title>
-            <link href="http://localhost/blog/a_good_year/"/>
-            <guid>http://localhost/blog/a_good_year/</guid>
+            <link href="https://lukewiwa.com/blog/a_good_year/"/>
+            <guid>https://lukewiwa.com/blog/a_good_year/</guid>
             <pubDate>2017-12-29T00:00:00Z</pubDate>
             <description>&lt;p&gt;It&#39;s that time to take stock of another year in my life and I think it&#39;s worthy of a blog post. Professionally and personally a lot has happened and I&#39;m hoping the next year can be very much like it.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -366,19 +366,19 @@ services:
         </item>
         <item>
             <title>New Text Editor and Syntax Colour Scheme</title>
-            <link href="http://localhost/blog/new_text_editor_theme/"/>
-            <guid>http://localhost/blog/new_text_editor_theme/</guid>
+            <link href="https://lukewiwa.com/blog/new_text_editor_theme/"/>
+            <guid>https://lukewiwa.com/blog/new_text_editor_theme/</guid>
             <pubDate>2017-12-06T00:00:00Z</pubDate>
             <description>&lt;p&gt;After trying a few different text editors out, from the standard of gedit, to sublime text and even attempts at nano, I&#39;ve standardised on Visual Studio Code which seems to be a standout for a few reasons. I&#39;m not exactly an advanced programmer but when I am punching in a few crummy lines of python or writing some markdown notes I&#39;ve reached for VSCode time and again. It seems to be both extremely flexible, as well as fairly intuitive. The VSCode&#39;s extension ecosystem and the git interface is straight forward and easy to use.&lt;/p&gt;
 &lt;!--more--&gt;
 &lt;p&gt;There was however one bug bear of mine which irritated me somewhat when using it. I love the &lt;strong&gt;Vibrant Ink&lt;/strong&gt; theme and there is an extension available, however the available theme does not have markdown support and I spend a lot of my time punching in notes using the markdown syntax. As such I attempted to do some tweaking of the Vibrant Ink theme but I wasn&#39;t happy with the results. I decided to eventually start from scratch.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/img/dark_wiwa.png&quot; alt=&quot;Dark Wiwa&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/img/dark_wiwa.png&quot; alt=&quot;Dark Wiwa&quot;&gt;&lt;/p&gt;
 &lt;p&gt;I made use of Microsoft&#39;s &lt;a href=&quot;http://yeoman.io/&quot;&gt;Yeoman&lt;/a&gt; to generate a scaffold theme and then used a great &lt;a href=&quot;https://github.com/Tyriar/vscode-theme-generator&quot;&gt;generator&lt;/a&gt; to populate that scaffold with a basic colour scheme and added my own tweaks. My choice of colours ended up looking very festive. I&#39;ve put the theme up on &lt;a href=&quot;https://github.com/lukewiwa/dark_wiwa&quot;&gt;Github&lt;/a&gt;.&lt;/p&gt;</description>
         </item>
         <item>
             <title>Does Driving Performance Degrade Or Improve With Increased Automation</title>
-            <link href="http://localhost/blog/automation_and_driving_performance/"/>
-            <guid>http://localhost/blog/automation_and_driving_performance/</guid>
+            <link href="https://lukewiwa.com/blog/automation_and_driving_performance/"/>
+            <guid>https://lukewiwa.com/blog/automation_and_driving_performance/</guid>
             <pubDate>2017-08-18T00:00:00Z</pubDate>
             <description>&lt;p&gt;During my studies I took a human factors and ergonomics course and found it quite interesting to see the implementation of human factors and how it relates to engineering in general. I was fascinated to study the psychology of how people in general accept certain designs. For better or worse here&#39;s an essay which I wrote answering the question &amp;quot;Does Driving Performance Degrade Or Improve With Increased Automation&amp;quot;.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -408,12 +408,12 @@ services:
         </item>
         <item>
             <title>Toyplot - A Simple Python Plotting Library</title>
-            <link href="http://localhost/blog/toyplot/"/>
-            <guid>http://localhost/blog/toyplot/</guid>
+            <link href="https://lukewiwa.com/blog/toyplot/"/>
+            <guid>https://lukewiwa.com/blog/toyplot/</guid>
             <pubDate>2017-07-12T00:00:00Z</pubDate>
             <description>&lt;p&gt;My previous attempts at using python for plotting saw me use the massive and widely used library of &lt;a href=&quot;https://matplotlib.org/&quot;&gt;Matplotlib&lt;/a&gt;. I managed to produce some workable plots which I exported to jpeg and used on one of my &lt;a href=&quot;https://medium.com/@lukewiwa/the-2020-code-of-points-what-we-might-expect-28afdab4b095&quot;&gt;medium articles&lt;/a&gt;. Although extremely customisable and functional I began the search for a plotting library with a nicer API that would export to more web friendly formats such as html and SVG.&lt;/p&gt;
 &lt;!--more--&gt;
-&lt;p&gt;After some searching I stumbled upon &lt;a href=&quot;http://toyplot.readthedocs.io/&quot;&gt;toyplot&lt;/a&gt; which I&#39;ve been quite happy with. I went ahead and updated the plots from my medium article using the library and uploaded the results to where I&#39;ve mirrored that medium article &lt;a href=&quot;http://localhost/blog/the_2020_code_predictions&quot;&gt;here&lt;/a&gt;. The format options are various but I decided to export to an html/css/js format and simply copied and pasted into my static site generator.&lt;/p&gt;
+&lt;p&gt;After some searching I stumbled upon &lt;a href=&quot;http://toyplot.readthedocs.io/&quot;&gt;toyplot&lt;/a&gt; which I&#39;ve been quite happy with. I went ahead and updated the plots from my medium article using the library and uploaded the results to where I&#39;ve mirrored that medium article &lt;a href=&quot;https://lukewiwa.com/blog/the_2020_code_predictions&quot;&gt;here&lt;/a&gt;. The format options are various but I decided to export to an html/css/js format and simply copied and pasted into my static site generator.&lt;/p&gt;
 &lt;p&gt;The API is quite straight forward, it boils down to a single &lt;code&gt;Canvas&lt;/code&gt; object which you can then add different attributes to. It&#39;s a nice way to block together the things you want. It doesn&#39;t seem to have hard opinions about what plot you are building to begin with which for me is nice as it generalises my code across different graph types. You tend to always begin the same way. Here&#39;s a quick snippet of the heat map plots I produced with it.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;import pandas as pd
 import toyplot
@@ -469,13 +469,13 @@ toyplot.html.render(
 )
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The output is a rather nice looking plot based on html, css and javascript. The result is below.&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/sr.svg&quot; alt=&quot;cool graph&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/graphs/sr.svg&quot; alt=&quot;cool graph&quot;&gt;&lt;/p&gt;
 &lt;p&gt;The full code is available on &lt;a href=&quot;https://github.com/lukewiwa/matrix_plots_code_of_points&quot;&gt;Github&lt;/a&gt; for anybody interested.&lt;/p&gt;</description>
         </item>
         <item>
             <title>The 2020 Code of Points: What we might expect</title>
-            <link href="http://localhost/blog/the_2020_code_predictions/"/>
-            <guid>http://localhost/blog/the_2020_code_predictions/</guid>
+            <link href="https://lukewiwa.com/blog/the_2020_code_predictions/"/>
+            <guid>https://lukewiwa.com/blog/the_2020_code_predictions/</guid>
             <pubDate>2017-06-05T00:00:00Z</pubDate>
             <description>&lt;p&gt;The Code of Points for the 2020 Olympic cycle is official. The time has come to make some wild speculations about the consequences of these code changes.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -484,12 +484,12 @@ toyplot.html.render(
 &lt;li&gt;A concentrated distribution at and above values of C, since most routines will be made up by these skills.&lt;/li&gt;
 &lt;li&gt;A more uniform distribution across element groups, since this will encourage variety with lots of skills to choose from.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/fx.svg&quot; alt=&quot;Floor Exercise&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/ph.svg&quot; alt=&quot;Pommel Horse&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/sr.svg&quot; alt=&quot;Rings&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/vt.svg&quot; alt=&quot;Vault&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/pb.svg&quot; alt=&quot;Parallel Bars&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost/graphs/hb.svg&quot; alt=&quot;High Bar&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/graphs/fx.svg&quot; alt=&quot;Floor Exercise&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/graphs/ph.svg&quot; alt=&quot;Pommel Horse&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/graphs/sr.svg&quot; alt=&quot;Rings&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/graphs/vt.svg&quot; alt=&quot;Vault&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/graphs/pb.svg&quot; alt=&quot;Parallel Bars&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://lukewiwa.com/graphs/hb.svg&quot; alt=&quot;High Bar&quot;&gt;&lt;/p&gt;
 &lt;p&gt;My predictions looking at these charts are:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Floor will be tend towards similarity as there are few skills to choose. Routines will trend towards the same skills and combinations in slightly varying order.&lt;/li&gt;
@@ -499,8 +499,8 @@ toyplot.html.render(
         </item>
         <item>
             <title>Bottle URL Redirect</title>
-            <link href="http://localhost/blog/bottle_url/"/>
-            <guid>http://localhost/blog/bottle_url/</guid>
+            <link href="https://lukewiwa.com/blog/bottle_url/"/>
+            <guid>https://lukewiwa.com/blog/bottle_url/</guid>
             <pubDate>2017-05-23T00:00:00Z</pubDate>
             <description>&lt;p&gt;I&#39;ve been making a little web app for my partner and I. I decided to use the &lt;a href=&quot;https://bottlepy.org/docs/0.12/&quot;&gt;Bottle&lt;/a&gt; framework as opposed to &lt;a href=&quot;http://flask.pocoo.org/docs/0.12/&quot;&gt;Flask&lt;/a&gt; since I&#39;ve always liked the lightness of Bottle and my little app has no need for scaling.&lt;/p&gt;
 &lt;p&gt;Flask and Bottle seem have much the same features but there&#39;s one pattern in particular that is done easily in Flask but wasn&#39;t obvious in Bottle. In many flask tutorials a simple redirect to a url, usually after an authentication seems easily done.&lt;/p&gt;
@@ -529,19 +529,19 @@ def redirected():
         </item>
         <item>
             <title>The Code Of Points Format</title>
-            <link href="http://localhost/blog/machine_readable_code/"/>
-            <guid>http://localhost/blog/machine_readable_code/</guid>
+            <link href="https://lukewiwa.com/blog/machine_readable_code/"/>
+            <guid>https://lukewiwa.com/blog/machine_readable_code/</guid>
             <pubDate>2017-04-08T00:00:00Z</pubDate>
             <description>&lt;p&gt;For my own purposes I wanted to do some analysis of the Code of Points and I had little option but to scrape the important information from the current MAG Code of Points PDF file. I appreciate that the Code is now freely available online however if one wants to do any sort of analysis of the Code the PDF format is one of the more annoying formats to work with. As such I&#39;ve made my scraping efforts available on &lt;a href=&quot;https://github.com/lukewiwa/code_of_points_MAG_2020&quot;&gt;github&lt;/a&gt; to anyone who would like to download it or make changes.&lt;/p&gt;
 &lt;!--more--&gt;
 &lt;p&gt;On that note I truly think that the FIG needs to consider making the Code of Points available in a machine readable format. Nowadays more and more of the community is starting to make efforts moving gymnastics and the Code of Points into the digital age. Having the FIG provide that data in a digital friendly format is a great first step into allowing the community to engage more and create interesting things with the data. To be clear when I say machine readable format that can be done in any number of ways. Whether it&#39;s simply a csv file published in tandem with the pdf or a fully fledged public API I don&#39;t honestly care, as long as it can be consumed and manipulated quickly.&lt;/p&gt;
 &lt;p&gt;In addition to this the way that most people will read the Code nowadays is on a digital device of some kind. I&#39;d personally prefer a format which is responsive to the device you are reading it on. PDF does not lend itself well to this use case.&lt;/p&gt;
-&lt;p&gt;A few fun things I&#39;ve done with the data can be found at my &lt;a href=&quot;http://localhost/projects&quot;&gt;projects&lt;/a&gt; page.&lt;/p&gt;</description>
+&lt;p&gt;A few fun things I&#39;ve done with the data can be found at my &lt;a href=&quot;https://lukewiwa.com/projects&quot;&gt;projects&lt;/a&gt; page.&lt;/p&gt;</description>
         </item>
         <item>
             <title>The Case Against Gymnastics Teams</title>
-            <link href="http://localhost/blog/gymnastics_teams_suck/"/>
-            <guid>http://localhost/blog/gymnastics_teams_suck/</guid>
+            <link href="https://lukewiwa.com/blog/gymnastics_teams_suck/"/>
+            <guid>https://lukewiwa.com/blog/gymnastics_teams_suck/</guid>
             <pubDate>2017-03-03T00:00:00Z</pubDate>
             <description>&lt;p&gt;There has been plenty of debate about the new team format for the current cycle and, as usual, nobody is happy. There is of course one solution to this problem which has not been talked about, although it appears to perhaps to be the most logical. &lt;strong&gt;Abolish all gymnastics teams&lt;/strong&gt;. Get rid of them. Really reform the system. This is a radical solution I’ll admit but let me outline some reasons as to why this option may actually be very appealing.&lt;/p&gt;
 &lt;!--more--&gt;
@@ -563,15 +563,15 @@ def redirected():
         </item>
         <item>
             <title>A Dumping Ground</title>
-            <link href="http://localhost/blog/dumping_ground/"/>
-            <guid>http://localhost/blog/dumping_ground/</guid>
+            <link href="https://lukewiwa.com/blog/dumping_ground/"/>
+            <guid>https://lukewiwa.com/blog/dumping_ground/</guid>
             <pubDate>2017-03-03T00:00:00Z</pubDate>
             <description>&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</description>
         </item>
         <item>
             <title>The “We Say You Do” Model Of Code Review Is Broken</title>
-            <link href="http://localhost/blog/broken_code_review/"/>
-            <guid>http://localhost/blog/broken_code_review/</guid>
+            <link href="https://lukewiwa.com/blog/broken_code_review/"/>
+            <guid>https://lukewiwa.com/blog/broken_code_review/</guid>
             <pubDate>2016-02-24T00:00:00Z</pubDate>
             <description>&lt;p&gt;With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.&lt;/p&gt;
 &lt;!--more--&gt;
