@@ -6,6 +6,13 @@
   "description": "The Ramblings of Wiwa",
   "items": [
     {
+      "id": "https://lukewiwa.com/blog/aws_lambda_and_django_with_sqlite/",
+      "url": "https://lukewiwa.com/blog/aws_lambda_and_django_with_sqlite/",
+      "title": "AWS Lambda and Django With Sqlite",
+      "content_html": "<p>Running Django on AWS Lambda has become fairly mainstream and there are many tools to assist with this goal. There is however a pain point which is admittedly not a conventional use case but a possible use case none the less. Django supports a version of sqlite that is above the current version supported on the underlying operating systems of the AWS python lambda implementation. If you're interested lambda functions run on Amazon Linux 1 and 2 which are based on CentOS 6 and 7 respectively.</p>\n<!--more-->\n<p>There are a few ways to get around this, all of them involving either building the source yourself or standing on the shoulders of <a href=\"https://github.com/FlipperPA/django-s3-sqlite/\">other people who already have</a>. Some people have created <a href=\"https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html\">lambda layers</a> to add the required libraries.</p>\n<p>With lambda now supporting container images I thought an easy thing to do would be to precompile sqlite inside the image. Using the magic of <a href=\"https://docs.docker.com/develop/develop-images/multistage-build/\">multi-stage build</a> the final image won't even have the build tools which cuts down on image size. Here's an example:</p>\n<pre><code class=\"language-dockerfile\">FROM public.ecr.aws/lambda/python:${PYTHON_VERSION} as build\n\nWORKDIR /sqlite/\n\nRUN yum groupinstall &quot;Development Tools&quot; -y &amp;&amp; \\\n    yum install -y tcl\n\nRUN curl -sSL https://www.sqlite.org/src/tarball/sqlite.tar.gz?r=release \\\n        --output ./sqlite.tar.gz &amp;&amp; \\\n    tar xzf sqlite.tar.gz\n\nWORKDIR /sqlite/bld\nRUN sh ../sqlite/configure &amp;&amp; make\n\n\nFROM public.ecr.aws/lambda/python:${PYTHON_VERSION}\n\nCOPY --from=build sqlite/bld/.libs/libsqlite3.so.0 /var/lang/lib/libsqlite3.so.0\nCOPY --from=build sqlite/bld/.libs/libsqlite3.so.0.8.6 /var/lang/lib/libsqlite3.so.0.8.6\n</code></pre>\n<p>You can see the source at <a href=\"https://github.com/lukewiwa/aws-lambda-python-sqlite\">github</a> and pull the final product from <a href=\"https://hub.docker.com/r/lukewiwa/aws-lambda-python-sqlite\">dockerhub</a>. I've set up monthly builds so hopefully things keep up to date for a while.</p>",
+      "date_modified": "2022-07-29T00:00:00Z"
+    },
+    {
       "id": "https://lukewiwa.com/blog/another_refresh/",
       "url": "https://lukewiwa.com/blog/another_refresh/",
       "title": "Another Fresh Lick Of Paint",

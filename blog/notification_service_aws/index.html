@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Personal Notifications Using AWS</title><link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"><link rel="stylesheet" href="/index.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css" media="screen and (prefers-color-scheme: dark)"></head><body><header><nav class="flex flex-row items-center justify-between"><a href="/" class="link nav-brand no-underline dtc w-25 f3">Wiwa</a><div class="dtc v-mid w-75 tr"><a href="/blog" class="link nav-link f6 f5-ns dib mr3 mr4-ns b">Blog</a><a href="/projects" class="link nav-link f6 f5-ns dib mr3 mr4-ns ">Projects</a></div></nav></header><main class="pt-4"><div><article><h1 class="f2">Personal Notifications Using AWS</h1><time class="db mb1">2022-02-11</time><div><p>I've found quite a few uses for recurring and scheduled scripts in my personal life. In days gone by I would have run these in a cron job on a server somewhere but as I've gotten into the weeds of AWS infrastructure I've leant on some AWS services more for these little personal conveniences. My preference nowadays is to use AWS Lambda as my first point of call and integrate other services as I need them. I'm very confident that AWS won't be deprecating their Lambda platform and they connect well to Cloudwatch, meaning I don't have to worry about creating a logging solution. Additionally now that I'm pretty confident with the AWS CDK for spinning up infrastructure it's a breeze to connect other services to assist with any other needs. Today I'll go through one example which provided a flexible and <strong>cheap</strong> solution to my problem.</p>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Personal Notifications Using AWS</title><link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"><link rel="stylesheet" href="/index.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css" media="screen and (prefers-color-scheme: dark)"></head><body><header><nav class="flex flex-row items-center justify-between"><a href="/" class="link nav-brand no-underline dtc w-25 f3">Wiwa</a><div class="dtc v-mid w-75 tr"><a href="/blog" class="link nav-link f6 f5-ns dib mr3 mr4-ns b">Blog</a><a href="/projects" class="link nav-link f6 f5-ns dib mr3 mr4-ns ">Projects</a></div></nav></header><main class="pt-4"><article><h1 class="f2">Personal Notifications Using AWS</h1><time class="db mb1">2022-02-11</time><div><p>I've found quite a few uses for recurring and scheduled scripts in my personal life. In days gone by I would have run these in a cron job on a server somewhere but as I've gotten into the weeds of AWS infrastructure I've leant on some AWS services more for these little personal conveniences. My preference nowadays is to use AWS Lambda as my first point of call and integrate other services as I need them. I'm very confident that AWS won't be deprecating their Lambda platform and they connect well to Cloudwatch, meaning I don't have to worry about creating a logging solution. Additionally now that I'm pretty confident with the AWS CDK for spinning up infrastructure it's a breeze to connect other services to assist with any other needs. Today I'll go through one example which provided a flexible and <strong>cheap</strong> solution to my problem.</p>
 <!--more-->
 <p>It can be quite difficult to find a good sports massage service and I've recently been very lucky to find a fantastic one. Of course they are booked out months in advance, which doesn't bother me too much but sometimes after a big training session I'll need something worked on sooner rather than later. Appointments do pop up from time to time due to cancellations but I didn't really want to keep checking their website throughout the day. So it made sense to automate the process somewhat.</p>
 <p>Firstly the code for the lambda. Fairly easy to test locally (minus the SNS dispatch), I've abridged a few things here but you get the idea. Basically it performs a GET request to the API endpoint for appointments available, if the response array has anything in it send an SMS message to all subscribers.</p>
 <pre><code class="language-ts hljs language-typescript"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">"axios"</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">DateTime</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"luxon"</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-title class_">PublishCommand</span>, SNSClient } <span class="hljs-keyword">from</span> <span class="hljs-string">"@aws-sdk/client-sns"</span>;
-<span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">URL</span>, URLSearchParams } <span class="hljs-keyword">from</span> <span class="hljs-string">"url"</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-title class_">PublishCommand</span>, <span class="hljs-title class_">SNSClient</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"@aws-sdk/client-sns"</span>;
+<span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">URL</span>, <span class="hljs-title class_">URLSearchParams</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"url"</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">EventBridgeHandler</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"aws-lambda"</span>;
 
-<span class="hljs-keyword">interface</span> MonthYearProps {
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">MonthYearProps</span> {
   <span class="hljs-attr">month</span>: <span class="hljs-built_in">number</span>;
   <span class="hljs-attr">year</span>: <span class="hljs-built_in">number</span>;
   days?: <span class="hljs-built_in">number</span>[];
 }
 
-<span class="hljs-keyword">interface</span> ResponseAppointment {
+<span class="hljs-keyword">interface</span> <span class="hljs-title class_">ResponseAppointment</span> {
   <span class="hljs-attr">day</span>: <span class="hljs-built_in">number</span>;
   <span class="hljs-attr">day_parts</span>: <span class="hljs-number">1</span> | <span class="hljs-number">2</span> | <span class="hljs-number">3</span>;
 }
@@ -30,7 +30,7 @@
 
 <span class="hljs-keyword">const</span> <span class="hljs-title function_">apiEndpoint</span> = (<span class="hljs-params">{ month, year }: MonthYearProps</span>) =&gt; {
   <span class="hljs-keyword">const</span> endpoint = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(apiEndpointUrl);
-  <span class="hljs-keyword">const</span> searchParams = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URLSearchParams</span>({
+  <span class="hljs-keyword">const</span> searchParams = <span class="hljs-keyword">new</span> <span class="hljs-title class_">URLSearchParams</span>({
     <span class="hljs-attr">month</span>: month.<span class="hljs-title function_">toString</span>(),
     <span class="hljs-attr">year</span>: year.<span class="hljs-title function_">toString</span>(),
   });
@@ -39,8 +39,8 @@
   <span class="hljs-keyword">return</span> endpoint.<span class="hljs-property">href</span>;
 };
 
-<span class="hljs-keyword">const</span> sendNotification = <span class="hljs-keyword">async</span> ({ month, year, days }: <span class="hljs-title class_">MonthYearProps</span>) =&gt; {
-  <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> <span class="hljs-title function_">SNSClient</span>({ region });
+<span class="hljs-keyword">const</span> <span class="hljs-title function_">sendNotification</span> = <span class="hljs-keyword">async</span> (<span class="hljs-params">{ month, year, days }: MonthYearProps</span>) =&gt; {
+  <span class="hljs-keyword">const</span> client = <span class="hljs-keyword">new</span> <span class="hljs-title class_">SNSClient</span>({ region });
   <span class="hljs-keyword">const</span> dates = days.<span class="hljs-title function_">map</span>(<span class="hljs-function">(<span class="hljs-params">day</span>) =&gt;</span> <span class="hljs-string">`<span class="hljs-subst">${day}</span>/<span class="hljs-subst">${month}</span>/<span class="hljs-subst">${year}</span>`</span>).<span class="hljs-title function_">join</span>(<span class="hljs-string">", "</span>);
   <span class="hljs-keyword">const</span> message = <span class="hljs-string">`Appointments available: <span class="hljs-subst">${dates}</span>`</span>;
   <span class="hljs-keyword">const</span> command = <span class="hljs-keyword">new</span> <span class="hljs-title class_">PublishCommand</span>({
@@ -51,7 +51,7 @@
   <span class="hljs-keyword">await</span> client.<span class="hljs-title function_">send</span>(command);
 };
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">handler</span>: <span class="hljs-title class_">EventBridgeHandler</span>&lt;<span class="hljs-built_in">string</span>, unknown, <span class="hljs-built_in">void</span>&gt; = <span class="hljs-function">() =&gt;</span> {
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">const</span> <span class="hljs-attr">handler</span>: <span class="hljs-title class_">EventBridgeHandler</span>&lt;<span class="hljs-built_in">string</span>, <span class="hljs-built_in">unknown</span>, <span class="hljs-built_in">void</span>&gt; = <span class="hljs-function">() =&gt;</span> {
   nextMonths.<span class="hljs-title function_">forEach</span>(<span class="hljs-keyword">async</span> ({ month, year }) =&gt; {
     <span class="hljs-keyword">try</span> {
       <span class="hljs-keyword">const</span> { data }: { <span class="hljs-attr">data</span>: <span class="hljs-title class_">ResponseAppointment</span>[] } = <span class="hljs-keyword">await</span> axios.<span class="hljs-title function_">get</span>(
@@ -131,4 +131,4 @@
 }
 </code></pre>
 <p>And that's it! This now sends me open bookings which probably pop up once or twice a week. It's a nice little piece of functionality which lives well within the free tier limits of AWS.</p>
-</div></article></div></main></body></html>
+</div></article></main></body></html>
