@@ -3,25 +3,25 @@
 <!--more-->
 <p>There are a few ways to get around this, all of them involving either building the source yourself or standing on the shoulders of <a href="https://github.com/FlipperPA/django-s3-sqlite/">other people who already have</a>. Some people have created <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">lambda layers</a> to add the required libraries.</p>
 <p>With lambda now supporting container images I thought an easy thing to do would be to precompile sqlite inside the image. Using the magic of <a href="https://docs.docker.com/develop/develop-images/multistage-build/">multi-stage build</a> the final image won't even have the build tools which cuts down on image size. Here's an example:</p>
-<pre><code class="language-dockerfile">FROM public.ecr.aws/lambda/python:${PYTHON_VERSION} as build
+<pre><code class="language-dockerfile hljs"><span class="hljs-keyword">FROM</span> public.ecr.aws/lambda/python:${PYTHON_VERSION} as build
 
-WORKDIR /sqlite/
+<span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /sqlite/</span>
 
-RUN yum groupinstall "Development Tools" -y &amp;&amp; \
-    yum install -y tcl
+<span class="hljs-keyword">RUN</span><span class="language-bash"> yum groupinstall <span class="hljs-string">"Development Tools"</span> -y &amp;&amp; \
+    yum install -y tcl</span>
 
-RUN curl -sSL https://www.sqlite.org/src/tarball/sqlite.tar.gz?r=release \
+<span class="hljs-keyword">RUN</span><span class="language-bash"> curl -sSL https://www.sqlite.org/src/tarball/sqlite.tar.gz?r=release \
         --output ./sqlite.tar.gz &amp;&amp; \
-    tar xzf sqlite.tar.gz
+    tar xzf sqlite.tar.gz</span>
 
-WORKDIR /sqlite/bld
-RUN sh ../sqlite/configure &amp;&amp; make
+<span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /sqlite/bld</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> sh ../sqlite/configure &amp;&amp; make</span>
 
 
-FROM public.ecr.aws/lambda/python:${PYTHON_VERSION}
+<span class="hljs-keyword">FROM</span> public.ecr.aws/lambda/python:${PYTHON_VERSION}
 
-COPY --from=build sqlite/bld/.libs/libsqlite3.so.0 /var/lang/lib/libsqlite3.so.0
-COPY --from=build sqlite/bld/.libs/libsqlite3.so.0.8.6 /var/lang/lib/libsqlite3.so.0.8.6
+<span class="hljs-keyword">COPY</span><span class="language-bash"> --from=build sqlite/bld/.libs/libsqlite3.so.0 /var/lang/lib/libsqlite3.so.0</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> --from=build sqlite/bld/.libs/libsqlite3.so.0.8.6 /var/lang/lib/libsqlite3.so.0.8.6</span>
 </code></pre>
 <p>You can see the source at <a href="https://github.com/lukewiwa/aws-lambda-python-sqlite">github</a> and pull the final product from <a href="https://hub.docker.com/r/lukewiwa/aws-lambda-python-sqlite">dockerhub</a>. I've set up monthly builds so hopefully things keep up to date for a while.</p>
 </div></article></main></body></html>

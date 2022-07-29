@@ -6,7 +6,7 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2022-07-29T15:14:50Z</lastBuildDate>
+        <lastBuildDate>2022-07-29T15:53:09Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>AWS Lambda and Django With Sqlite</title>
