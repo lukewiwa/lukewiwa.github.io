@@ -1,8 +1,8 @@
 {
   "imports": {
-    "lume": "https://deno.land/x/lume@v1.5.1/mod.ts",
-    "lume/": "https://deno.land/x/lume@v1.5.1/",
-    "https://deno.land/x/lume/": "https://deno.land/x/lume@v1.5.1/",
+    "lume": "https://deno.land/x/lume@v1.10.1/mod.ts",
+    "lume/": "https://deno.land/x/lume@v1.10.1/",
+    "https://deno.land/x/lume/": "https://deno.land/x/lume@v1.10.1/",
     "react": "https://deno.land/x/react_deno@17.0.2/react.ts",
     "react-dom-server": "https://deno.land/x/react_deno@17.0.2/dom_server.ts",
     "react-feather": "https://esm.sh/react-feather@2.0.9",
