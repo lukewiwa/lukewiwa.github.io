@@ -3,11 +3,13 @@ import date from "lume/plugins/date.ts";
 import parcel_css from "lume/plugins/parcel_css.ts";
 import jsx from "lume/plugins/jsx.ts";
 import postcss from "lume/plugins/postcss.ts";
-import code_highlight from "lume/plugins/code_highlight.ts";
+import codeHighlight from "lume/plugins/code_highlight.ts";
+import dockerfile from "https://unpkg.com/@highlightjs/cdn-assets@11.6.0/es/languages/dockerfile.min.js";
+
 
 const site = lume({ location: new URL("https://lukewiwa.com/") });
 
-site.use(code_highlight());
+site.use(codeHighlight({languages: {"dockerfile": dockerfile}}));
 site.use(jsx());
 site.use(parcel_css());
 site.use(date({ name: "printDate" }));
