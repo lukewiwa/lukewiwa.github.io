@@ -5,7 +5,7 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-07-29T15:53:09Z</updated>
+    <updated>2022-07-30T06:58:22Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
@@ -272,36 +272,6 @@ RUN ln -s /usr/local/aws-cli/v2/current/bin/aws \
         /usr/local/bin/aws &amp;amp;&amp;amp; \
     ln -s /usr/local/aws-cli/v2/current/bin/aws_completer \
         /usr/local/bin/aws_completer
-&lt;/code&gt;&lt;/pre&gt;</content>
-    </entry>
-    <entry>
-        <title>Local AWS API Gateway</title>
-        <id>https://lukewiwa.com/blog/local_aws_api_gateway/</id>
-        <link href="https://lukewiwa.com/blog/local_aws_api_gateway/"/>
-        <updated>2021-02-20T00:00:00Z</updated>
-        <content type="html">&lt;p&gt;Many smart people both inside and outside of Amazon have been working hard to make local development of AWS lambda functions more accessible. There does however seem to be a missing link to using lambdas as http endpoints.&lt;/p&gt;
-&lt;!--more--&gt;
-&lt;p&gt;There are tools to make AWS lambda functions work locally and also to mock an AWS API Gateway request and response. The most prominent being the &lt;a href=&quot;https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-using-start-api.html&quot;&gt;AWS SAM local commands&lt;/a&gt; (interestingly implemented using a local flask server) and the &lt;a href=&quot;https://www.serverless.com/plugins/serverless-offline/&quot;&gt;serverless framework offline plugins&lt;/a&gt; (this one uses a hapi server). They do a pretty good job but it does mean that you have to buy in to the entire ecosystem of those tools. On the other side of the coin AWS has started supporting lambda functions in docker containers and even made &lt;a href=&quot;https://docs.aws.amazon.com/lambda/latest/dg/images-test.html&quot;&gt;local testing possible&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;These tools are great but they definitely become cumbersome if you want to add resources that don&#39;t have the requisite plugins. I prefer to use a docker-compose file to run resources locally for testing and there doesn&#39;t seem to be any containers that will mock this relationship between API Gateway and lambda functions (tweet me if I&#39;m wrong about this). So I made my own.&lt;/p&gt;
-&lt;p&gt;I created a &lt;a href=&quot;https://hub.docker.com/repository/docker/lukewiwa/local-lambda-api-gateway&quot;&gt;AWS API Gateway container&lt;/a&gt; to mock a simple HTTP Proxy call. It basically mimics what a default integration will output for you if you were to create this lambda and API Gateway route via clickops. Admittedly this is a real kludge and I&#39;m happy to accept any PRs or issues at the &lt;a href=&quot;https://github.com/lukewiwa/local-lambda-api-gateway&quot;&gt;github repo&lt;/a&gt;. Below is an example of how you might plug this docker container into a docker-compose file.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-yaml&quot;&gt;version: &amp;quot;3&amp;quot;
-
-services:
-
-  frontend:
-    image: node
-    # Extra args
-
-  api-gateway:
-    image: local-lambda-api-gateway
-    environment:
-      LAMBDA_HOST: cloud-function
-      LAMBDA_PORT: 8080
-
-  cloud-function:
-    image: public.ecr.aws/lambda/nodejs
-    command: /lambda-entrypoint.sh index.handler
-    # extra args
 &lt;/code&gt;&lt;/pre&gt;</content>
     </entry>
     <entry>
