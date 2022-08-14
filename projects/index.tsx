@@ -7,6 +7,22 @@ export default () => (
   <article>
     <section className="pb2">
       <h3>
+        <a href="https://setfire.lukewiwa.com/">
+        Set Fire to a Gif
+        </a>
+      </h3>
+      <p>
+        A website backed by an AWS Lambda function and S3. The functionality is pretty simple, input
+        an image file and it should spit out an animated gif with an overlay of a flickering fire.
+        This was an experiment in how I could shove django into a lambda function white stripping away
+        as much of the django functionality as possible. Django here is <em>almost</em> stateless.
+        The function relies on a sqlite database that is largely used as go between to easily
+        keep track of the gif file and to generate an endpoint to show the processed gif. The source
+        is available on <a href="https://github.com/lukewiwa/set-fire-to-emoji">github</a>.
+      </p>
+    </section>
+    <section className="pb2">
+      <h3>
         <a href="https://github.com/lukewiwa/privatise">
           Privatise Browser Extension
         </a>
