@@ -5,10 +5,46 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-08-14T03:54:02Z</updated>
+    <updated>2022-10-20T11:53:14Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>AWS Lambda and Django With Sqlite</title>
+        <id>https://lukewiwa.com/blog/aws_lambda_and_django_with_sqlite/</id>
+        <link href="https://lukewiwa.com/blog/aws_lambda_and_django_with_sqlite/"/>
+        <updated>2022-10-20T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;Running Django on AWS Lambda has become fairly mainstream and there are many tools to assist with this goal. There is however a pain point which is admittedly not a conventional use case but a possible use case none the less. Django supports a version of sqlite that is above the current version supported on the underlying operating systems of the AWS python lambda implementation. If you&#39;re interested lambda functions run on Amazon Linux 1 and 2 which are based on CentOS 6 and 7 respectively.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;There are a few ways to get around this, all of them involving either building the source yourself or standing on the shoulders of &lt;a href=&quot;https://github.com/FlipperPA/django-s3-sqlite/&quot;&gt;other people who already have&lt;/a&gt;. Some people have created &lt;a href=&quot;https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html&quot;&gt;lambda layers&lt;/a&gt; to add the required libraries.&lt;/p&gt;
+&lt;p&gt;With lambda now supporting container images I thought an easy thing to do would be to precompile sqlite inside the image using the build process in the &lt;a href=&quot;https://github.com/coleifer/pysqlite3&quot;&gt;pysqlite3&lt;/a&gt; repository. This repo formalises a build process for creating more up to date &lt;code&gt;sqlite3&lt;/code&gt; python modules. Using the magic of &lt;a href=&quot;https://docs.docker.com/develop/develop-images/multistage-build/&quot;&gt;multi-stage builds&lt;/a&gt; we can build everything and only copy over the relevant output files. The final image won&#39;t even have the build tools which cuts down on image size. Here&#39;s an example:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;ARG PYTHON_VERSION=3.9
+FROM public.ecr.aws/lambda/python:${PYTHON_VERSION} as build
+
+RUN yum groupinstall -y &amp;quot;Development Tools&amp;quot; &amp;amp;&amp;amp; \
+    yum install -y tcl
+
+WORKDIR /
+RUN git clone --depth 1 --branch master https://github.com/coleifer/pysqlite3.git
+
+RUN curl -sSL https://www.sqlite.org/src/tarball/sqlite.tar.gz?r=release \
+    --output sqlite.tar.gz
+RUN tar xzf sqlite.tar.gz
+WORKDIR /sqlite
+RUN  ./configure &amp;amp;&amp;amp; make sqlite3.c
+
+RUN cp /sqlite/sqlite3.[ch] /pysqlite3/
+WORKDIR /pysqlite3
+RUN python setup.py build_static build
+
+
+FROM public.ecr.aws/lambda/python:${PYTHON_VERSION}
+ARG PYTHON_VERSION
+
+COPY --from=build /pysqlite3/build/lib.linux-*/pysqlite3/_sqlite3.*.so /var/lang/lib/python${PYTHON_VERSION}/lib-dynload/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can see the source at &lt;a href=&quot;https://github.com/lukewiwa/aws-lambda-python-sqlite&quot;&gt;github&lt;/a&gt; and pull the final product from &lt;a href=&quot;https://hub.docker.com/r/lukewiwa/aws-lambda-python-sqlite&quot;&gt;dockerhub&lt;/a&gt;. I&#39;ve set up monthly builds so hopefully things keep up to date for a while.&lt;/p&gt;</content>
+    </entry>
     <entry>
         <title>Another Fresh Lick Of Paint</title>
         <id>https://lukewiwa.com/blog/another_refresh/</id>
