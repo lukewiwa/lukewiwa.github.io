@@ -5,10 +5,20 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-10-20T11:53:14Z</updated>
+    <updated>2022-10-26T13:19:07Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>Wiwa&#39;s Axion For Python Packaging</title>
+        <id>https://lukewiwa.com/blog/wiwas_axiom_for_python_packaging/</id>
+        <link href="https://lukewiwa.com/blog/wiwas_axiom_for_python_packaging/"/>
+        <updated>2022-10-26T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;Python packaging will be &amp;quot;solved&amp;quot; when a packaging and dependency manager that is written in a compiled language becomes mainstream.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;There are many efforts to fix packaging and dependency resolution on Python. PDM, Poetry, Pipenv and many other efforts have been made in this space. The fundamental flaw in my opinion as that they are all written in Python. Javascript is having a boon in tooling due in part to many of these tools being written in Go, Rust or some other language that can compile down to a static binary and releases itself from the hard dependency of the language it&#39;s built for.&lt;/p&gt;
+&lt;p&gt;I look forward to the day that we see that same explosion for tools in Python.&lt;/p&gt;</content>
+    </entry>
     <entry>
         <title>AWS Lambda and Django With Sqlite</title>
         <id>https://lukewiwa.com/blog/aws_lambda_and_django_with_sqlite/</id>
