@@ -24,7 +24,7 @@ export default (
         const { url, date, title, content, description } = data as BlogPostData;
         const preview = md(content.split("<!--more-->")[0]);
         return (
-          <section className="pb2">
+          <section className="pb2" key={url}>
             <h3>
               <a href={url}>
                 {title}

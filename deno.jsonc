@@ -6,7 +6,9 @@
       "dom.asynciterable",
       "deno.ns",
       "deno.unstable"
-    ]
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "npm:react"
   },
   "importMap": "./import_map.json",
   "tasks": {

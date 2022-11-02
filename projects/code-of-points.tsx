@@ -42,17 +42,17 @@ export default async () => {
       <colgroup>
         {headers.map((_, i) => {
           const { width } = widths[i];
-          if (width) return <col width={width} />;
-          return <col />;
+          if (width) return <col key={i} width={width} />;
+          return <col key={i} />;
         })}
       </colgroup>
       <thead>
         <tr>
-          {headers.map((header) => <th>{header.toLocaleUpperCase()}</th>)}
+          {headers.map((header) => <th key={header}>{header.toLocaleUpperCase()}</th>)}
         </tr>
       </thead>
       <tbody>
-        {data.map((row) => <tr>{row.map((cell) => <td>{cell}</td>)}</tr>)}
+        {data.map((row, i) => <tr key={i}>{row.map((cell) => <td key={cell}>{cell}</td>)}</tr>)}
       </tbody>
     </table>
   );
