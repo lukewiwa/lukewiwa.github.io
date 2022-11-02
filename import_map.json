@@ -2,6 +2,7 @@
   "imports": {
     "lume/": "https://deno.land/x/lume@v1.12.1/",
     "react": "https://deno.land/x/react_deno@17.0.2/react.ts",
+    "react-types": "https://deno.land/x/react_deno@17.0.2/src/react.d.ts",
     "react-dom-server": "https://deno.land/x/react_deno@17.0.2/dom_server.ts",
     "react-feather": "https://esm.sh/react-feather@2.0.9",
     "csv": "https://deno.land/x/csv_file@v0.0.4/mod.ts",
