@@ -6,8 +6,21 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2022-11-02T03:09:56Z</lastBuildDate>
+        <lastBuildDate>2022-11-03T06:09:04Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <item>
+            <title>Australia and Pommel Horse</title>
+            <link href="https://lukewiwa.com/blog/australia_pommel_horse/"/>
+            <guid>https://lukewiwa.com/blog/australia_pommel_horse/</guid>
+            <pubDate>2022-11-03T00:00:00Z</pubDate>
+            <description>&lt;p&gt;There is something so wrong and rigid about how we teach pommel horse in Australia.&lt;/p&gt;
+&lt;p&gt;In contrast we seem to be so savvy and inventive when it comes to high bar or even floor. Our &amp;quot;middle class&amp;quot; routines are adequate and serviceable.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Sure we had Prashanth and now Jesse but where are our all around stalwarts getting solid mid 13s?&lt;/p&gt;
+&lt;p&gt;I&#39;m telling on myself here. Quite obvious that pommel was my worst. Part of me reckons with a coach that thought a little more outside the box we could&#39;ve gotten a lot more out of me on that apparatus.&lt;/p&gt;
+&lt;p&gt;Last aimless thought. Whatever has worked for us on high bar needs to be bottled up somehow and applied to pommel.&lt;/p&gt;
+&lt;p&gt;Some nations have achieved this. GB and Brazil are good recent examples.&lt;/p&gt;</description>
+        </item>
         <item>
             <title>Wiwa&#39;s Axion For Python Packaging</title>
             <link href="https://lukewiwa.com/blog/wiwas_axiom_for_python_packaging/"/>

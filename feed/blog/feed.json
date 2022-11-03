@@ -6,6 +6,13 @@
   "description": "The Ramblings of Wiwa",
   "items": [
     {
+      "id": "https://lukewiwa.com/blog/australia_pommel_horse/",
+      "url": "https://lukewiwa.com/blog/australia_pommel_horse/",
+      "title": "Australia and Pommel Horse",
+      "content_html": "<p>There is something so wrong and rigid about how we teach pommel horse in Australia.</p>\n<p>In contrast we seem to be so savvy and inventive when it comes to high bar or even floor. Our &quot;middle class&quot; routines are adequate and serviceable.</p>\n<!--more-->\n<p>Sure we had Prashanth and now Jesse but where are our all around stalwarts getting solid mid 13s?</p>\n<p>I'm telling on myself here. Quite obvious that pommel was my worst. Part of me reckons with a coach that thought a little more outside the box we could've gotten a lot more out of me on that apparatus.</p>\n<p>Last aimless thought. Whatever has worked for us on high bar needs to be bottled up somehow and applied to pommel.</p>\n<p>Some nations have achieved this. GB and Brazil are good recent examples.</p>",
+      "date_modified": "2022-11-03T00:00:00Z"
+    },
+    {
       "id": "https://lukewiwa.com/blog/wiwas_axiom_for_python_packaging/",
       "url": "https://lukewiwa.com/blog/wiwas_axiom_for_python_packaging/",
       "title": "Wiwa's Axion For Python Packaging",
