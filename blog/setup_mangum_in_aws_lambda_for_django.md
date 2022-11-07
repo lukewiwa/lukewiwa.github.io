@@ -10,7 +10,7 @@ Here's a quick setup guide to get [mangum](https://mangum.io/) working as the re
 <!--more-->
 
 
-The first step is to setup the handler function itself. The tutorial in the official docs outlines this process but I like to add a little extra processing to the handler for running select management commands. This could be abstracted out further than here but I find the migrate command enough for my needs.
+The first step is to setup the handler function itself. The tutorial in the official docs outlines this process but I like to add a little extra processing to the handler for running select management commands. This could be abstracted out further than here but I find the migrate command enough for my needs. Add the following to `asgi.py`.
 
 ```python
 from django.core.asgi import get_asgi_application
@@ -28,7 +28,7 @@ def handler(event: LambdaEvent, context: LambdaContext):
         return Mangum(application, lifespan="off")(event, context)
 ```
 
-The next step is to setup logging. It seems under default configs this goes missing when deployed so the below config tweaks the default django config just slightly so that mangum largely mirrors the output you would get running this on a standard asgi or wsgi framework.
+The next step is to setup logging. It seems under default configs this goes missing when deployed so the below config tweaks the default django config just slightly so that mangum largely mirrors the output you would get running this on a standard asgi or wsgi framework. Add the following to your settings file (usually `settings.py`).
 
 ```python
 LOGGING = {
