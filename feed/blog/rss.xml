@@ -6,7 +6,7 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2022-11-07T13:00:24Z</lastBuildDate>
+        <lastBuildDate>2022-11-07T13:06:46Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>Setup Mangum in AWS Lambda for Django</title>
@@ -15,7 +15,7 @@
             <pubDate>2022-11-07T00:00:00Z</pubDate>
             <description>&lt;p&gt;Here&#39;s a quick setup guide to get &lt;a href=&quot;https://mangum.io/&quot;&gt;mangum&lt;/a&gt; working as the request handler in a django project in AWS Lambda.&lt;/p&gt;
 &lt;!--more--&gt;
-&lt;p&gt;The first step is to setup the handler function itself. The tutorial in the official docs outlines this process but I like to add a little extra processing to the handler for running select management commands. This could be abstracted out further than here but I find the migrate command enough for my needs.&lt;/p&gt;
+&lt;p&gt;The first step is to setup the handler function itself. The tutorial in the official docs outlines this process but I like to add a little extra processing to the handler for running select management commands. This could be abstracted out further than here but I find the migrate command enough for my needs. Add the following to &lt;code&gt;asgi.py&lt;/code&gt;.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from django.core.asgi import get_asgi_application
 from django.core.management import call_command
 from mangum import Mangum
@@ -30,7 +30,7 @@ def handler(event: LambdaEvent, context: LambdaContext):
     else:
         return Mangum(application, lifespan=&amp;quot;off&amp;quot;)(event, context)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The next step is to setup logging. It seems under default configs this goes missing when deployed so the below config tweaks the default django config just slightly so that mangum largely mirrors the output you would get running this on a standard asgi or wsgi framework.&lt;/p&gt;
+&lt;p&gt;The next step is to setup logging. It seems under default configs this goes missing when deployed so the below config tweaks the default django config just slightly so that mangum largely mirrors the output you would get running this on a standard asgi or wsgi framework. Add the following to your settings file (usually &lt;code&gt;settings.py&lt;/code&gt;).&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;LOGGING = {
     &amp;quot;version&amp;quot;: 1,
     &amp;quot;disable_existing_loggers&amp;quot;: False,
