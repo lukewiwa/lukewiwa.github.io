@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Setup Mangum in AWS Lambda for Django</title><link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"><link rel="stylesheet" href="/index.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css" media="screen and (prefers-color-scheme: dark)"></head><body><header><nav class="flex flex-row items-center justify-between"><a href="/" class="link nav-brand no-underline dtc w-25 f3">Wiwa</a><div class="dtc v-mid w-75 tr"><a href="/blog" class="link nav-link f6 f5-ns dib mr3 mr4-ns b">Blog</a><a href="/projects" class="link nav-link f6 f5-ns dib mr3 mr4-ns ">Projects</a></div></nav></header><main class="pt-4"><article><h1 class="f2">Setup Mangum in AWS Lambda for Django</h1><time class="db mb1">2022-11-07</time><div><p>Here's a quick setup guide to get <a href="https://mangum.io/">mangum</a> working as the request handler in a django project in AWS Lambda.</p>
+<!--more-->
+<p>The first step is to setup the handler function itself. The tutorial in the official docs outlines this process but I like to add a little extra processing to the handler for running select management commands. This could be abstracted out further than here but I find the migrate command enough for my needs.</p>
+<pre><code class="language-python hljs"><span class="hljs-keyword">from</span> django.core.asgi <span class="hljs-keyword">import</span> get_asgi_application
+<span class="hljs-keyword">from</span> django.core.management <span class="hljs-keyword">import</span> call_command
+<span class="hljs-keyword">from</span> mangum <span class="hljs-keyword">import</span> Mangum
+<span class="hljs-keyword">from</span> mangum.types <span class="hljs-keyword">import</span> LambdaContext, LambdaEvent
+
+application = get_asgi_application()
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">handler</span>(<span class="hljs-params">event: LambdaEvent, context: LambdaContext</span>):
+    <span class="hljs-keyword">if</span> event.get(<span class="hljs-string">"migrate"</span>, <span class="hljs-literal">None</span>):
+        call_command(<span class="hljs-string">"migrate"</span>, interactive=<span class="hljs-literal">False</span>)
+    <span class="hljs-keyword">else</span>:
+        <span class="hljs-keyword">return</span> Mangum(application, lifespan=<span class="hljs-string">"off"</span>)(event, context)
+</code></pre>
+<p>The next step is to setup logging. It seems under default configs this goes missing when deployed so the below config tweaks the default django config just slightly so that mangum largely mirrors the output you would get running this on a standard asgi or wsgi framework.</p>
+<pre><code class="language-python hljs">LOGGING = {
+    <span class="hljs-string">"version"</span>: <span class="hljs-number">1</span>,
+    <span class="hljs-string">"disable_existing_loggers"</span>: <span class="hljs-literal">False</span>,
+    <span class="hljs-string">"formatters"</span>: {
+        <span class="hljs-string">"django.server"</span>: {
+            <span class="hljs-string">"()"</span>: <span class="hljs-string">"django.utils.log.ServerFormatter"</span>,
+            <span class="hljs-string">"format"</span>: <span class="hljs-string">"[{server_time}] {message}"</span>,
+            <span class="hljs-string">"style"</span>: <span class="hljs-string">"{"</span>,
+        }
+    },
+    <span class="hljs-string">"handlers"</span>: {
+        <span class="hljs-string">"django.server"</span>: {
+            <span class="hljs-string">"level"</span>: <span class="hljs-string">"INFO"</span>,
+            <span class="hljs-string">"class"</span>: <span class="hljs-string">"logging.StreamHandler"</span>,
+            <span class="hljs-string">"formatter"</span>: <span class="hljs-string">"django.server"</span>,
+        },
+    },
+    <span class="hljs-string">"loggers"</span>: {
+        <span class="hljs-string">"mangum"</span>: {
+            <span class="hljs-string">"handlers"</span>: [<span class="hljs-string">"django.server"</span>],
+            <span class="hljs-string">"level"</span>: <span class="hljs-string">"INFO"</span>,
+            <span class="hljs-string">"propagate"</span>: <span class="hljs-literal">False</span>,
+        },
+    },
+}
+</code></pre>
+</div></article></main></body></html>

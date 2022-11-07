@@ -6,6 +6,13 @@
   "description": "The Ramblings of Wiwa",
   "items": [
     {
+      "id": "https://lukewiwa.com/blog/setup_mangum_in_aws_lambda_for_django/",
+      "url": "https://lukewiwa.com/blog/setup_mangum_in_aws_lambda_for_django/",
+      "title": "Setup Mangum in AWS Lambda for Django",
+      "content_html": "<p>Here's a quick setup guide to get <a href=\"https://mangum.io/\">mangum</a> working as the request handler in a django project in AWS Lambda.</p>\n<!--more-->\n<p>The first step is to setup the handler function itself. The tutorial in the official docs outlines this process but I like to add a little extra processing to the handler for running select management commands. This could be abstracted out further than here but I find the migrate command enough for my needs.</p>\n<pre><code class=\"language-python\">from django.core.asgi import get_asgi_application\nfrom django.core.management import call_command\nfrom mangum import Mangum\nfrom mangum.types import LambdaContext, LambdaEvent\n\napplication = get_asgi_application()\n\n\ndef handler(event: LambdaEvent, context: LambdaContext):\n    if event.get(&quot;migrate&quot;, None):\n        call_command(&quot;migrate&quot;, interactive=False)\n    else:\n        return Mangum(application, lifespan=&quot;off&quot;)(event, context)\n</code></pre>\n<p>The next step is to setup logging. It seems under default configs this goes missing when deployed so the below config tweaks the default django config just slightly so that mangum largely mirrors the output you would get running this on a standard asgi or wsgi framework.</p>\n<pre><code class=\"language-python\">LOGGING = {\n    &quot;version&quot;: 1,\n    &quot;disable_existing_loggers&quot;: False,\n    &quot;formatters&quot;: {\n        &quot;django.server&quot;: {\n            &quot;()&quot;: &quot;django.utils.log.ServerFormatter&quot;,\n            &quot;format&quot;: &quot;[{server_time}] {message}&quot;,\n            &quot;style&quot;: &quot;{&quot;,\n        }\n    },\n    &quot;handlers&quot;: {\n        &quot;django.server&quot;: {\n            &quot;level&quot;: &quot;INFO&quot;,\n            &quot;class&quot;: &quot;logging.StreamHandler&quot;,\n            &quot;formatter&quot;: &quot;django.server&quot;,\n        },\n    },\n    &quot;loggers&quot;: {\n        &quot;mangum&quot;: {\n            &quot;handlers&quot;: [&quot;django.server&quot;],\n            &quot;level&quot;: &quot;INFO&quot;,\n            &quot;propagate&quot;: False,\n        },\n    },\n}\n</code></pre>",
+      "date_modified": "2022-11-07T00:00:00Z"
+    },
+    {
       "id": "https://lukewiwa.com/blog/australia_pommel_horse/",
       "url": "https://lukewiwa.com/blog/australia_pommel_horse/",
       "title": "Australia and Pommel Horse",

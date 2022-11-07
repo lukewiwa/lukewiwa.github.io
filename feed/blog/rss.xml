@@ -6,8 +6,58 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2022-11-03T06:09:04Z</lastBuildDate>
+        <lastBuildDate>2022-11-07T13:00:24Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <item>
+            <title>Setup Mangum in AWS Lambda for Django</title>
+            <link href="https://lukewiwa.com/blog/setup_mangum_in_aws_lambda_for_django/"/>
+            <guid>https://lukewiwa.com/blog/setup_mangum_in_aws_lambda_for_django/</guid>
+            <pubDate>2022-11-07T00:00:00Z</pubDate>
+            <description>&lt;p&gt;Here&#39;s a quick setup guide to get &lt;a href=&quot;https://mangum.io/&quot;&gt;mangum&lt;/a&gt; working as the request handler in a django project in AWS Lambda.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;The first step is to setup the handler function itself. The tutorial in the official docs outlines this process but I like to add a little extra processing to the handler for running select management commands. This could be abstracted out further than here but I find the migrate command enough for my needs.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;from django.core.asgi import get_asgi_application
+from django.core.management import call_command
+from mangum import Mangum
+from mangum.types import LambdaContext, LambdaEvent
+
+application = get_asgi_application()
+
+
+def handler(event: LambdaEvent, context: LambdaContext):
+    if event.get(&amp;quot;migrate&amp;quot;, None):
+        call_command(&amp;quot;migrate&amp;quot;, interactive=False)
+    else:
+        return Mangum(application, lifespan=&amp;quot;off&amp;quot;)(event, context)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The next step is to setup logging. It seems under default configs this goes missing when deployed so the below config tweaks the default django config just slightly so that mangum largely mirrors the output you would get running this on a standard asgi or wsgi framework.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;LOGGING = {
+    &amp;quot;version&amp;quot;: 1,
+    &amp;quot;disable_existing_loggers&amp;quot;: False,
+    &amp;quot;formatters&amp;quot;: {
+        &amp;quot;django.server&amp;quot;: {
+            &amp;quot;()&amp;quot;: &amp;quot;django.utils.log.ServerFormatter&amp;quot;,
+            &amp;quot;format&amp;quot;: &amp;quot;[{server_time}] {message}&amp;quot;,
+            &amp;quot;style&amp;quot;: &amp;quot;{&amp;quot;,
+        }
+    },
+    &amp;quot;handlers&amp;quot;: {
+        &amp;quot;django.server&amp;quot;: {
+            &amp;quot;level&amp;quot;: &amp;quot;INFO&amp;quot;,
+            &amp;quot;class&amp;quot;: &amp;quot;logging.StreamHandler&amp;quot;,
+            &amp;quot;formatter&amp;quot;: &amp;quot;django.server&amp;quot;,
+        },
+    },
+    &amp;quot;loggers&amp;quot;: {
+        &amp;quot;mangum&amp;quot;: {
+            &amp;quot;handlers&amp;quot;: [&amp;quot;django.server&amp;quot;],
+            &amp;quot;level&amp;quot;: &amp;quot;INFO&amp;quot;,
+            &amp;quot;propagate&amp;quot;: False,
+        },
+    },
+}
+&lt;/code&gt;&lt;/pre&gt;</description>
+        </item>
         <item>
             <title>Australia and Pommel Horse</title>
             <link href="https://lukewiwa.com/blog/australia_pommel_horse/"/>
