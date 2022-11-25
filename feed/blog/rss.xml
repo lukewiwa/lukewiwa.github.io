@@ -6,8 +6,65 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2022-11-07T13:06:46Z</lastBuildDate>
+        <lastBuildDate>2022-11-25T00:22:10Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <item>
+            <title>Dev Container Features</title>
+            <link href="https://lukewiwa.com/blog/dev_container_features/"/>
+            <guid>https://lukewiwa.com/blog/dev_container_features/</guid>
+            <pubDate>2022-11-24T00:00:00Z</pubDate>
+            <description>&lt;p&gt;Dev containers have been a thing for a while now in different forms and it looks like Microsoft is really trying to push them forward as a standard rather than something siloed off in Visual Studio Code. One of their latest additions to the spec is a feature creatively named &lt;a href=&quot;https://containers.dev/features&quot;&gt;&lt;em&gt;features&lt;/em&gt;&lt;/a&gt;. I took the time to investigate them and &lt;a href=&quot;https://github.com/lukewiwa/features&quot;&gt;write some of my own&lt;/a&gt;.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;I&#39;ve standardised my own development using dev containers for almost everything. It provides me with a consistent developer experience regardless of the machine and has been a huge boon for onboarding people onto big projects that require a lot of moving parts.&lt;/p&gt;
+&lt;p&gt;One annoying point that I had with them though is that any development tool you would like in your environment you would have to install into your container and that led to awkward Dockerfiles with patterns like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;WORKDIR /tmp/dev-setup
+ARG HADOLINT_VERSION=&amp;quot;v2.10.0&amp;quot;
+ARG HADOLINT_ARCH=&amp;quot;arm64&amp;quot;
+ARG SC_VERSION=&amp;quot;stable&amp;quot;
+RUN if [ &amp;quot;$DEV_ENV&amp;quot; = &amp;quot;vscode&amp;quot; ]; then \
+    yum install --debuglevel=1 -y zsh vim git amazon-linux-extras \
+    #
+    # Install docker
+    &amp;amp;&amp;amp; amazon-linux-extras install docker -y \
+    #
+    # install zsh
+    &amp;amp;&amp;amp; sh -c &amp;quot;$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)&amp;quot; &amp;quot;&amp;quot; --unattended \
+    #
+    # install hadolint
+    &amp;amp;&amp;amp; curl -sSL &amp;quot;https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}/hadolint-Linux-arm64&amp;quot; \
+    --output /usr/bin/hadolint \
+    &amp;amp;&amp;amp; chmod +x /usr/bin/hadolint \
+    #
+    # Clean up
+    &amp;amp;&amp;amp; rm -rf /tmp/dev-setup &amp;amp;&amp;amp; yum clean all; \
+    fi
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Ugly as hell and mixes IDE logic with deployment logic. Dev container features allows us to abstract all this away and install an extra layer on top of what your &amp;quot;production&amp;quot; Dockerfile will be. It also allows us to have one bit of abstracted code and use it in enumerable projects. All the above can be replaced with this addition to the &lt;code&gt;devcontainer.json&lt;/code&gt; file:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;&amp;quot;features&amp;quot;: {
+  &amp;quot;ghcr.io/devcontainers/features/docker-from-docker:1&amp;quot;: {},
+    &amp;quot;ghcr.io/devcontainers/features/git:1&amp;quot;: {},
+    &amp;quot;ghcr.io/guiyomh/features/vim:0&amp;quot;: {},
+    &amp;quot;ghcr.io/devcontainers/features/common-utils:1&amp;quot;: {},
+    &amp;quot;ghcr.io/dhoeric/features/hadolint:1&amp;quot;: {},
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I wrote a couple for myself and it&#39;s surprisingly straight forward to get started. There are nice &lt;a href=&quot;https://github.com/devcontainers/feature-starter&quot;&gt;starter templates&lt;/a&gt; which helped immensely in getting a basic idea into a repo. At it&#39;s very bare bones all you need is a &lt;code&gt;devcontainer-feature.json&lt;/code&gt; file and an &lt;code&gt;install.sh&lt;/code&gt; file. But the sky is the limit, there are a lot of powerful options such as setting an entrypoint or messing with the mounting points. See the &lt;a href=&quot;https://github.com/devcontainers/features/tree/main/src/docker-from-docker&quot;&gt;docker-from-docker&lt;/a&gt; feature for something that extensively used the available features.&lt;/p&gt;
+&lt;p&gt;The first &lt;a href=&quot;https://github.com/lukewiwa/features/tree/main/src/shellcheck&quot;&gt;feature I wrote&lt;/a&gt; was a simple installation of the &lt;a href=&quot;https://www.shellcheck.net/&quot;&gt;&lt;code&gt;shellcheck&lt;/code&gt;&lt;/a&gt; tool. Additionally you can add an extension so naturally I added the excellent &lt;a href=&quot;https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck&quot;&gt;vscode shellcheck extension&lt;/a&gt;. Now for any project I want shellcheck for all I need to do is add a line to my features key in the &lt;code&gt;devcontainer.json&lt;/code&gt; file and I&#39;m off to the races.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;&amp;quot;features&amp;quot;: {
+  &amp;quot;ghcr.io/lukewiwa/features/shellcheck:0&amp;quot;: {}
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The second &lt;a href=&quot;https://github.com/lukewiwa/features/tree/main/src/wait-for-it&quot;&gt;feature&lt;/a&gt; was adding the &lt;a href=&quot;https://github.com/vishnubob/wait-for-it&quot;&gt;&lt;code&gt;wait-for-it&lt;/code&gt;&lt;/a&gt; tool. This one required a adding an entrypoint and a few options for what host and port to wait for.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;&amp;quot;features&amp;quot;: {
+    &amp;quot;ghcr.io/lukewiwa/features/wait-for-it:0&amp;quot;: {
+      &amp;quot;host&amp;quot;: &amp;quot;postgres&amp;quot;,
+      &amp;quot;port: &amp;quot;5432&amp;quot;,
+      timeout: &amp;quot;60&amp;quot;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The only downside is that because these features are build as layers on top of your existing dockerfile if you regularly make changes to your dockerfile you can expect some slow build times if you have a few features to load. All in all though I&#39;m ok with this trade off if it abstracts away all this code from the main production logic of the project.&lt;/p&gt;</description>
+        </item>
         <item>
             <title>Setup Mangum in AWS Lambda for Django</title>
             <link href="https://lukewiwa.com/blog/setup_mangum_in_aws_lambda_for_django/"/>

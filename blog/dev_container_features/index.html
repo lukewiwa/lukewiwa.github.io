@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dev Container Features</title><link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"><link rel="stylesheet" href="/index.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css" media="screen and (prefers-color-scheme: dark)"></head><body><header><nav class="flex flex-row items-center justify-between"><a href="/" class="link nav-brand no-underline dtc w-25 f3">Wiwa</a><div class="dtc v-mid w-75 tr"><a href="/blog" class="link nav-link f6 f5-ns dib mr3 mr4-ns b">Blog</a><a href="/projects" class="link nav-link f6 f5-ns dib mr3 mr4-ns ">Projects</a></div></nav></header><main class="pt-4"><article><h1 class="f2">Dev Container Features</h1><time class="db mb1">2022-11-24</time><div><p>Dev containers have been a thing for a while now in different forms and it looks like Microsoft is really trying to push them forward as a standard rather than something siloed off in Visual Studio Code. One of their latest additions to the spec is a feature creatively named <a href="https://containers.dev/features"><em>features</em></a>. I took the time to investigate them and <a href="https://github.com/lukewiwa/features">write some of my own</a>.</p>
+<!--more-->
+<p>I've standardised my own development using dev containers for almost everything. It provides me with a consistent developer experience regardless of the machine and has been a huge boon for onboarding people onto big projects that require a lot of moving parts.</p>
+<p>One annoying point that I had with them though is that any development tool you would like in your environment you would have to install into your container and that led to awkward Dockerfiles with patterns like this:</p>
+<pre><code class="language-dockerfile hljs"><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /tmp/dev-setup</span>
+<span class="hljs-keyword">ARG</span> HADOLINT_VERSION=<span class="hljs-string">"v2.10.0"</span>
+<span class="hljs-keyword">ARG</span> HADOLINT_ARCH=<span class="hljs-string">"arm64"</span>
+<span class="hljs-keyword">ARG</span> SC_VERSION=<span class="hljs-string">"stable"</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-keyword">if</span> [ <span class="hljs-string">"<span class="hljs-variable">$DEV_ENV</span>"</span> = <span class="hljs-string">"vscode"</span> ]; <span class="hljs-keyword">then</span> \
+    yum install --debuglevel=1 -y zsh vim git amazon-linux-extras \
+    <span class="hljs-comment">#</span></span>
+    <span class="hljs-comment"># Install docker</span>
+    &amp;&amp; amazon-linux-extras install docker -y \
+    <span class="hljs-comment">#</span>
+    <span class="hljs-comment"># install zsh</span>
+    &amp;&amp; sh -c <span class="hljs-string">"$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"</span> <span class="hljs-string">""</span> --unattended \
+    <span class="hljs-comment">#</span>
+    <span class="hljs-comment"># install hadolint</span>
+    &amp;&amp; curl -sSL <span class="hljs-string">"https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}/hadolint-Linux-arm64"</span> \
+    --output /usr/bin/hadolint \
+    &amp;&amp; chmod +x /usr/bin/hadolint \
+    <span class="hljs-comment">#</span>
+    <span class="hljs-comment"># Clean up</span>
+    &amp;&amp; rm -rf /tmp/dev-setup &amp;&amp; yum clean all; \
+    fi
+</code></pre>
+<p>Ugly as hell and mixes IDE logic with deployment logic. Dev container features allows us to abstract all this away and install an extra layer on top of what your "production" Dockerfile will be. It also allows us to have one bit of abstracted code and use it in enumerable projects. All the above can be replaced with this addition to the <code>devcontainer.json</code> file:</p>
+<pre><code class="language-json hljs"><span class="hljs-attr">"features"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"ghcr.io/devcontainers/features/docker-from-docker:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"ghcr.io/devcontainers/features/git:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"ghcr.io/guiyomh/features/vim:0"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"ghcr.io/devcontainers/features/common-utils:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">"ghcr.io/dhoeric/features/hadolint:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>I wrote a couple for myself and it's surprisingly straight forward to get started. There are nice <a href="https://github.com/devcontainers/feature-starter">starter templates</a> which helped immensely in getting a basic idea into a repo. At it's very bare bones all you need is a <code>devcontainer-feature.json</code> file and an <code>install.sh</code> file. But the sky is the limit, there are a lot of powerful options such as setting an entrypoint or messing with the mounting points. See the <a href="https://github.com/devcontainers/features/tree/main/src/docker-from-docker">docker-from-docker</a> feature for something that extensively used the available features.</p>
+<p>The first <a href="https://github.com/lukewiwa/features/tree/main/src/shellcheck">feature I wrote</a> was a simple installation of the <a href="https://www.shellcheck.net/"><code>shellcheck</code></a> tool. Additionally you can add an extension so naturally I added the excellent <a href="https://marketplace.visualstudio.com/items?itemName=timonwong.shellcheck">vscode shellcheck extension</a>. Now for any project I want shellcheck for all I need to do is add a line to my features key in the <code>devcontainer.json</code> file and I'm off to the races.</p>
+<pre><code class="language-json hljs"><span class="hljs-attr">"features"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"ghcr.io/lukewiwa/features/shellcheck:0"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>The second <a href="https://github.com/lukewiwa/features/tree/main/src/wait-for-it">feature</a> was adding the <a href="https://github.com/vishnubob/wait-for-it"><code>wait-for-it</code></a> tool. This one required a adding an entrypoint and a few options for what host and port to wait for.</p>
+<pre><code class="language-json hljs"><span class="hljs-attr">"features"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+    <span class="hljs-attr">"ghcr.io/lukewiwa/features/wait-for-it:0"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"host"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"postgres"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-string">"port: "</span><span class="hljs-number">5432</span><span class="hljs-string">",
+      timeout: "</span><span class="hljs-number">60</span><span class="hljs-string">"
+    }
+}
+</span></code></pre>
+<p>The only downside is that because these features are build as layers on top of your existing dockerfile if you regularly make changes to your dockerfile you can expect some slow build times if you have a few features to load. All in all though I'm ok with this trade off if it abstracts away all this code from the main production logic of the project.</p>
+</div></article></main></body></html>
