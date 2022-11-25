@@ -17,7 +17,6 @@ One annoying point that I had with them though is that any development tool you 
 WORKDIR /tmp/dev-setup
 ARG HADOLINT_VERSION="v2.10.0"
 ARG HADOLINT_ARCH="arm64"
-ARG SC_VERSION="stable"
 RUN if [ "$DEV_ENV" = "vscode" ]; then \
     yum install --debuglevel=1 -y zsh vim git amazon-linux-extras \
     #
@@ -42,10 +41,10 @@ Ugly as hell and mixes IDE logic with deployment logic. Dev container features a
 ```json
 "features": {
   "ghcr.io/devcontainers/features/docker-from-docker:1": {},
-    "ghcr.io/devcontainers/features/git:1": {},
-    "ghcr.io/guiyomh/features/vim:0": {},
-    "ghcr.io/devcontainers/features/common-utils:1": {},
-    "ghcr.io/dhoeric/features/hadolint:1": {},
+  "ghcr.io/devcontainers/features/git:1": {},
+  "ghcr.io/guiyomh/features/vim:0": {},
+  "ghcr.io/devcontainers/features/common-utils:1": {},
+  "ghcr.io/dhoeric/features/hadolint:1": {},
 }
 ```
 
