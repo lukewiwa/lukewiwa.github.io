@@ -6,7 +6,6 @@
 <pre><code class="language-dockerfile hljs"><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /tmp/dev-setup</span>
 <span class="hljs-keyword">ARG</span> HADOLINT_VERSION=<span class="hljs-string">"v2.10.0"</span>
 <span class="hljs-keyword">ARG</span> HADOLINT_ARCH=<span class="hljs-string">"arm64"</span>
-<span class="hljs-keyword">ARG</span> SC_VERSION=<span class="hljs-string">"stable"</span>
 <span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-keyword">if</span> [ <span class="hljs-string">"<span class="hljs-variable">$DEV_ENV</span>"</span> = <span class="hljs-string">"vscode"</span> ]; <span class="hljs-keyword">then</span> \
     yum install --debuglevel=1 -y zsh vim git amazon-linux-extras \
     <span class="hljs-comment">#</span></span>
@@ -28,10 +27,10 @@
 <p>Ugly as hell and mixes IDE logic with deployment logic. Dev container features allows us to abstract all this away and install an extra layer on top of what your "production" Dockerfile will be. It also allows us to have one bit of abstracted code and use it in enumerable projects. All the above can be replaced with this addition to the <code>devcontainer.json</code> file:</p>
 <pre><code class="language-json hljs"><span class="hljs-attr">"features"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
   <span class="hljs-attr">"ghcr.io/devcontainers/features/docker-from-docker:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">"ghcr.io/devcontainers/features/git:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">"ghcr.io/guiyomh/features/vim:0"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">"ghcr.io/devcontainers/features/common-utils:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
-    <span class="hljs-attr">"ghcr.io/dhoeric/features/hadolint:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"ghcr.io/devcontainers/features/git:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"ghcr.io/guiyomh/features/vim:0"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"ghcr.io/devcontainers/features/common-utils:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"ghcr.io/dhoeric/features/hadolint:1"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span><span class="hljs-punctuation">,</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
 <p>I wrote a couple for myself and it's surprisingly straight forward to get started. There are nice <a href="https://github.com/devcontainers/feature-starter">starter templates</a> which helped immensely in getting a basic idea into a repo. At it's very bare bones all you need is a <code>devcontainer-feature.json</code> file and an <code>install.sh</code> file. But the sky is the limit, there are a lot of powerful options such as setting an entrypoint or messing with the mounting points. See the <a href="https://github.com/devcontainers/features/tree/main/src/docker-from-docker">docker-from-docker</a> feature for something that extensively used the available features.</p>

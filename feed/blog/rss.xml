@@ -6,7 +6,7 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2022-11-25T00:22:10Z</lastBuildDate>
+        <lastBuildDate>2022-11-25T00:27:04Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>Dev Container Features</title>
@@ -20,7 +20,6 @@
 &lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;WORKDIR /tmp/dev-setup
 ARG HADOLINT_VERSION=&amp;quot;v2.10.0&amp;quot;
 ARG HADOLINT_ARCH=&amp;quot;arm64&amp;quot;
-ARG SC_VERSION=&amp;quot;stable&amp;quot;
 RUN if [ &amp;quot;$DEV_ENV&amp;quot; = &amp;quot;vscode&amp;quot; ]; then \
     yum install --debuglevel=1 -y zsh vim git amazon-linux-extras \
     #
@@ -42,10 +41,10 @@ RUN if [ &amp;quot;$DEV_ENV&amp;quot; = &amp;quot;vscode&amp;quot; ]; then \
 &lt;p&gt;Ugly as hell and mixes IDE logic with deployment logic. Dev container features allows us to abstract all this away and install an extra layer on top of what your &amp;quot;production&amp;quot; Dockerfile will be. It also allows us to have one bit of abstracted code and use it in enumerable projects. All the above can be replaced with this addition to the &lt;code&gt;devcontainer.json&lt;/code&gt; file:&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;&amp;quot;features&amp;quot;: {
   &amp;quot;ghcr.io/devcontainers/features/docker-from-docker:1&amp;quot;: {},
-    &amp;quot;ghcr.io/devcontainers/features/git:1&amp;quot;: {},
-    &amp;quot;ghcr.io/guiyomh/features/vim:0&amp;quot;: {},
-    &amp;quot;ghcr.io/devcontainers/features/common-utils:1&amp;quot;: {},
-    &amp;quot;ghcr.io/dhoeric/features/hadolint:1&amp;quot;: {},
+  &amp;quot;ghcr.io/devcontainers/features/git:1&amp;quot;: {},
+  &amp;quot;ghcr.io/guiyomh/features/vim:0&amp;quot;: {},
+  &amp;quot;ghcr.io/devcontainers/features/common-utils:1&amp;quot;: {},
+  &amp;quot;ghcr.io/dhoeric/features/hadolint:1&amp;quot;: {},
 }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I wrote a couple for myself and it&#39;s surprisingly straight forward to get started. There are nice &lt;a href=&quot;https://github.com/devcontainers/feature-starter&quot;&gt;starter templates&lt;/a&gt; which helped immensely in getting a basic idea into a repo. At it&#39;s very bare bones all you need is a &lt;code&gt;devcontainer-feature.json&lt;/code&gt; file and an &lt;code&gt;install.sh&lt;/code&gt; file. But the sky is the limit, there are a lot of powerful options such as setting an entrypoint or messing with the mounting points. See the &lt;a href=&quot;https://github.com/devcontainers/features/tree/main/src/docker-from-docker&quot;&gt;docker-from-docker&lt;/a&gt; feature for something that extensively used the available features.&lt;/p&gt;
