@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Wiwa's Axiom for Python Virtual Environments In Containers</title><link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"><link rel="stylesheet" href="/index.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css" media="screen and (prefers-color-scheme: dark)"></head><body><header><nav class="flex flex-row items-center justify-between"><a href="/" class="link nav-brand no-underline dtc w-25 f3">Wiwa</a><div class="dtc v-mid w-75 tr"><a href="/blog" class="link nav-link f6 f5-ns dib mr3 mr4-ns b">Blog</a><a href="/projects" class="link nav-link f6 f5-ns dib mr3 mr4-ns ">Projects</a></div></nav></header><main class="pt-4"><article><h1 class="f2">Wiwa's Axiom for Python Virtual Environments In Containers</h1><time class="db mb1 gray">2022-11-27</time><div><p>Don't.</p>
+<!--more-->
+<p>Never use python virtual environments in a container. At least not directly. There is one argument that holds some water and that's using it as a base to copy from in a multi-stage build but on all honesty that's done quite neatly with a pattern like this:</p>
+<pre><code class="language-dockerfile hljs"><span class="hljs-keyword">ARG</span> PYTHON_VERSION=<span class="hljs-string">"3.9"</span>
+<span class="hljs-keyword">FROM</span> python:${PYTHON_VERSION} AS builder
+<span class="hljs-keyword">ARG</span> PYTHON_VERSION
+
+<span class="hljs-comment"># use whatever method you like here.</span>
+<span class="hljs-comment"># I usually use poetry but let's use the common</span>
+<span class="hljs-comment"># primitive for demonstration purposes.</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> requirements.txt requirements.txt</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> python -m pip install -r requirements.txt</span>
+
+<span class="hljs-keyword">FROM</span> python:${PYTHON_VERSION}
+<span class="hljs-keyword">ARG</span> PYTHON_VERSION
+
+<span class="hljs-comment"># Copy files from build container</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /usr/local/lib/python<span class="hljs-variable">${PYTHON_VERSION}</span>/site-packages/ /usr/local/lib/python<span class="hljs-variable">${PYTHON_VERSION}</span>/site-packages/</span>
+<span class="hljs-keyword">COPY</span><span class="language-bash"> --from=builder /usr/local/bin/ /usr/local/bin/</span>
+</code></pre>
+<p>If we need to install "standalone python executables" then the best way is through <code>pipx</code>. A good example might be to install <code>cookiecutter</code>.</p>
+<pre><code class="language-dockerfile hljs"><span class="hljs-keyword">FROM</span> python
+
+<span class="hljs-keyword">RUN</span><span class="language-bash"> python -m pip install pipx</span>
+<span class="hljs-keyword">ENV</span> PATH=<span class="hljs-string">"/root/.local/bin:$PATH"</span>
+<span class="hljs-keyword">RUN</span><span class="language-bash"> pipx install cookiecutter</span>
+</code></pre>
+<p><code>pipx</code> technically does create a virtual environment for each executable but that's not something we need to worry about managing.</p>
+<p>Never use python virtual environments in a container.</p>
+</div></article></main></body></html>

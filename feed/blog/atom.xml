@@ -5,10 +5,45 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-11-25T00:27:04Z</updated>
+    <updated>2022-11-27T09:25:27Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>Wiwa&#39;s Axiom for Python Virtual Environments In Containers</title>
+        <id>https://lukewiwa.com/blog/never_use_a_virtual_env_in_a_container/</id>
+        <link href="https://lukewiwa.com/blog/never_use_a_virtual_env_in_a_container/"/>
+        <updated>2022-11-27T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;Don&#39;t.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;Never use python virtual environments in a container. At least not directly. There is one argument that holds some water and that&#39;s using it as a base to copy from in a multi-stage build but on all honesty that&#39;s done quite neatly with a pattern like this:&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;ARG PYTHON_VERSION=&amp;quot;3.9&amp;quot;
+FROM python:${PYTHON_VERSION} AS builder
+ARG PYTHON_VERSION
+
+# use whatever method you like here.
+# I usually use poetry but let&#39;s use the common
+# primitive for demonstration purposes.
+COPY requirements.txt requirements.txt
+RUN python -m pip install -r requirements.txt
+
+FROM python:${PYTHON_VERSION}
+ARG PYTHON_VERSION
+
+# Copy files from build container
+COPY --from=builder /usr/local/lib/python${PYTHON_VERSION}/site-packages/ /usr/local/lib/python${PYTHON_VERSION}/site-packages/
+COPY --from=builder /usr/local/bin/ /usr/local/bin/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If we need to install &amp;quot;standalone python executables&amp;quot; then the best way is through &lt;code&gt;pipx&lt;/code&gt;. A good example might be to install &lt;code&gt;cookiecutter&lt;/code&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;FROM python
+
+RUN python -m pip install pipx
+ENV PATH=&amp;quot;/root/.local/bin:$PATH&amp;quot;
+RUN pipx install cookiecutter
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;code&gt;pipx&lt;/code&gt; technically does create a virtual environment for each executable but that&#39;s not something we need to worry about managing.&lt;/p&gt;
+&lt;p&gt;Never use python virtual environments in a container.&lt;/p&gt;</content>
+    </entry>
     <entry>
         <title>Dev Container Features</title>
         <id>https://lukewiwa.com/blog/dev_container_features/</id>
