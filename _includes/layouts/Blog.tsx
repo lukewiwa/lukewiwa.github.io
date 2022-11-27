@@ -15,7 +15,7 @@ export default (
   return (
     <article>
       <h1 className="f2">{title}</h1>
-      <time className="db mb1">{printDate(date)}</time>
+      <time className="db mb1 gray">{printDate(date)}</time>
       {children}
     </article>
   );
