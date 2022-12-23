@@ -5,10 +5,21 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-11-27T09:25:27Z</updated>
+    <updated>2022-12-23T04:38:33Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>No Growth</title>
+        <id>https://lukewiwa.com/blog/now_growth/</id>
+        <link href="https://lukewiwa.com/blog/now_growth/"/>
+        <updated>2022-12-23T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;This end of year break my goal is to have no growth. No goals, no targets, no feeling guilty about not finishing that book or that side project.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;This year more than any other I feel like everyone around me has a heightened sense of exhaustion. It&#39;s palpable, people need the rest and I am no exception. It&#39;s been a big year for me personally and next year is likely to be just as full.&lt;/p&gt;
+&lt;p&gt;As such I&#39;ve set a personal goal this holiday period to allow myself to meander, to be slow, to not achieve any personal or professional goals. If I read a book it&#39;s because I felt like doing it in the moment. If I create a little side project it&#39;s for fun and if it withers on the vine it was meant to be. I&#39;m giving myself permission to suck and be lazy. Perhaps I&#39;m lucky and privileged to have this opportunity but I hand taking it with open arms.&lt;/p&gt;
+&lt;p&gt;Here&#39;s to a break in work and life. A delineation in the forward momentum of the universe. A rest.&lt;/p&gt;</content>
+    </entry>
     <entry>
         <title>Wiwa&#39;s Axiom for Python Virtual Environments In Containers</title>
         <id>https://lukewiwa.com/blog/never_use_a_virtual_env_in_a_container/</id>
