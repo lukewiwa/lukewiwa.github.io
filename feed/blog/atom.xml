@@ -5,10 +5,20 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-12-23T04:41:51Z</updated>
+    <updated>2022-12-28T02:33:18Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>Django Migrate Middleware</title>
+        <id>https://lukewiwa.com/blog/django_migrate_middleware/</id>
+        <link href="https://lukewiwa.com/blog/django_migrate_middleware/"/>
+        <updated>2022-12-28T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I created a &lt;a href=&quot;https://pypi.org/project/django-migrate-middleware/&quot;&gt;python package&lt;/a&gt; that runs django migrations on every request. It seems silly but has been useful for creating &lt;em&gt;almost&lt;/em&gt; stateless AWS Lambda functions using django.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;I&#39;ve found using django in AWS Lambdas pretty useful for creating little websites that need a little server work and can&#39;t be fully static. Sometimes I want a little state and the power of django&#39;s database integration between a request and a response has proven really useful. Using an ephemeral sqlite database in the &lt;code&gt;/tmp&lt;/code&gt; directory really handy for stuff like this. As such this package allows each request to have a database available.&lt;/p&gt;
+&lt;p&gt;An example of this pattern is implemented in my &lt;a href=&quot;https://setfire.lukewiwa.com/&quot;&gt;set fire to emoji&lt;/a&gt; website. You can see &lt;a href=&quot;https://github.com/lukewiwa/set-fire-to-emoji/blob/main/src/config/settings.py#L71&quot;&gt;in the source&lt;/a&gt; where my package being used.&lt;/p&gt;</content>
+    </entry>
     <entry>
         <title>No Growth</title>
         <id>https://lukewiwa.com/blog/no_growth/</id>

@@ -6,6 +6,13 @@
   "description": "The Ramblings of Wiwa",
   "items": [
     {
+      "id": "https://lukewiwa.com/blog/django_migrate_middleware/",
+      "url": "https://lukewiwa.com/blog/django_migrate_middleware/",
+      "title": "Django Migrate Middleware",
+      "content_html": "<p>I created a <a href=\"https://pypi.org/project/django-migrate-middleware/\">python package</a> that runs django migrations on every request. It seems silly but has been useful for creating <em>almost</em> stateless AWS Lambda functions using django.</p>\n<!--more-->\n<p>I've found using django in AWS Lambdas pretty useful for creating little websites that need a little server work and can't be fully static. Sometimes I want a little state and the power of django's database integration between a request and a response has proven really useful. Using an ephemeral sqlite database in the <code>/tmp</code> directory really handy for stuff like this. As such this package allows each request to have a database available.</p>\n<p>An example of this pattern is implemented in my <a href=\"https://setfire.lukewiwa.com/\">set fire to emoji</a> website. You can see <a href=\"https://github.com/lukewiwa/set-fire-to-emoji/blob/main/src/config/settings.py#L71\">in the source</a> where my package being used.</p>",
+      "date_modified": "2022-12-28T00:00:00Z"
+    },
+    {
       "id": "https://lukewiwa.com/blog/no_growth/",
       "url": "https://lukewiwa.com/blog/no_growth/",
       "title": "No Growth",
