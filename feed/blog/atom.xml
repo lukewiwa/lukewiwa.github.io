@@ -5,7 +5,7 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-12-28T02:33:18Z</updated>
+    <updated>2022-12-29T04:37:09Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
@@ -16,7 +16,7 @@
         <updated>2022-12-28T00:00:00Z</updated>
         <content type="html">&lt;p&gt;I created a &lt;a href=&quot;https://pypi.org/project/django-migrate-middleware/&quot;&gt;python package&lt;/a&gt; that runs django migrations on every request. It seems silly but has been useful for creating &lt;em&gt;almost&lt;/em&gt; stateless AWS Lambda functions using django.&lt;/p&gt;
 &lt;!--more--&gt;
-&lt;p&gt;I&#39;ve found using django in AWS Lambdas pretty useful for creating little websites that need a little server work and can&#39;t be fully static. Sometimes I want a little state and the power of django&#39;s database integration between a request and a response has proven really useful. Using an ephemeral sqlite database in the &lt;code&gt;/tmp&lt;/code&gt; directory really handy for stuff like this. As such this package allows each request to have a database available.&lt;/p&gt;
+&lt;p&gt;I&#39;ve found using django in AWS Lambdas pretty useful for creating little websites that need a little server work and can&#39;t be fully static. Sometimes I want a little state and the power of django&#39;s database integration between a request and a response has proven really useful. Using an ephemeral sqlite database in the &lt;code&gt;/tmp&lt;/code&gt; directory is really handy for stuff like this. As such this package allows each request to have a database available.&lt;/p&gt;
 &lt;p&gt;An example of this pattern is implemented in my &lt;a href=&quot;https://setfire.lukewiwa.com/&quot;&gt;set fire to emoji&lt;/a&gt; website. You can see &lt;a href=&quot;https://github.com/lukewiwa/set-fire-to-emoji/blob/main/src/config/settings.py#L71&quot;&gt;in the source&lt;/a&gt; where my package being used.&lt;/p&gt;</content>
     </entry>
     <entry>
@@ -27,7 +27,7 @@
         <content type="html">&lt;p&gt;This end of year break my goal is to have no growth. No goals, no targets, no feeling guilty about not finishing that book or that side project.&lt;/p&gt;
 &lt;!--more--&gt;
 &lt;p&gt;This year more than any other I feel like everyone around me has a heightened sense of exhaustion. It&#39;s palpable, people need the rest and I am no exception. It&#39;s been a big year for me personally and next year is likely to be just as full.&lt;/p&gt;
-&lt;p&gt;As such I&#39;ve set a personal goal this holiday period to allow myself to meander, to be slow, to not achieve any personal or professional goals. If I read a book it&#39;s because I felt like doing it in the moment. If I create a little side project it&#39;s for fun and if it withers on the vine it was meant to be. I&#39;m giving myself permission to suck and be lazy. Perhaps I&#39;m lucky and privileged to have this opportunity but I hand taking it with open arms.&lt;/p&gt;
+&lt;p&gt;As such I&#39;ve set a personal goal this holiday period to allow myself to meander, to be slow, to not achieve any personal or professional goals. If I read a book it&#39;s because I felt like doing it in the moment. If I create a little side project it&#39;s for fun and if it withers on the vine it was meant to be. I&#39;m giving myself permission to suck and be lazy. Perhaps I&#39;m lucky and privileged to have this opportunity but I am taking it with open arms.&lt;/p&gt;
 &lt;p&gt;Here&#39;s to a break in work and life. A delineation in the forward momentum of the universe. A rest.&lt;/p&gt;</content>
     </entry>
     <entry>
