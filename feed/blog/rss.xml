@@ -6,10 +6,10 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2023-01-08T12:44:00Z</lastBuildDate>
+        <lastBuildDate>2023-01-08T12:46:49Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
-            <title>manylinux2014 multi architecture build</title>
+            <title>manylinux2014 Multi Architecture Build</title>
             <link href="https://lukewiwa.com/blog/multi_arch_manylinux2014/"/>
             <guid>https://lukewiwa.com/blog/multi_arch_manylinux2014/</guid>
             <pubDate>2023-01-08T00:00:00Z</pubDate>
