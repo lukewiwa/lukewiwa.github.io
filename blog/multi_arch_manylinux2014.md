@@ -1,5 +1,5 @@
 ---
-title: manylinux2014 multi architecture build
+title: manylinux2014 Multi Architecture Build
 date: 2023-01-08
 tags: blog
 layout: layouts/Blog.tsx
