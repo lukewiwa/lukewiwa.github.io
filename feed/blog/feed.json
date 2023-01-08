@@ -6,6 +6,13 @@
   "description": "The Ramblings of Wiwa",
   "items": [
     {
+      "id": "https://lukewiwa.com/blog/multi_arch_manylinux2014/",
+      "url": "https://lukewiwa.com/blog/multi_arch_manylinux2014/",
+      "title": "manylinux2014 multi architecture build",
+      "content_html": "<p><a href=\"https://github.com/pypa/manylinux\"><code>manylinux</code></a> is a linux distro created to provide the widest support possible for python packages. The folks at the Python Packaging Authority (PyPA) provide convenient docker images of this distro but due to the scale and issues of providing builds across multiple architectures the images are distributed under different tags for different architectures. I created a <a href=\"https://github.com/lukewiwa/manylinux2014\">repo github action</a> to aggregate these images into a multi architecture build using the <a href=\"https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/\">docker manifest command</a>.</p>\n<!--more-->\n<p>This allows me to mindlessly pull <a href=\"https://hub.docker.com/r/lukewiwa/manylinux2014\"><code>lukewiwa/manylinux2014</code></a> and let docker sort out the architectural details. This was fairly straight forward to do and I hope the PyPA team implement something like this (although I understand the issues they face). I've got this setup to update every month which feels like a relatively good update schedule without wasting CPU cycles.</p>",
+      "date_modified": "2023-01-08T00:00:00Z"
+    },
+    {
       "id": "https://lukewiwa.com/blog/django_migrate_middleware/",
       "url": "https://lukewiwa.com/blog/django_migrate_middleware/",
       "title": "Django Migrate Middleware",

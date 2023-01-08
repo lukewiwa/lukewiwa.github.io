@@ -5,10 +5,19 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2022-12-29T04:37:09Z</updated>
+    <updated>2023-01-08T12:44:00Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>manylinux2014 multi architecture build</title>
+        <id>https://lukewiwa.com/blog/multi_arch_manylinux2014/</id>
+        <link href="https://lukewiwa.com/blog/multi_arch_manylinux2014/"/>
+        <updated>2023-01-08T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;&lt;a href=&quot;https://github.com/pypa/manylinux&quot;&gt;&lt;code&gt;manylinux&lt;/code&gt;&lt;/a&gt; is a linux distro created to provide the widest support possible for python packages. The folks at the Python Packaging Authority (PyPA) provide convenient docker images of this distro but due to the scale and issues of providing builds across multiple architectures the images are distributed under different tags for different architectures. I created a &lt;a href=&quot;https://github.com/lukewiwa/manylinux2014&quot;&gt;repo github action&lt;/a&gt; to aggregate these images into a multi architecture build using the &lt;a href=&quot;https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/&quot;&gt;docker manifest command&lt;/a&gt;.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;This allows me to mindlessly pull &lt;a href=&quot;https://hub.docker.com/r/lukewiwa/manylinux2014&quot;&gt;&lt;code&gt;lukewiwa/manylinux2014&lt;/code&gt;&lt;/a&gt; and let docker sort out the architectural details. This was fairly straight forward to do and I hope the PyPA team implement something like this (although I understand the issues they face). I&#39;ve got this setup to update every month which feels like a relatively good update schedule without wasting CPU cycles.&lt;/p&gt;</content>
+    </entry>
     <entry>
         <title>Django Migrate Middleware</title>
         <id>https://lukewiwa.com/blog/django_migrate_middleware/</id>
