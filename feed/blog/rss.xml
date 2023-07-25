@@ -6,8 +6,17 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2023-01-08T12:46:49Z</lastBuildDate>
+        <lastBuildDate>2023-07-25T05:15:45Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <item>
+            <title>Added Python 3.11 to aws-lambda-python-sqlite container</title>
+            <link href="https://lukewiwa.com/blog/update_aws_lambda_python_sqlite_container_image/"/>
+            <guid>https://lukewiwa.com/blog/update_aws_lambda_python_sqlite_container_image/</guid>
+            <pubDate>2023-07-25T00:00:00Z</pubDate>
+            <description>&lt;p&gt;I went ahead an updated the build scripts for my &lt;a href=&quot;https://lukewiwa.com/blog/aws_lambda_and_django_with_sqlite&quot;&gt;custom AWS lambda container&lt;/a&gt;. Now there is Python 3.11 available with all its goodies.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;From memory this python version is much more performant with a few more really nice things that I can&#39;t remember off the top of my head.&lt;/p&gt;</description>
+        </item>
         <item>
             <title>manylinux2014 Multi Architecture Build</title>
             <link href="https://lukewiwa.com/blog/multi_arch_manylinux2014/"/>
@@ -739,6 +748,13 @@ def redirected():
 &lt;p&gt;A few fun things I&#39;ve done with the data can be found at my &lt;a href=&quot;https://lukewiwa.com/projects&quot;&gt;projects&lt;/a&gt; page.&lt;/p&gt;</description>
         </item>
         <item>
+            <title>A Dumping Ground</title>
+            <link href="https://lukewiwa.com/blog/dumping_ground/"/>
+            <guid>https://lukewiwa.com/blog/dumping_ground/</guid>
+            <pubDate>2017-03-03T00:00:00Z</pubDate>
+            <description>&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</description>
+        </item>
+        <item>
             <title>The Case Against Gymnastics Teams</title>
             <link href="https://lukewiwa.com/blog/gymnastics_teams_suck/"/>
             <guid>https://lukewiwa.com/blog/gymnastics_teams_suck/</guid>
@@ -760,13 +776,6 @@ def redirected():
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In essence the gymnastics community has been asking itself the wrong questions and we really need to take a hard look at ourselves and decide what we really want from gymnastics in the long term. Granted it takes two medals away from the Olympic Games events but if we really want to be honest with ourselves as a community we should stop beating around the bush and tackle this issue head on.&lt;/p&gt;</description>
-        </item>
-        <item>
-            <title>A Dumping Ground</title>
-            <link href="https://lukewiwa.com/blog/dumping_ground/"/>
-            <guid>https://lukewiwa.com/blog/dumping_ground/</guid>
-            <pubDate>2017-03-03T00:00:00Z</pubDate>
-            <description>&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</description>
         </item>
         <item>
             <title>The “We Say You Do” Model Of Code Review Is Broken</title>
