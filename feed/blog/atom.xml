@@ -5,10 +5,19 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2023-07-25T05:15:45Z</updated>
+    <updated>2023-11-07T02:04:31Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>Finishing Work On Docker Image aws-lambda-python-sqlite</title>
+        <id>https://lukewiwa.com/blog/finish_work_on_aws_lambda_python_sqlite/</id>
+        <link href="https://lukewiwa.com/blog/finish_work_on_aws_lambda_python_sqlite/"/>
+        <updated>2023-11-07T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;AWS now has &lt;a href=&quot;https://gallery.ecr.aws/lambda/python&quot;&gt;preview support for python 3.12 in their lambda docker images&lt;/a&gt;. They are built on the new Amazon Linux 2023 base images and as such stop the need for my hacky image &lt;a href=&quot;https://hub.docker.com/r/lukewiwa/aws-lambda-python-sqlite&quot;&gt;&lt;code&gt;aws-lambda-python-sqlite&lt;/code&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;The reason I built the image &lt;code&gt;aws-lambda-python-sqlite&lt;/code&gt; was because the base image didn&#39;t support a version of sqlite high enough for Django. Happily the new base images have a more up to date version and this means support for python 3.12 in &lt;code&gt;aws-lambda-python-sqlite&lt;/code&gt; will not come. It&#39;s been a fun little project and I&#39;ll keep the build pipeline going for a while yet but there will be no new python version support.&lt;/p&gt;</content>
+    </entry>
     <entry>
         <title>Added Python 3.11 to aws-lambda-python-sqlite container</title>
         <id>https://lukewiwa.com/blog/update_aws_lambda_python_sqlite_container_image/</id>
