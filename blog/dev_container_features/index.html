@@ -39,14 +39,14 @@
   <span class="hljs-attr">"ghcr.io/lukewiwa/features/shellcheck:0"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span><span class="hljs-punctuation">}</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-<p>The second <a href="https://github.com/lukewiwa/features/tree/main/src/wait-for-it">feature</a> was adding the <a href="https://github.com/vishnubob/wait-for-it"><code>wait-for-it</code></a> tool. This one required a adding an entrypoint and a few options for what host and port to wait for.</p>
+<p>The second <a href="https://github.com/lukewiwa/features/tree/main/src/wait-for-it">feature</a> was adding the <a href="https://github.com/vishnubob/wait-for-it"><code>wait-for-it</code></a> tool. This one required adding an entrypoint and a few options for what host and port to wait for.</p>
 <pre><code class="language-json hljs"><span class="hljs-attr">"features"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
     <span class="hljs-attr">"ghcr.io/lukewiwa/features/wait-for-it:0"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">{</span>
       <span class="hljs-attr">"host"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"postgres"</span><span class="hljs-punctuation">,</span>
-      <span class="hljs-string">"port: "</span><span class="hljs-number">5432</span><span class="hljs-string">",
-      timeout: "</span><span class="hljs-number">60</span><span class="hljs-string">"
-    }
-}
-</span></code></pre>
+      <span class="hljs-attr">"port"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"5432"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"timeout"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"60"</span>
+    <span class="hljs-punctuation">}</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
 <p>The only downside is that because these features are build as layers on top of your existing dockerfile if you regularly make changes to your dockerfile you can expect some slow build times if you have a few features to load. All in all though I'm ok with this trade off if it abstracts away all this code from the main production logic of the project.</p>
 </div></article></main></body></html>

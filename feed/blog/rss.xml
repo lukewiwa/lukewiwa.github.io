@@ -6,7 +6,7 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2023-11-07T02:04:31Z</lastBuildDate>
+        <lastBuildDate>2023-11-07T04:41:00Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>Finishing Work On Docker Image aws-lambda-python-sqlite</title>
@@ -136,12 +136,12 @@ RUN if [ &amp;quot;$DEV_ENV&amp;quot; = &amp;quot;vscode&amp;quot; ]; then \
   &amp;quot;ghcr.io/lukewiwa/features/shellcheck:0&amp;quot;: {}
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;The second &lt;a href=&quot;https://github.com/lukewiwa/features/tree/main/src/wait-for-it&quot;&gt;feature&lt;/a&gt; was adding the &lt;a href=&quot;https://github.com/vishnubob/wait-for-it&quot;&gt;&lt;code&gt;wait-for-it&lt;/code&gt;&lt;/a&gt; tool. This one required a adding an entrypoint and a few options for what host and port to wait for.&lt;/p&gt;
+&lt;p&gt;The second &lt;a href=&quot;https://github.com/lukewiwa/features/tree/main/src/wait-for-it&quot;&gt;feature&lt;/a&gt; was adding the &lt;a href=&quot;https://github.com/vishnubob/wait-for-it&quot;&gt;&lt;code&gt;wait-for-it&lt;/code&gt;&lt;/a&gt; tool. This one required adding an entrypoint and a few options for what host and port to wait for.&lt;/p&gt;
 &lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;&amp;quot;features&amp;quot;: {
     &amp;quot;ghcr.io/lukewiwa/features/wait-for-it:0&amp;quot;: {
       &amp;quot;host&amp;quot;: &amp;quot;postgres&amp;quot;,
-      &amp;quot;port: &amp;quot;5432&amp;quot;,
-      timeout: &amp;quot;60&amp;quot;
+      &amp;quot;port&amp;quot;: &amp;quot;5432&amp;quot;,
+      &amp;quot;timeout&amp;quot;: &amp;quot;60&amp;quot;
     }
 }
 &lt;/code&gt;&lt;/pre&gt;
