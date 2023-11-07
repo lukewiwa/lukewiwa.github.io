@@ -58,14 +58,14 @@ The first [feature I wrote](https://github.com/lukewiwa/features/tree/main/src/s
 }
 ```
 
-The second [feature](https://github.com/lukewiwa/features/tree/main/src/wait-for-it) was adding the [`wait-for-it`](https://github.com/vishnubob/wait-for-it) tool. This one required a adding an entrypoint and a few options for what host and port to wait for.
+The second [feature](https://github.com/lukewiwa/features/tree/main/src/wait-for-it) was adding the [`wait-for-it`](https://github.com/vishnubob/wait-for-it) tool. This one required adding an entrypoint and a few options for what host and port to wait for.
 
 ```json
 "features": {
     "ghcr.io/lukewiwa/features/wait-for-it:0": {
       "host": "postgres",
-      "port: "5432",
-      timeout: "60"
+      "port": "5432",
+      "timeout": "60"
     }
 }
 ```
