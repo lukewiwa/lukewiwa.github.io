@@ -1,0 +1,13 @@
+{% load static %}
+<header>
+    <nav class="flex flex-row items-center justify-between">
+        <a href="{% url "core:index" %}"
+           class="link nav-brand no-underline dtc w-25 f3">Wiwa</a>
+        <div class="dtc v-mid w-75 tr">
+            {% with className="link nav-link f6 f5-ns dib mr3 mr4-ns" %}
+                <a class="{{ className }}" href="{% url "wagtail_serve" "" %}">Blog</a>
+                <a class="{{ className }}" href="{% url "core:projects" %}">Projects</a>
+            {% endwith %}
+        </div>
+    </nav>
+</header>
