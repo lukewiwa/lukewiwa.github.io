@@ -6,7 +6,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      target: base
+      target: builder
 
     environment:
       - DEBUG=true
@@ -19,7 +19,7 @@ services:
 
       - CSRF_COOKIE_NAME=wiwablogcsrftoken
       - SESSION_COOKIE_NAME=wiwablogsessionid
-      - SESSION_COOKIE_SECURE=true
+      - SESSION_COOKIE_SECURE=false
 
       - AWS_STORAGE_BUCKET_NAME=blog
       - AWS_S3_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE

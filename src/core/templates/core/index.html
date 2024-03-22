@@ -7,7 +7,7 @@
     <div>
         <div>
             <h2>
-                <Award />
+                {% include "core/includes/icons/award.html" %}
                 <span>Gymnastics</span>
             </h2>
             <p>
@@ -17,7 +17,7 @@
         </div>
         <div>
             <h2>
-                <Settings />
+                {% include "core/includes/icons/settings.html" %}
                 <span>Engineering</span>
             </h2>
             <p>
@@ -28,17 +28,13 @@
         </div>
         <div>
             <h2>
-                <Smartphone />
+                {% include "core/includes/icons/smartphone.html" %}
                 <span>Online</span>
             </h2>
             <p>
                 You can connect with me on the line using many different urls.
-                <a href="https://www.linkedin.com/in/lukewiwa/">
-                    <Linkedin />
-                </a>
-                <a href="https://github.com/lukewiwa/">
-                    <GitHub />
-                </a>
+                <a href="https://www.linkedin.com/in/lukewiwa/">{% include "core/includes/icons/linkedin.html" %}</a>
+                <a href="https://github.com/lukewiwa/">{% include "core/includes/icons/github.html" %}</a>
             </p>
         </div>
     </div>

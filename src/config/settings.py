@@ -10,12 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 from datetime import timedelta
-from django.urls import reverse_lazy
-import environ
 from pathlib import Path
+
+import environ
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+ROOT_DIR = BASE_DIR.parent
 
 env = environ.Env(
     DJANGO_SECRET_KEY=(str,),
@@ -30,7 +32,7 @@ env = environ.Env(
     # For local development this will need to be set to false since localhost
     # isn't served on https. The docker compose setup does this automatically
     # or it can be manually set in the `.env` file.
-    SESSION_COOKIE_SECURE=(bool, False),
+    SESSION_COOKIE_SECURE=(bool, True),
     DATABASE_ENGINE=(str, "django_s3_sqlite"),
     STATIC_ROOT=(Path, "/staticfiles"),
     AWS_STORAGE_BUCKET_NAME=(str, None),
@@ -64,16 +66,6 @@ CSRF_COOKIE_NAME = env.str("CSRF_COOKIE_NAME")
 # Application definition
 
 INSTALLED_APPS = [
-    "django.contrib.admin",
-    "django.contrib.auth",
-    "django.contrib.contenttypes",
-    "django.contrib.sessions",
-    "django.contrib.messages",
-    "whitenoise.runserver_nostatic",
-    "django.contrib.staticfiles",
-    "django_extensions",
-    "core.apps.CoreConfig",
-    "blog.apps.BlogConfig",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -87,6 +79,16 @@ INSTALLED_APPS = [
     "wagtail",
     "modelcluster",
     "taggit",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "whitenoise.runserver_nostatic",
+    "django.contrib.staticfiles",
+    "django_extensions",
+    "core.apps.CoreConfig",
+    "blog.apps.BlogConfig",
 ]
 
 MIDDLEWARE = [
