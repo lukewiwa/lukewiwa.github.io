@@ -7,4 +7,4 @@ The Ramblings of Wiwa
 [Install `lume`](https://lumeland.github.io/getting-started/installation/) then run server with import maps set:
 
 ```
-lume --serve -- --import-map=import_map.json
+deno task lume --serve
