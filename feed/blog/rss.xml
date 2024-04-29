@@ -6,8 +6,48 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2023-11-07T04:41:00Z</lastBuildDate>
+        <lastBuildDate>2024-04-29T00:20:24Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <item>
+            <title>Debug Django Management Commands In VSCode</title>
+            <link href="https://lukewiwa.com/blog/debug_django_management_commands_in_vscode/"/>
+            <guid>https://lukewiwa.com/blog/debug_django_management_commands_in_vscode/</guid>
+            <pubDate>2024-04-29T00:00:00Z</pubDate>
+            <description>&lt;p&gt;Adding break points to a django management command in Visual Studio Code is one of those tasks that I’ve been wanting to achieve for a while but never really got around to investigating. I generally fell back on print statements which has been &lt;em&gt;Good Enough&lt;/em&gt;.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;VSCode does give you some helpful templates for debugging commands when setting them up. It already has a pretty workable Django server solution but nothing specifically in the way of management commands. However the entry for &lt;a href=&quot;https://code.visualstudio.com/docs/python/debugging#_set-configuration-options&quot;&gt;“Python File With Arguments”&lt;/a&gt; looked interesting and that seemed like a good stepping stone into what I wanted.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
+  &amp;quot;version&amp;quot;: &amp;quot;0.2.0&amp;quot;,
+  &amp;quot;configurations&amp;quot;: [
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Python Debugger: Current File with Arguments&amp;quot;,
+      &amp;quot;type&amp;quot;: &amp;quot;debugpy&amp;quot;,
+      &amp;quot;request&amp;quot;: &amp;quot;launch&amp;quot;,
+      &amp;quot;program&amp;quot;: &amp;quot;${file}&amp;quot;,
+      &amp;quot;console&amp;quot;: &amp;quot;integratedTerminal&amp;quot;,
+      &amp;quot;args&amp;quot;: &amp;quot;${command:pickArgs}&amp;quot;
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is pretty close. What we want to do is tweak the program entry so that it follows the standard ./manage.py &lt;filename&gt; [args] format that Django requires. For the arguments we can keep the args entry in the configuration as is. The tricky part is getting the currently open file without the extension. VSCode already has this as a predefined variable for this ${fileBasenameNoExtension}. So with this we can put together a debug configuration that should allow us to add breakpoints to a management command and run that file with all the niceties of VSCode debugging. Here’s the full configuration.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-json&quot;&gt;{
+  &amp;quot;version&amp;quot;: &amp;quot;0.2.0&amp;quot;,
+  &amp;quot;configurations&amp;quot;: [
+    {
+      &amp;quot;name&amp;quot;: &amp;quot;Python Debugger: Django Management Command&amp;quot;,
+      &amp;quot;type&amp;quot;: &amp;quot;debugpy&amp;quot;,
+      &amp;quot;request&amp;quot;: &amp;quot;launch&amp;quot;,
+      // Make sure the path to `manage.py` is correct for your project
+      &amp;quot;program&amp;quot;: &amp;quot;${workspaceFolder}/backend/manage.py ${fileBasenameNoExtension}&amp;quot;,
+      &amp;quot;console&amp;quot;: &amp;quot;integratedTerminal&amp;quot;,
+      &amp;quot;args&amp;quot;: &amp;quot;${command:pickArgs}&amp;quot;
+    }
+  ]
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This way we can set break points inside a management command file and run the currently open file from the debugging options. You’ll also have options to add arbitrary arguments too.&lt;/p&gt;</description>
+        </item>
         <item>
             <title>Finishing Work On Docker Image aws-lambda-python-sqlite</title>
             <link href="https://lukewiwa.com/blog/finish_work_on_aws_lambda_python_sqlite/"/>
@@ -757,13 +797,6 @@ def redirected():
 &lt;p&gt;A few fun things I&#39;ve done with the data can be found at my &lt;a href=&quot;https://lukewiwa.com/projects&quot;&gt;projects&lt;/a&gt; page.&lt;/p&gt;</description>
         </item>
         <item>
-            <title>A Dumping Ground</title>
-            <link href="https://lukewiwa.com/blog/dumping_ground/"/>
-            <guid>https://lukewiwa.com/blog/dumping_ground/</guid>
-            <pubDate>2017-03-03T00:00:00Z</pubDate>
-            <description>&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</description>
-        </item>
-        <item>
             <title>The Case Against Gymnastics Teams</title>
             <link href="https://lukewiwa.com/blog/gymnastics_teams_suck/"/>
             <guid>https://lukewiwa.com/blog/gymnastics_teams_suck/</guid>
@@ -785,6 +818,13 @@ def redirected():
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In essence the gymnastics community has been asking itself the wrong questions and we really need to take a hard look at ourselves and decide what we really want from gymnastics in the long term. Granted it takes two medals away from the Olympic Games events but if we really want to be honest with ourselves as a community we should stop beating around the bush and tackle this issue head on.&lt;/p&gt;</description>
+        </item>
+        <item>
+            <title>A Dumping Ground</title>
+            <link href="https://lukewiwa.com/blog/dumping_ground/"/>
+            <guid>https://lukewiwa.com/blog/dumping_ground/</guid>
+            <pubDate>2017-03-03T00:00:00Z</pubDate>
+            <description>&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</description>
         </item>
         <item>
             <title>The “We Say You Do” Model Of Code Review Is Broken</title>

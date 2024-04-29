@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Debug Django Management Commands In VSCode</title><link rel="stylesheet" href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css"><link rel="stylesheet" href="/index.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css"><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github-dark.min.css" media="screen and (prefers-color-scheme: dark)"></head><body><header><nav class="flex flex-row items-center justify-between"><a href="/" class="link nav-brand no-underline dtc w-25 f3">Wiwa</a><div class="dtc v-mid w-75 tr"><a href="/blog" class="link nav-link f6 f5-ns dib mr3 mr4-ns b">Blog</a><a href="/projects" class="link nav-link f6 f5-ns dib mr3 mr4-ns ">Projects</a></div></nav></header><main class="pt-4"><article><h1 class="f2">Debug Django Management Commands In VSCode</h1><time class="db mb1 gray">2024-04-29</time><div><p>Adding break points to a django management command in Visual Studio Code is one of those tasks that I’ve been wanting to achieve for a while but never really got around to investigating. I generally fell back on print statements which has been <em>Good Enough</em>.</p>
+<!--more-->
+<p>VSCode does give you some helpful templates for debugging commands when setting them up. It already has a pretty workable Django server solution but nothing specifically in the way of management commands. However the entry for <a href="https://code.visualstudio.com/docs/python/debugging#_set-configuration-options">“Python File With Arguments”</a> looked interesting and that seemed like a good stepping stone into what I wanted.</p>
+<pre><code class="language-json hljs"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"version"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0.2.0"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"configurations"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Python Debugger: Current File with Arguments"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"debugpy"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"request"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"launch"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"program"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"${file}"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"console"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"integratedTerminal"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"args"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"${command:pickArgs}"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>This is pretty close. What we want to do is tweak the program entry so that it follows the standard ./manage.py <filename> [args] format that Django requires. For the arguments we can keep the args entry in the configuration as is. The tricky part is getting the currently open file without the extension. VSCode already has this as a predefined variable for this ${fileBasenameNoExtension}. So with this we can put together a debug configuration that should allow us to add breakpoints to a management command and run that file with all the niceties of VSCode debugging. Here’s the full configuration.</filename></p>
+<pre><code class="language-json hljs"><span class="hljs-punctuation">{</span>
+  <span class="hljs-attr">"version"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0.2.0"</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">"configurations"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-punctuation">{</span>
+      <span class="hljs-attr">"name"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"Python Debugger: Django Management Command"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"type"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"debugpy"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"request"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"launch"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-comment">// Make sure the path to `manage.py` is correct for your project</span>
+      <span class="hljs-attr">"program"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"${workspaceFolder}/backend/manage.py ${fileBasenameNoExtension}"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"console"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"integratedTerminal"</span><span class="hljs-punctuation">,</span>
+      <span class="hljs-attr">"args"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"${command:pickArgs}"</span>
+    <span class="hljs-punctuation">}</span>
+  <span class="hljs-punctuation">]</span>
+<span class="hljs-punctuation">}</span>
+</code></pre>
+<p>This way we can set break points inside a management command file and run the currently open file from the debugging options. You’ll also have options to add arbitrary arguments too.</p>
+</div></article></main></body></html>
