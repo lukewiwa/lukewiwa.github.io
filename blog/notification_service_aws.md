@@ -14,7 +14,7 @@ It can be quite difficult to find a good sports massage service and I've recentl
 
 Firstly the code for the lambda. Fairly easy to test locally (minus the SNS dispatch), I've abridged a few things here but you get the idea. Basically it performs a GET request to the API endpoint for appointments available, if the response array has anything in it send an SMS message to all subscribers.
 
-```ts
+```typescript
 import axios from "axios";
 import { DateTime } from "luxon";
 import { PublishCommand, SNSClient } from "@aws-sdk/client-sns";
@@ -91,7 +91,7 @@ Now let's build the infrastructure around it. I've pretty much standardised on A
 5. Schedule the lambda on a recurring basis. I chose once every hour during business hours to not spam either my own email or the booking website.
 
 
-```ts
+```typescript
 import {
   Stack,
   StackProps,
