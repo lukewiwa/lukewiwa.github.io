@@ -3,7 +3,7 @@
 <!--more-->
 <p>It can be quite difficult to find a good sports massage service and I've recently been very lucky to find a fantastic one. Of course they are booked out months in advance, which doesn't bother me too much but sometimes after a big training session I'll need something worked on sooner rather than later. Appointments do pop up from time to time due to cancellations but I didn't really want to keep checking their website throughout the day. So it made sense to automate the process somewhat.</p>
 <p>Firstly the code for the lambda. Fairly easy to test locally (minus the SNS dispatch), I've abridged a few things here but you get the idea. Basically it performs a GET request to the API endpoint for appointments available, if the response array has anything in it send an SMS message to all subscribers.</p>
-<pre><code class="language-ts hljs language-typescript"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">"axios"</span>;
+<pre><code class="language-typescript hljs"><span class="hljs-keyword">import</span> axios <span class="hljs-keyword">from</span> <span class="hljs-string">"axios"</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">DateTime</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"luxon"</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-title class_">PublishCommand</span>, <span class="hljs-title class_">SNSClient</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"@aws-sdk/client-sns"</span>;
 <span class="hljs-keyword">import</span> { <span class="hljs-variable constant_">URL</span>, <span class="hljs-title class_">URLSearchParams</span> } <span class="hljs-keyword">from</span> <span class="hljs-string">"url"</span>;
@@ -77,7 +77,7 @@
 <li>Subscribe any emails (mine) to the topic.</li>
 <li>Schedule the lambda on a recurring basis. I chose once every hour during business hours to not spam either my own email or the booking website.</li>
 </ol>
-<pre><code class="language-ts hljs language-typescript"><span class="hljs-keyword">import</span> {
+<pre><code class="language-typescript hljs"><span class="hljs-keyword">import</span> {
   <span class="hljs-title class_">Stack</span>,
   <span class="hljs-title class_">StackProps</span>,
   aws_sns <span class="hljs-keyword">as</span> sns,
