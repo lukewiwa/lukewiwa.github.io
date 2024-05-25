@@ -16,7 +16,7 @@
   <span class="hljs-punctuation">]</span>
 <span class="hljs-punctuation">}</span>
 </code></pre>
-<p>This is pretty close. What we want to do is tweak the program entry so that it follows the standard ./manage.py <filename> [args] format that Django requires. For the arguments we can keep the args entry in the configuration as is. The tricky part is getting the currently open file without the extension. VSCode already has this as a predefined variable for this ${fileBasenameNoExtension}. So with this we can put together a debug configuration that should allow us to add breakpoints to a management command and run that file with all the niceties of VSCode debugging. Here’s the full configuration.</filename></p>
+<p>This is pretty close. What we want to do is tweak the program entry so that it follows the standard <code>./manage.py &lt;filename&gt; [args]</code> format that Django requires. For the arguments we can keep the args entry in the configuration as is. The tricky part is getting the currently open file without the extension. VSCode already has this as a predefined variable for this <code>${fileBasenameNoExtension}</code>. So with this we can put together a debug configuration that should allow us to add breakpoints to a management command and run that file with all the niceties of VSCode debugging. Here’s the full configuration.</p>
 <pre><code class="language-json hljs"><span class="hljs-punctuation">{</span>
   <span class="hljs-attr">"version"</span><span class="hljs-punctuation">:</span> <span class="hljs-string">"0.2.0"</span><span class="hljs-punctuation">,</span>
   <span class="hljs-attr">"configurations"</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>

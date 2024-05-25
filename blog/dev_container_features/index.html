@@ -3,7 +3,7 @@
 <!--more-->
 <p>I've standardised my own development using dev containers for almost everything. It provides me with a consistent developer experience regardless of the machine and has been a huge boon for onboarding people onto big projects that require a lot of moving parts.</p>
 <p>One annoying point that I had with them though is that any development tool you would like in your environment you would have to install into your container and that led to awkward Dockerfiles with patterns like this:</p>
-<pre><code class="language-dockerfile hljs"><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /tmp/dev-setup</span>
+<pre><code class="language-docker hljs language-dockerfile"><span class="hljs-keyword">WORKDIR</span><span class="language-bash"> /tmp/dev-setup</span>
 <span class="hljs-keyword">ARG</span> HADOLINT_VERSION=<span class="hljs-string">"v2.10.0"</span>
 <span class="hljs-keyword">ARG</span> HADOLINT_ARCH=<span class="hljs-string">"arm64"</span>
 <span class="hljs-keyword">RUN</span><span class="language-bash"> <span class="hljs-keyword">if</span> [ <span class="hljs-string">"<span class="hljs-variable">$DEV_ENV</span>"</span> = <span class="hljs-string">"vscode"</span> ]; <span class="hljs-keyword">then</span> \

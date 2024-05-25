@@ -3,7 +3,7 @@
 <!--more-->
 <p>There are a few ways to get around this, all of them involving either building the source yourself or standing on the shoulders of <a href="https://github.com/FlipperPA/django-s3-sqlite/">other people who already have</a>. Some people have created <a href="https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html">lambda layers</a> to add the required libraries.</p>
 <p>With lambda now supporting container images I thought an easy thing to do would be to precompile sqlite inside the image using the build process in the <a href="https://github.com/coleifer/pysqlite3">pysqlite3</a> repository. This repo formalises a build process for creating more up to date <code>sqlite3</code> python modules. Using the magic of <a href="https://docs.docker.com/develop/develop-images/multistage-build/">multi-stage builds</a> we can build everything and only copy over the relevant output files. The final image won't even have the build tools which cuts down on image size. Here's an example:</p>
-<pre><code class="language-dockerfile hljs"><span class="hljs-keyword">ARG</span> PYTHON_VERSION=<span class="hljs-number">3.9</span>
+<pre><code class="language-docker hljs language-dockerfile"><span class="hljs-keyword">ARG</span> PYTHON_VERSION=<span class="hljs-number">3.9</span>
 <span class="hljs-keyword">FROM</span> public.ecr.aws/lambda/python:${PYTHON_VERSION} as build
 
 <span class="hljs-keyword">RUN</span><span class="language-bash"> yum groupinstall -y <span class="hljs-string">"Development Tools"</span> &amp;&amp; \
