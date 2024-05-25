@@ -27,7 +27,7 @@ VSCode does give you some helpful templates for debugging commands when setting 
 }
 ```
 
-This is pretty close. What we want to do is tweak the program entry so that it follows the standard ./manage.py <filename> [args] format that Django requires. For the arguments we can keep the args entry in the configuration as is. The tricky part is getting the currently open file without the extension. VSCode already has this as a predefined variable for this ${fileBasenameNoExtension}. So with this we can put together a debug configuration that should allow us to add breakpoints to a management command and run that file with all the niceties of VSCode debugging. Here’s the full configuration.
+This is pretty close. What we want to do is tweak the program entry so that it follows the standard `./manage.py <filename> [args]` format that Django requires. For the arguments we can keep the args entry in the configuration as is. The tricky part is getting the currently open file without the extension. VSCode already has this as a predefined variable for this `${fileBasenameNoExtension}`. So with this we can put together a debug configuration that should allow us to add breakpoints to a management command and run that file with all the niceties of VSCode debugging. Here’s the full configuration.
 
 
 ```json
