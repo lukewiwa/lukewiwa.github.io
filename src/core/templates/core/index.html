@@ -1,0 +1,42 @@
+{% extends "core/base.html" %}
+{% load feather %}
+{% block main %}
+    <section>
+        <h1>Luke Wiwatowski</h1>
+        <div>Gymnastics Engineering Miscellaneous</div>
+    </section>
+    <div>
+        <div>
+            <h2>
+                {% feather "award" %}
+                <span>Gymnastics</span>
+            </h2>
+            <p>
+                Australian Representative for 15 years. 2010 Delhi Commonwealth Games
+                Gold Medal winner.
+            </p>
+        </div>
+        <div>
+            <h2>
+                {% feather "settings" %}
+                <span>Engineering</span>
+            </h2>
+            <p>
+                Bachelors in mechanical engineering from Swinburne University.
+                Controls engineering at Alerton Australia. Lab Assistant for PV Lab
+                Australia. Software Engineer for WSP Australia.
+            </p>
+        </div>
+        <div>
+            <h2>
+                {% feather "smartphone" %}
+                <span>Online</span>
+            </h2>
+            <p>
+                You can connect with me on the line using many different urls.
+                <a href="https://www.linkedin.com/in/lukewiwa/">{% feather "linkedin" className="no-underline" %}</a>
+                <a href="https://github.com/lukewiwa/">{% feather "github" %}</a>
+            </p>
+        </div>
+    </div>
+{% endblock main %}

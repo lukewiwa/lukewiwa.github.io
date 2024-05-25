@@ -1,0 +1,88 @@
+import json
+import logging
+from typing import Any
+
+import frontmatter
+import marko
+from django.conf import settings
+from django.core.management import BaseCommand
+from django.db import transaction
+from wagtail.models import Page, Site
+
+from blog.models import BlogIndexPage, BlogPage
+
+logger = logging.getLogger(__name__)
+
+
+class Command(BaseCommand):
+    @transaction.atomic
+    def handle(self, *args: Any, **options: Any):
+        site = Site.objects.first()
+        if not site:
+            site = Site.objects.create(hostname="localhost", is_default_site=True)
+
+        # welcome_page = Page.objects.get(title="Welcome to your new Wagtail site!")
+        # welcome_page.delete()
+        BlogPage.objects.all().delete()
+        BlogIndexPage.objects.all().delete()
+
+        example_page = Page.objects.filter(title="Welcome to your new Wagtail site!")
+        example_page.all().delete()
+
+        root_page = Page.objects.get(title="Root")
+        blog_index_page = BlogIndexPage(title="Wiwa's Blog")
+        root_page.add_child(instance=blog_index_page)
+
+        site.root_page = blog_index_page
+        site.save()
+
+        # Populate blog
+        blog_dir = settings.ROOT_DIR / "blog"
+        markdown_files = (f for f in blog_dir.iterdir() if f.suffix == ".md")
+        for file in markdown_files:
+            print(file.stem)
+            with open(file, "r") as f:
+                post = frontmatter.load(f)
+            title = post.metadata["title"]
+            doc = marko.parse(post.content)
+            blocks: list[dict] = []
+            for child in doc.children:
+                match child:
+                    case (
+                        marko.block.Paragraph()
+                        | marko.block.Heading()
+                        | marko.block.List()
+                    ):
+                        paragraph = marko.render(child)
+                        blocks.append({"type": "rich_text", "value": paragraph})
+                    case marko.block.Quote():
+                        blocks.append(
+                            {
+                                "type": "quote",
+                                "value": child.children[0].children[0].children,
+                            }
+                        )
+                    case marko.block.FencedCode():
+                        code_string = child.children[0].children
+                        print(f"Code: {code_string} with language: {child.lang}")
+                        blocks.append(
+                            {
+                                "type": "code",
+                                "value": {
+                                    "language": child.lang,
+                                    "code": code_string,
+                                },
+                            }
+                        )
+                    case _:
+                        pass
+                        # print(child)
+
+            body = json.dumps(blocks)
+
+            blog_page = BlogPage(
+                title=title, date=post.metadata["date"], body=body, slug=file.stem
+            )
+            blog_index_page.add_child(instance=blog_page)
+            blog_page.save_revision().publish()
+            print(f"Created: {title}")

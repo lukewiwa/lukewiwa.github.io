@@ -1,0 +1,15 @@
+{% extends "core/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block main %}
+    {% for post in posts %}
+        <h2>
+            <a href="{% pageurl post %}">{{ post.title }}</a>
+        </h2>
+        <time class="db gray mb1">{{ post.specific.date }}</time>
+        {% for block in post.specific.body %}
+            <section>
+                {% include_block block %}
+            </section>
+        {% endfor %}
+    {% endfor %}
+{% endblock main %}
