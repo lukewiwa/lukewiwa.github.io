@@ -5,7 +5,7 @@ tags: blog
 layout: layouts/Blog.tsx
 ---
 
-I went ahead an updated the build scripts for my [custom AWS lambda container](/blog/aws_lambda_and_django_with_sqlite). Now there is Python 3.11 available with all its goodies.
+I went ahead and updated the build scripts for my [custom AWS lambda container](/blog/aws_lambda_and_django_with_sqlite). Now there is Python 3.11 available with all its goodies.
 
 <!--more-->
 

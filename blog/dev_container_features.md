@@ -13,7 +13,7 @@ I've standardised my own development using dev containers for almost everything.
 
 One annoying point that I had with them though is that any development tool you would like in your environment you would have to install into your container and that led to awkward Dockerfiles with patterns like this:
 
-```dockerfile
+```docker
 WORKDIR /tmp/dev-setup
 ARG HADOLINT_VERSION="v2.10.0"
 ARG HADOLINT_ARCH="arm64"

@@ -11,7 +11,7 @@ Using the magic of multi-stage builds using [external images](https://docs.docke
 
 I haven't tested this on every single docker image out there but for my needs this is a quick and easy way to add the AWS CLI. Configuration can be done using environment variables so no need for mucking around with config files.
 
-```dockerfile
+```docker
 ARG IMAGE
 FROM ${IMAGE}
 

@@ -13,7 +13,7 @@ There are a few ways to get around this, all of them involving either building t
 
 With lambda now supporting container images I thought an easy thing to do would be to precompile sqlite inside the image using the build process in the [pysqlite3](https://github.com/coleifer/pysqlite3) repository. This repo formalises a build process for creating more up to date `sqlite3` python modules. Using the magic of [multi-stage builds](https://docs.docker.com/develop/develop-images/multistage-build/) we can build everything and only copy over the relevant output files. The final image won't even have the build tools which cuts down on image size. Here's an example:
 
-```dockerfile
+```docker
 ARG PYTHON_VERSION=3.9
 FROM public.ecr.aws/lambda/python:${PYTHON_VERSION} as build
 
