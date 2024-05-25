@@ -1,0 +1,13 @@
+{% extends "core/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block main %}
+    <article>
+        <h1 class="f2">{{ page.title }}</h1>
+        <time class="db mb1 gray">{{ page.date }}</time>
+        {% for block in page.body %}
+            <section>
+                {% include_block block %}
+            </section>
+        {% endfor %}
+    </article>
+{% endblock main %}
