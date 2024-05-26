@@ -7,7 +7,7 @@ const exec = promisify(baseExec);
 const args = process.argv.slice(2);
 
 const baseContext = {
-  entryPoints: ["./frontend/index.ts", "./frontend/index.css"],
+  entryPoints: ["./frontend/index.ts"],
   bundle: true,
   outdir: "./frontend/dist/",
 };

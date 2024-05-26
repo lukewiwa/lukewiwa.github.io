@@ -16,7 +16,7 @@ WORKDIR ${FUNCTION_DIR}
 
 FROM base AS builder
 
-RUN apt update && apt install curl --yes
+RUN apt update && apt install curl make --yes
 
 # Install node https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION

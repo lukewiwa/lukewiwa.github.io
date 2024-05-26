@@ -180,6 +180,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 WHITENOISE_ROOT = BASE_DIR / "public"
 STATIC_ROOT = env.str("STATIC_ROOT")
+STATICFILES_DIRS = (("frontend", (BASE_DIR / "frontend" / "dist")),)
 
 
 STORAGES = {
