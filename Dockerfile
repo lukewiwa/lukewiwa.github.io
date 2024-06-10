@@ -21,8 +21,7 @@ RUN apt update && apt install curl make --yes
 # Install node https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
 ARG NODE_VERSION
 RUN curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
-    apt-get install -y nodejs && npm install --global yarn
-
+    apt-get install --no-install-recommends -y nodejs
 
 FROM base AS staticbuild
 
@@ -30,8 +29,11 @@ COPY src/ ${FUNCTION_DIR}
 
 # Collect all static files
 WORKDIR ${FUNCTION_DIR}
-ENV DJANGO_SECRET_KEY="dummy-secret-key-for-static-files-collection" ALLOWED_HOSTS=""
 
+RUN --mount=type=cache,target=/root/.npm npm install
+RUN npm run build
+
+ENV DJANGO_SECRET_KEY="dummy-secret-key-for-static-files-collection" ALLOWED_HOSTS=""
 RUN python manage.py collectstatic --noinput --clear
 
 FROM base AS prod
@@ -42,6 +44,7 @@ COPY --from=staticbuild /bundle /bundle
 
 COPY src/ ${FUNCTION_DIR}
 
-ENTRYPOINT [ "poetry", "run","python", "-m", "awslambdaric" ]
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.3 /lambda-adapter /opt/extensions/lambda-adapter
 
-CMD [ "config.asgi.handler" ]
+EXPOSE 8080
+CMD ["poetry", "run", "gunicorn", "config.wsgi:application", "-w=1", "-b=0.0.0.0:8080"]

@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  a {
+    @apply underline text-blue-600;
+  }
+  a:hover {
+    @apply underline text-blue-700;
+  }
+
+  p {
+    @apply mb-4;
+  }
+}

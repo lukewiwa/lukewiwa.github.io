@@ -64,7 +64,6 @@ class Command(BaseCommand):
                         )
                     case marko.block.FencedCode():
                         code_string = child.children[0].children
-                        print(f"Code: {code_string} with language: {child.lang}")
                         blocks.append(
                             {
                                 "type": "code",
@@ -74,14 +73,26 @@ class Command(BaseCommand):
                                 },
                             }
                         )
+                    case marko.block.HTMLBlock():
+                        if "<!--more-->" in child.body:
+                            blocks.append(
+                                {
+                                    "type": "fold",
+                                    "value": None,
+                                }
+                            )
+
                     case _:
                         pass
-                        # print(child)
 
             body = json.dumps(blocks)
 
             blog_page = BlogPage(
-                title=title, date=post.metadata["date"], body=body, slug=file.stem
+                title=title,
+                date=post.metadata["date"],
+                body=body,
+                slug=file.stem,
+                description=post.metadata.get("description", ""),
             )
             blog_index_page.add_child(instance=blog_page)
             blog_page.save_revision().publish()

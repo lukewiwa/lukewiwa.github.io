@@ -9,11 +9,14 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import logging
 from datetime import timedelta
 from pathlib import Path
 
 import environ
 from django.urls import reverse_lazy
+
+logger = logging.getLogger(__name__)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,6 +26,7 @@ env = environ.Env(
     DJANGO_SECRET_KEY=(str,),
     DEBUG=(bool, False),
     DJANGO_LOG_LEVEL=(str, "INFO"),
+    DEBUG_TOOLBAR_ENABLED=(bool, False),
     ALLOWED_HOSTS=(list, []),
     CSRF_COOKIE_NAME=(str, "wiwablogcsrftoken"),
     SESSION_COOKIE_NAME=(str, "wiwablogsessionid"),
@@ -408,3 +412,38 @@ WAGTAIL_CODE_BLOCK_LANGUAGES = (
     ("yaml", "YAML"),
     ("zig", "Zig"),
 )
+
+# ----------------------------------------------------------
+# Debug Toolbar
+# ----------------------------------------------------------
+
+DEBUG_TOOLBAR_ENABLED = env("DEBUG_TOOLBAR_ENABLED")
+if DEBUG_TOOLBAR_ENABLED:
+    INSTALLED_APPS.append("debug_toolbar")
+    MIDDLEWARE.append("debug_toolbar.middleware.DebugToolbarMiddleware")
+
+    # Allow for docker networks to connect
+    # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#configure-internal-ips
+    import socket
+
+    try:
+        _, _, internal_ips = socket.gethostbyname_ex(socket.gethostname())  # type: ignore
+    except socket.gaierror as e:
+        logger.warning(e)
+        internal_ips = []
+
+    # ADDITIONALLY docker desktop on Mac and Windows run on a virtual machine
+    # that are mapped via an IP address into the host machine. This IP is sent in
+    # Django requests as the REMOTE_ADDR value so let's add that to the internal ips too.
+    # https://docs.docker.com/desktop/networking/#i-want-to-connect-from-a-container-to-a-service-on-the-host
+    try:
+        _, _, docker_desktop_ips = socket.gethostbyname_ex("host.docker.internal")  # type: ignore
+    except socket.gaierror as e:
+        logger.warning(e)
+        docker_desktop_ips = []
+
+    ips = [*internal_ips, *docker_desktop_ips]
+    INTERNAL_IPS = [ip[: ip.rfind(".")] + ".1" for ip in ips] + [
+        "127.0.0.1",
+        "10.0.2.2",
+    ]

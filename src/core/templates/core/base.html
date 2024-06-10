@@ -1,4 +1,4 @@
-{% load static %}
+{% load static navbar %}
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -9,10 +9,7 @@
                 Wiwa
             {% endblock title %}
         </title>
-        <link rel="stylesheet"
-              href="https://unpkg.com/tachyons@4.12.0/css/tachyons.min.css" />
-        <link rel="stylesheet"
-              href="https://cdn.jsdelivr.net/npm/@exampledev/new.css@1.1.2/new.min.css" />
+        <link rel="stylesheet" href="{% static "frontend/index.css" %}">
         <link rel="stylesheet"
               href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.4.0/styles/github.min.css" />
         <link rel="stylesheet"
@@ -20,9 +17,9 @@
               media="screen and (prefers-color-scheme: dark)" />
     </head>
     <body>
-        {% include "core/includes/navbar.html" %}
+        {% navbar %}
         {% block body %}
-            <main className="pt-4">
+            <main class="{% block main_css %}pt-8 max-w-3xl mx-auto px-4{% endblock main_css %}">
                 {% block main %}
                 {% endblock main %}
             </main>

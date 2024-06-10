@@ -10,7 +10,8 @@ static-build:
 
 .PHONY: static-watch
 static-watch:
-	npm --prefix=src run build -- --dev
+	npm --prefix=src run dev
+
 
 .PHONY: run
 run: python-server static-watch
