@@ -46,5 +46,7 @@ COPY src/ ${FUNCTION_DIR}
 
 COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.3 /lambda-adapter /opt/extensions/lambda-adapter
 
+ENTRYPOINT [ "./entrypoint.sh" ]
+
 EXPOSE 8080
-CMD ["poetry", "run", "gunicorn", "config.wsgi:application", "-w=1", "-b=0.0.0.0:8080"]
+CMD ["gunicorn", "config.wsgi:application"]

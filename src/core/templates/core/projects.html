@@ -59,7 +59,8 @@
             </p>
         </section>
         <section>
-            {% include "core/includes/heading_link.html" with url="/projects/code-of-points" title="Code of Points" %}
+            {% url "core:code-of-points" as code_of_points_url %}
+            {% include "core/includes/heading_link.html" with url=code_of_points_url title="Code of Points" %}
             <p>
                 I wanted a machine readable code of points so I created a scraper with
                 python and pulled out the relevant information. The most up to date

@@ -21,31 +21,33 @@ class Command(BaseCommand):
         if not site:
             site = Site.objects.create(hostname="localhost", is_default_site=True)
 
-        # welcome_page = Page.objects.get(title="Welcome to your new Wagtail site!")
-        # welcome_page.delete()
-        BlogPage.objects.all().delete()
-        BlogIndexPage.objects.all().delete()
-
         example_page = Page.objects.filter(title="Welcome to your new Wagtail site!")
         example_page.all().delete()
 
-        root_page = Page.objects.get(title="Root")
-        blog_index_page = BlogIndexPage(title="Wiwa's Blog")
-        root_page.add_child(instance=blog_index_page)
+        BlogIndexPage.objects.all().delete()
 
-        site.root_page = blog_index_page
-        site.save()
+        root_page = Page.objects.get(title="Root")
+        blog_index_pages = BlogIndexPage.objects.filter(title="Wiwa's Blog")
+        if not blog_index_pages.exists():
+            blog_index_page = BlogIndexPage(title="Wiwa's Blog")
+            root_page.add_child(instance=blog_index_page)
+            site.root_page = blog_index_page
+            site.save()
 
         # Populate blog
         blog_dir = settings.ROOT_DIR / "blog"
         markdown_files = (f for f in blog_dir.iterdir() if f.suffix == ".md")
         for file in markdown_files:
-            print(file.stem)
             with open(file, "r") as f:
                 post = frontmatter.load(f)
             title = post.metadata["title"]
             doc = marko.parse(post.content)
             blocks: list[dict] = []
+
+            existing_page = BlogPage.objects.filter(slug=file.stem)
+            if existing_page.exists():
+                continue
+
             for child in doc.children:
                 match child:
                     case (
@@ -96,4 +98,4 @@ class Command(BaseCommand):
             )
             blog_index_page.add_child(instance=blog_page)
             blog_page.save_revision().publish()
-            print(f"Created: {title}")
+            self.stdout.write("Created: %s" % title)

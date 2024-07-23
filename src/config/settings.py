@@ -71,6 +71,10 @@ CSRF_COOKIE_NAME = env.str("CSRF_COOKIE_NAME")
 # Application definition
 
 INSTALLED_APPS = [
+    "core.apps.CoreConfig",
+    "blog.apps.BlogConfig",
+    "admin_core.apps.AdminCoreConfig",
+    "admin_utils.apps.AdminUtilsConfig",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -85,7 +89,6 @@ INSTALLED_APPS = [
     "modelcluster",
     "taggit",
     "wagtailcodeblock",
-    "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -93,8 +96,6 @@ INSTALLED_APPS = [
     "whitenoise.runserver_nostatic",
     "django.contrib.staticfiles",
     "django_extensions",
-    "core.apps.CoreConfig",
-    "blog.apps.BlogConfig",
 ]
 
 MIDDLEWARE = [

@@ -10,13 +10,12 @@ import {
   Stack,
   StackProps,
   triggers,
+  aws_lambda_nodejs,
 } from "aws-cdk-lib";
 import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import { Construct } from "constructs";
 import { Architecture } from "aws-cdk-lib/aws-lambda";
 import { Platform } from "aws-cdk-lib/aws-ecr-assets";
-
-
 
 const getEnv = (envVar: string) => {
   const env = process.env[envVar];
@@ -39,22 +38,32 @@ export class InfraStack extends Stack {
     const FULLY_QUALIFIED_DOMAIN = getEnv("FULLY_QUALIFIED_DOMAIN");
     const SUB_DOMAIN = getEnv("SUB_DOMAIN");
     const DOMAIN_NAME = `${SUB_DOMAIN}.${FULLY_QUALIFIED_DOMAIN}`;
+    const HEALTH_CHECK_PATH = "/health_check/";
 
     const hostedZone = route53.HostedZone.fromLookup(this, "HubHostedZone", {
       domainName: FULLY_QUALIFIED_DOMAIN,
     });
 
-    const bucket = new s3.Bucket(this, "HubBucket", {
+    const dbBucket = new s3.Bucket(this, "HubDbBucket", {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       versioned: true,
     });
 
-    const commonFnConfig = {
+    const mediaBucket = new s3.Bucket(this, "HubMediaBucket", {
+      blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+      versioned: true,
+    });
+
+    const fn = new lambda.DockerImageFunction(this, "HubFunction", {
+      code: lambda.DockerImageCode.fromImageAsset("..", {
+        platform: Platform.LINUX_ARM64,
+      }),
       architecture: Architecture.ARM_64,
       environment: {
         DJANGO_SECRET_KEY,
-        ALLOWED_HOSTS: `${DOMAIN_NAME},localhost`,
-        AWS_STORAGE_BUCKET_NAME: bucket.bucketName,
+        ALLOWED_HOSTS: `${DOMAIN_NAME},127.0.0.1`,
+        AWS_STORAGE_BUCKET_NAME: mediaBucket.bucketName,
+        AWS_SQLITE_BUCKET_NAME: dbBucket.bucketName,
         INITIAL_SUPERUSER_USERNAME,
         INITIAL_SUPERUSER_PASSWORD,
         INITIAL_SUPERUSER_EMAIL,
@@ -62,37 +71,15 @@ export class InfraStack extends Stack {
       memorySize: 512,
       timeout: Duration.seconds(30),
       logRetention: logs.RetentionDays.ONE_MONTH,
-    }
-
-    const fn = new lambda.DockerImageFunction(this, "HubFunction", {
-      code: lambda.DockerImageCode.fromImageAsset("..", {
-        platform: Platform.LINUX_ARM64,
-      }),
-      ...commonFnConfig
     });
-    bucket.grantReadWrite(fn);
-
-    const migrationsFn = new lambda.DockerImageFunction(this, "HubMigrationsFunction", {
-      code: lambda.DockerImageCode.fromImageAsset("..", {
-        platform: Platform.LINUX_ARM64,
-        cmd: ["poetry", "run", "python", "manage.py", "migrate"]
-      }),
-      ...commonFnConfig
-    });
-    bucket.grantReadWrite(migrationsFn);
-
-
-    new triggers.Trigger(this, "HubMigrationsFunctionTrigger", {
-      handler: migrationsFn,
-      executeAfter: [fn],
-    });
+    dbBucket.grantReadWrite(fn);
 
     const Certificate = new acm.Certificate(this, "HubCert", {
       domainName: DOMAIN_NAME,
       validation: acm.CertificateValidation.fromDns(hostedZone),
     });
 
-    const Integration = new HttpLambdaIntegration("HubIntegration", fn);
+    const integration = new HttpLambdaIntegration("HubIntegration", fn);
 
     const apigwDomainName = new apigwv2.DomainName(this, "HubDomainName", {
       domainName: DOMAIN_NAME,
@@ -100,7 +87,7 @@ export class InfraStack extends Stack {
     });
 
     const api = new apigwv2.HttpApi(this, "HubHttpApi", {
-      defaultIntegration: Integration,
+      defaultIntegration: integration,
       createDefaultStage: false,
     });
     api.addStage("HubDefaultStage", {
@@ -111,6 +98,29 @@ export class InfraStack extends Stack {
         rateLimit: 500,
       },
     });
+    // const manageRoute = api.addRoutes({
+    //   path: "/manage/",
+    //   methods: [apigwv2.HttpMethod.POST],
+    //   integration,
+    //   authorizer: new HttpIamAuthorizer(),
+    // });
+
+    const manageFn = new aws_lambda_nodejs.NodejsFunction(this, "manage", {
+      architecture: Architecture.ARM_64,
+      environment: {
+        HEALTH_CHECK_URL: `https://${DOMAIN_NAME}${HEALTH_CHECK_PATH}`,
+      },
+      timeout: Duration.seconds(30),
+      logRetention: logs.RetentionDays.ONE_WEEK,
+      runtime: lambda.Runtime.NODEJS_20_X,
+    });
+    manageFn.node.addDependency(fn);
+
+    new triggers.Trigger(this, "HubMigrationsFunctionTrigger", {
+      handler: manageFn,
+      executeAfter: [fn],
+    });
+    // manageRoute[0].grantInvoke(manageFn);
 
     new route53.ARecord(this, "HubAliasRecord", {
       zone: hostedZone,

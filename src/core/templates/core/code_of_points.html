@@ -1,0 +1,22 @@
+{% extends "core/base.html" %}
+{% block title %}
+  Code of Points
+{% endblock title %}
+{% block main %}
+  {% with "border border-gray-200 p-2" as border_class %}
+    <table class="{{ border_class }} mb-10">
+      <thead class="bg-gray-100">
+        <tr>
+          {% for header in headers %}<th class="{{ border_class }}">{{ header|upper }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in data %}
+          <tr {% if forloop.counter|divisibleby:2 %}class="bg-gray-50"{% endif %}>
+            {% for cell in row %}<td class="{{ border_class }}">{{ cell }}</td>{% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endwith %}
+{% endblock main %}

@@ -13,8 +13,8 @@ static-watch:
 	npm --prefix=src run dev
 
 
-.PHONY: run
-run: python-server static-watch
+.PHONY: start
+start: python-server static-watch
 
 .PHONY: deploy
 deploy:
