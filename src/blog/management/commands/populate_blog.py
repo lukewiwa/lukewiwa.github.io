@@ -1,30 +1,43 @@
+import argparse
 import json
 import logging
+from pathlib import Path
 from typing import Any
 
 import frontmatter
 import marko
+import marko.inline
 from django.conf import settings
+from django.core.files import File
 from django.core.management import BaseCommand
+from django.core.management.base import CommandParser
 from django.db import transaction
+from wagtail.images import get_image_model
 from wagtail.models import Page, Site
 
 from blog.models import BlogIndexPage, BlogPage
 
 logger = logging.getLogger(__name__)
 
+Image = get_image_model()
+
 
 class Command(BaseCommand):
+    def add_arguments(self, parser: CommandParser) -> None:
+        parser.add_argument("--clear", action=argparse.BooleanOptionalAction)
+
     @transaction.atomic
     def handle(self, *args: Any, **options: Any):
         site = Site.objects.first()
         if not site:
-            site = Site.objects.create(hostname="localhost", is_default_site=True)
+            site = Site.objects.create(hostname=settings.DOMAIN, is_default_site=True)
 
         example_page = Page.objects.filter(title="Welcome to your new Wagtail site!")
         example_page.all().delete()
 
-        BlogIndexPage.objects.all().delete()
+        if options.get("clear"):
+            BlogPage.objects.all().delete()
+            BlogIndexPage.objects.all().delete()
 
         root_page = Page.objects.get(title="Root")
         blog_index_pages = BlogIndexPage.objects.filter(title="Wiwa's Blog")
@@ -50,22 +63,41 @@ class Command(BaseCommand):
 
             for child in doc.children:
                 match child:
+                    case marko.block.Paragraph(
+                        children=[marko.inline.Image() as image]
+                    ):
+                        root, *parts = Path(image.dest).parts
+                        file_path = Path(settings.ROOT_DIR, "_static", *parts)
+                        with file_path.open(mode="rb") as f:
+                            image_file = File(f, name=file_path.name)
+                            im = Image(file=image_file, title=file_path.name)
+                            im.save()
+                        blocks.append({"type": "image", "value": im.pk})
                     case (
-                        marko.block.Paragraph()
-                        | marko.block.Heading()
+                        marko.block.Heading()
                         | marko.block.List()
+                        | marko.block.Paragraph()
                     ):
                         paragraph = marko.render(child)
                         blocks.append({"type": "rich_text", "value": paragraph})
-                    case marko.block.Quote():
+
+                    case marko.block.Quote(
+                        children=[
+                            marko.block.Paragraph(
+                                children=[marko.inline.RawText(children=quote_string)]
+                            )
+                        ]
+                    ):
                         blocks.append(
                             {
                                 "type": "quote",
-                                "value": child.children[0].children[0].children,
+                                "value": quote_string,
                             }
                         )
-                    case marko.block.FencedCode():
-                        code_string = child.children[0].children
+                        self.stdout.write(quote_string)
+                    case marko.block.FencedCode(
+                        children=[marko.inline.RawText(children=code_string)]
+                    ):
                         blocks.append(
                             {
                                 "type": "code",

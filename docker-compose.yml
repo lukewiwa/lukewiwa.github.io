@@ -11,6 +11,7 @@ services:
       - DEBUG_TOOLBAR_ENABLED=true
       - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
       - ALLOWED_HOSTS=localhost,
+      - DOMAIN=localhost
 
       - INITIAL_SUPERUSER_USERNAME=${INITIAL_SUPERUSER_USERNAME}
       - INITIAL_SUPERUSER_PASSWORD=${INITIAL_SUPERUSER_PASSWORD}
@@ -75,7 +76,6 @@ services:
       - ./create-buckets-command.sh:/opt/command/create-buckets-command.sh
     entrypoint: "bash"
     command: /opt/command/create-buckets-command.sh
-
 
 volumes:
   blog-s3-data: null

@@ -52,7 +52,8 @@
 				"mtxr.sqltools",
 				"mtxr.sqltools-driver-sqlite",
 				"bradlc.vscode-tailwindcss",
-				"exiasr.hadolint"
+				"exiasr.hadolint",
+				"redhat.vscode-commons"
 			]
 		}
 	},

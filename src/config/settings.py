@@ -28,6 +28,7 @@ env = environ.Env(
     DJANGO_LOG_LEVEL=(str, "INFO"),
     DEBUG_TOOLBAR_ENABLED=(bool, False),
     ALLOWED_HOSTS=(list, []),
+    DOMAIN=(str,),
     CSRF_COOKIE_NAME=(str, "wiwablogcsrftoken"),
     SESSION_COOKIE_NAME=(str, "wiwablogsessionid"),
     # Default session age. This tends to need tweaking from project to project.
@@ -214,6 +215,9 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Wagtail
 
 WAGTAIL_SITE_NAME = "Wiwa's Blog"
+WAGTAILADMIN_BASE_URL = env.str("DOMAIN")
+
+WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 
 WAGTAIL_CODE_BLOCK_THEME = None  # default theme
 WAGTAIL_CODE_BLOCK_LINE_NUMBERS = False

@@ -8,8 +8,8 @@ from blog.views import AtomFeed, JsonFeed, RssFeed
 urlpatterns = [
     path("cms/", include(wagtailadmin_urls)),
     path("documents/", include(wagtaildocs_urls)),
-    path("feed/rss.xml", RssFeed()),
-    path("feed/atom.xml", AtomFeed()),
-    path("feed/feed.json", JsonFeed()),
+    path("feed/rss.xml", RssFeed(), name="blog_rss_feed"),
+    path("feed/atom.xml", AtomFeed(), name="blog_atom_feed"),
+    path("feed/feed.json", JsonFeed(),name="blog_json_feed"),
     path("", include(wagtail_urls)),
 ]

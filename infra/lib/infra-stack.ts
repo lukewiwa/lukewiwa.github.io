@@ -62,6 +62,7 @@ export class InfraStack extends Stack {
       environment: {
         DJANGO_SECRET_KEY,
         ALLOWED_HOSTS: `${DOMAIN_NAME},127.0.0.1`,
+        DOMAIN: DOMAIN_NAME,
         AWS_STORAGE_BUCKET_NAME: mediaBucket.bucketName,
         AWS_SQLITE_BUCKET_NAME: dbBucket.bucketName,
         INITIAL_SUPERUSER_USERNAME,
@@ -98,12 +99,6 @@ export class InfraStack extends Stack {
         rateLimit: 500,
       },
     });
-    // const manageRoute = api.addRoutes({
-    //   path: "/manage/",
-    //   methods: [apigwv2.HttpMethod.POST],
-    //   integration,
-    //   authorizer: new HttpIamAuthorizer(),
-    // });
 
     const manageFn = new aws_lambda_nodejs.NodejsFunction(this, "manage", {
       architecture: Architecture.ARM_64,
@@ -120,7 +115,6 @@ export class InfraStack extends Stack {
       handler: manageFn,
       executeAfter: [fn],
     });
-    // manageRoute[0].grantInvoke(manageFn);
 
     new route53.ARecord(this, "HubAliasRecord", {
       zone: hostedZone,

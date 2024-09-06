@@ -17,12 +17,35 @@ Including another URLconf
 from django.conf import settings
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path("", include("core.urls")),
     path("blog/", include("blog.urls")),
     # path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
+    path(
+        "feed/blog/",
+        include(
+            [
+                path(
+                    "rss.xml",
+                    RedirectView.as_view(permanent=True, pattern_name="blog_rss_feed"),
+                    name="redirect_to_rss_feed",
+                ),
+                path(
+                    "atom.xml",
+                    RedirectView.as_view(permanent=True, pattern_name="blog_atom_feed"),
+                    name="redirect_to_atom_feed",
+                ),
+                path(
+                    "feed.json",
+                    RedirectView.as_view(permanent=True, pattern_name="blog_json_feed"),
+                    name="redirect_to_json_feed",
+                ),
+            ]
+        ),
+    ),
 ]
 
 if settings.DEBUG_TOOLBAR_ENABLED:
