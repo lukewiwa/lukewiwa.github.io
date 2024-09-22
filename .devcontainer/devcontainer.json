@@ -53,7 +53,8 @@
 				"mtxr.sqltools-driver-sqlite",
 				"bradlc.vscode-tailwindcss",
 				"exiasr.hadolint",
-				"redhat.vscode-commons"
+				"redhat.vscode-commons",
+				"amazonwebservices.aws-toolkit-vscode"
 			]
 		}
 	},

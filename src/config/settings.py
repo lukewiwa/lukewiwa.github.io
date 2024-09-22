@@ -44,7 +44,10 @@ env = environ.Env(
     AWS_S3_ACCESS_KEY_ID=(str, None),
     AWS_S3_SECRET_ACCESS_KEY=(str, None),
     AWS_S3_ENDPOINT_URL=(str, None),
-    AWS_SQLITE_BUCKET_NAME=(str),
+    SQLITE_OBJECT_STORAGE_BUCKET_NAME=(str),
+    SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID=(str, None),
+    SQLITE_OBJECT_STORAGE_ACCESS_SECRET=(str, None),
+    SQLITE_OBJECT_STORAGE_ENDPOINT_URL=(str, None),
 )
 
 
@@ -139,10 +142,18 @@ DATABASES = {
     "default": {
         "ENGINE": "django_sqlite_object_storage",
         "NAME": "/tmp/db.sqlite3",
-        "SQLITE_OBJECT_STORAGE_BUCKET_NAME": env.str("AWS_SQLITE_BUCKET_NAME"),
-        "SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID": env.str("AWS_S3_ACCESS_KEY_ID"),
-        "SQLITE_OBJECT_STORAGE_ACCESS_SECRET": env.str("AWS_S3_SECRET_ACCESS_KEY"),
-        "SQLITE_OBJECT_STORAGE_ENDPOINT_URL": env.str("AWS_S3_ENDPOINT_URL"),
+        "SQLITE_OBJECT_STORAGE_BUCKET_NAME": env.str(
+            "SQLITE_OBJECT_STORAGE_BUCKET_NAME"
+        ),
+        "SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID": env.str(
+            "SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID"
+        ),
+        "SQLITE_OBJECT_STORAGE_ACCESS_SECRET": env.str(
+            "SQLITE_OBJECT_STORAGE_ACCESS_SECRET"
+        ),
+        "SQLITE_OBJECT_STORAGE_ENDPOINT_URL": env.str(
+            "SQLITE_OBJECT_STORAGE_ENDPOINT_URL"
+        ),
     }
 }
 

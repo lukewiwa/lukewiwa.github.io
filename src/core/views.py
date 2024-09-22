@@ -32,8 +32,12 @@ class CodeOfPointsView(TemplateView):
         )
         csv_string = io.StringIO(r.content.decode("utf-8"))
         reader = csv.reader(csv_string)
-        context["headers"] = next(reader)
-        context["data"] = reader
+
+        def delete_first_column_in_line(line):
+            return line[1:]
+
+        context["headers"] = delete_first_column_in_line(next(reader))
+        context["data"] = (delete_first_column_in_line(line) for line in reader)
         return context
 
 

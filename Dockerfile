@@ -44,7 +44,7 @@ COPY --from=staticbuild /bundle /bundle
 
 COPY src/ ${FUNCTION_DIR}
 
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.3 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.4 /lambda-adapter /opt/extensions/lambda-adapter
 
 ENTRYPOINT [ "./entrypoint.sh" ]
 

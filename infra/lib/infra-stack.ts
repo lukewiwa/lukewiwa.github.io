@@ -9,8 +9,6 @@ import {
   Duration,
   Stack,
   StackProps,
-  triggers,
-  aws_lambda_nodejs,
 } from "aws-cdk-lib";
 import { HttpLambdaIntegration } from "aws-cdk-lib/aws-apigatewayv2-integrations";
 import { Construct } from "constructs";
@@ -38,7 +36,6 @@ export class InfraStack extends Stack {
     const FULLY_QUALIFIED_DOMAIN = getEnv("FULLY_QUALIFIED_DOMAIN");
     const SUB_DOMAIN = getEnv("SUB_DOMAIN");
     const DOMAIN_NAME = `${SUB_DOMAIN}.${FULLY_QUALIFIED_DOMAIN}`;
-    const HEALTH_CHECK_PATH = "/health_check/";
 
     const hostedZone = route53.HostedZone.fromLookup(this, "HubHostedZone", {
       domainName: FULLY_QUALIFIED_DOMAIN,
@@ -64,10 +61,11 @@ export class InfraStack extends Stack {
         ALLOWED_HOSTS: `${DOMAIN_NAME},127.0.0.1`,
         DOMAIN: DOMAIN_NAME,
         AWS_STORAGE_BUCKET_NAME: mediaBucket.bucketName,
-        AWS_SQLITE_BUCKET_NAME: dbBucket.bucketName,
+        SQLITE_OBJECT_STORAGE_BUCKET_NAME: dbBucket.bucketName,
         INITIAL_SUPERUSER_USERNAME,
         INITIAL_SUPERUSER_PASSWORD,
         INITIAL_SUPERUSER_EMAIL,
+        AWS_LWA_READINESS_CHECK_PATH: "/health_check/",
       },
       memorySize: 512,
       timeout: Duration.seconds(30),
@@ -98,22 +96,6 @@ export class InfraStack extends Stack {
         burstLimit: 50,
         rateLimit: 500,
       },
-    });
-
-    const manageFn = new aws_lambda_nodejs.NodejsFunction(this, "manage", {
-      architecture: Architecture.ARM_64,
-      environment: {
-        HEALTH_CHECK_URL: `https://${DOMAIN_NAME}${HEALTH_CHECK_PATH}`,
-      },
-      timeout: Duration.seconds(30),
-      logRetention: logs.RetentionDays.ONE_WEEK,
-      runtime: lambda.Runtime.NODEJS_20_X,
-    });
-    manageFn.node.addDependency(fn);
-
-    new triggers.Trigger(this, "HubMigrationsFunctionTrigger", {
-      handler: manageFn,
-      executeAfter: [fn],
     });
 
     new route53.ARecord(this, "HubAliasRecord", {
