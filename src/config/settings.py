@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import logging
 from datetime import timedelta
 from pathlib import Path
@@ -38,7 +39,7 @@ env = environ.Env(
     # isn't served on https. The docker compose setup does this automatically
     # or it can be manually set in the `.env` file.
     SESSION_COOKIE_SECURE=(bool, True),
-    DATABASE_ENGINE=(str, "django_s3_sqlite"),
+    DATABASE_ENGINE=(str, "django_sqlite_object_storage"),
     STATIC_ROOT=(Path, "/staticfiles"),
     AWS_STORAGE_BUCKET_NAME=(str, None),
     AWS_S3_ACCESS_KEY_ID=(str, None),
@@ -140,7 +141,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django_sqlite_object_storage",
+        "ENGINE": env("DATABASE_ENGINE"),
         "NAME": "/tmp/db.sqlite3",
         "SQLITE_OBJECT_STORAGE_BUCKET_NAME": env.str(
             "SQLITE_OBJECT_STORAGE_BUCKET_NAME"

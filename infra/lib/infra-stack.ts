@@ -37,21 +37,21 @@ export class InfraStack extends Stack {
     const SUB_DOMAIN = getEnv("SUB_DOMAIN");
     const DOMAIN_NAME = `${SUB_DOMAIN}.${FULLY_QUALIFIED_DOMAIN}`;
 
-    const hostedZone = route53.HostedZone.fromLookup(this, "HubHostedZone", {
+    const hostedZone = route53.HostedZone.fromLookup(this, "WiwaHostedZone", {
       domainName: FULLY_QUALIFIED_DOMAIN,
     });
 
-    const dbBucket = new s3.Bucket(this, "HubDbBucket", {
+    const dbBucket = new s3.Bucket(this, "WiwaDbBucket", {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       versioned: true,
     });
 
-    const mediaBucket = new s3.Bucket(this, "HubMediaBucket", {
+    const mediaBucket = new s3.Bucket(this, "WiwaMediaBucket", {
       blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
       versioned: true,
     });
 
-    const fn = new lambda.DockerImageFunction(this, "HubFunction", {
+    const fn = new lambda.DockerImageFunction(this, "WiwaFunction", {
       code: lambda.DockerImageCode.fromImageAsset("..", {
         platform: Platform.LINUX_ARM64,
       }),
@@ -72,24 +72,25 @@ export class InfraStack extends Stack {
       logRetention: logs.RetentionDays.ONE_MONTH,
     });
     dbBucket.grantReadWrite(fn);
+    mediaBucket.grantReadWrite(fn);
 
-    const Certificate = new acm.Certificate(this, "HubCert", {
+    const Certificate = new acm.Certificate(this, "WiwaCert", {
       domainName: DOMAIN_NAME,
       validation: acm.CertificateValidation.fromDns(hostedZone),
     });
 
-    const integration = new HttpLambdaIntegration("HubIntegration", fn);
+    const integration = new HttpLambdaIntegration("WiwaIntegration", fn);
 
-    const apigwDomainName = new apigwv2.DomainName(this, "HubDomainName", {
+    const apigwDomainName = new apigwv2.DomainName(this, "WiwaDomainName", {
       domainName: DOMAIN_NAME,
       certificate: Certificate,
     });
 
-    const api = new apigwv2.HttpApi(this, "HubHttpApi", {
+    const api = new apigwv2.HttpApi(this, "WiwaHttpApi", {
       defaultIntegration: integration,
       createDefaultStage: false,
     });
-    api.addStage("HubDefaultStage", {
+    api.addStage("WiwaDefaultStage", {
       domainMapping: { domainName: apigwDomainName },
       autoDeploy: true,
       throttle: {
@@ -98,7 +99,7 @@ export class InfraStack extends Stack {
       },
     });
 
-    new route53.ARecord(this, "HubAliasRecord", {
+    new route53.ARecord(this, "WiwaAliasRecord", {
       zone: hostedZone,
       recordName: DOMAIN_NAME,
       target: route53.RecordTarget.fromAlias(

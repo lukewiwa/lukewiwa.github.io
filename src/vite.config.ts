@@ -1,5 +1,5 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
 import { exec as baseExec } from "child_process";
 import { promisify } from "util";
 
@@ -11,14 +11,12 @@ const collectStaticPlugin = () => {
     async writeBundle() {
       console.log("calling collectstatic");
       const { stdout } = await exec(
-        "python manage.py collectstatic --clear --noinput --verbosity 0"
+        "uv run python manage.py collectstatic --clear --noinput --verbosity 0"
       );
       console.log(stdout);
-
-    }
-
-  }
-}
+    },
+  };
+};
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -37,4 +35,4 @@ export default defineConfig({
     // We'll deal with the size limits later
     chunkSizeWarningLimit: 5000,
   },
-})
+});

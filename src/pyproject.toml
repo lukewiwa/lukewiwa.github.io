@@ -1,35 +1,35 @@
-[tool.poetry]
+[project]
 name = "wiwa-blog"
+authors = [{ name = "lukewiwa", email = "luke.wiwa@gmail.com" }]
 version = "0.1.0"
 description = ""
-authors = ["lukewiwa <luke.wiwa@gmail.com>"]
 readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "django>=5.1.1",
+  "django-environ>=0.11.2",
+  "django-extensions>=3.2.3",
+  "django-storages[s3]>=1.14.4",
+  "marko>=2.1.2",
+  "python-frontmatter>=1.1.0",
+  "wagtail>=6.2.1",
+  "whitenoise>=6.7.0",
+  "wagtailcodeblock>=1.29.0.2",
+  "django-sqlite-object-storage>=0.1.1",
+  "gunicorn>=23.0.0",
+  "django-jsonfeed>=0.4.0",
+]
 
-[tool.poetry.dependencies]
-python = "^3.10"
-django = "^5.0.2"
-django-environ = "^0.11.2"
-django-storages = { extras = ["s3"], version = "^1.14.2" }
-whitenoise = "^6.6.0"
-wagtail = "^6.0.1"
-django-extensions = "^3.2.3"
-python-frontmatter = "^1.1.0"
-marko = "^2.0.3"
-wagtailcodeblock = "^1.29.0.2"
-django-sqlite-object-storage = "^0.1.0"
-gunicorn = "^22.0.0"
-django-jsonfeed = "^0.4.0"
+[tool.uv]
+dev-dependencies = [
+  "django-debug-toolbar>=4.4.6",
+  "djlint>=1.35.2",
+  "ipython>=8.27.0",
+  "ruff>=0.6.7",
+]
 
-
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.2.2"
-ipython = "^8.22.1"
-djlint = "^1.34.1"
-django-debug-toolbar = "^4.4.2"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.hatch.build.targets.wheel]
+packages = ["."]
 
 [tool.djlint]
 profile = "django"

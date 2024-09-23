@@ -2,11 +2,11 @@ MAKEFLAGS += --jobs
 
 .PHONY: python-server
 python-server:
-	python ./src/manage.py runserver 0.0.0.0:8000
+	cd src && uv run ./manage.py runserver 0.0.0.0:8000
 
 .PHONY: static-build
 static-build:
-	python src/manage.py collectstatic --noinput --clear
+	cd src && uv run ./manage.py collectstatic --noinput --clear
 
 .PHONY: static-watch
 static-watch:

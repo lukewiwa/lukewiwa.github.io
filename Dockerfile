@@ -1,16 +1,11 @@
 ARG FUNCTION_DIR="/function"
 ARG NODE_VERSION="20"
-FROM python:3.12-slim as base
+FROM python:3.12-slim AS base
 ARG FUNCTION_DIR
 
-ENV POETRY_VIRTUALENVS_CREATE="false"
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --upgrade pip poetry
-
-# Install project deps
-RUN --mount=type=cache,target=/root/.cache/pypoetry \
-    --mount=type=bind,source=src,target=/tmp/pip-tmp/ \
-    poetry --directory=/tmp/pip-tmp/ install
+COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.4 /lambda-adapter /opt/extensions/lambda-adapter
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
+ENV UV_CACHE_DIR=/tmp/uv UV_LINK_MODE=copy UV_PROJECT_ENVIRONMENT=/opt/venv
 
 WORKDIR ${FUNCTION_DIR}
 
@@ -23,30 +18,38 @@ ARG NODE_VERSION
 RUN curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
     apt-get install --no-install-recommends -y nodejs
 
-FROM base AS staticbuild
+FROM builder AS build
+ARG FUNCTION_DIR
 
 COPY src/ ${FUNCTION_DIR}
 
-# Collect all static files
 WORKDIR ${FUNCTION_DIR}
+
+RUN --mount=type=cache,target=/tmp/uv \
+    uv sync --no-dev
+
+# Dummy values so that we can run collectstatic
+# These will have no bearing on the final image
+ENV DJANGO_SECRET_KEY="dummy-secret-key-for-static-files-collection" \
+    ALLOWED_HOSTS="" \
+    DATABASE_ENGINE="django.db.backends.sqlite3" \
+    SQLITE_OBJECT_STORAGE_BUCKET_NAME="/tmp/dummy.sqlite3" \
+    DOMAIN="https://example.com"
 
 RUN --mount=type=cache,target=/root/.npm npm install
 RUN npm run build
 
-ENV DJANGO_SECRET_KEY="dummy-secret-key-for-static-files-collection" ALLOWED_HOSTS=""
-RUN python manage.py collectstatic --noinput --clear
 
 FROM base AS prod
 ARG FUNCTION_DIR
 
 # Copy django static files
-COPY --from=staticbuild /bundle /bundle
+COPY --from=build /staticfiles /staticfiles
 
 COPY src/ ${FUNCTION_DIR}
+COPY --from=build /opt/venv /opt/venv
 
-COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.4 /lambda-adapter /opt/extensions/lambda-adapter
-
-ENTRYPOINT [ "./entrypoint.sh" ]
 
 EXPOSE 8080
-CMD ["gunicorn", "config.wsgi:application"]
+ENTRYPOINT [ "./entrypoint.sh" ]
+CMD ["uv", "run", "gunicorn", "config.wsgi:application"]
