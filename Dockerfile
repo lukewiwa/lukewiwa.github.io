@@ -1,4 +1,5 @@
-ARG FUNCTION_DIR="/function"
+ARG BASE_DIR="/function"
+ARG FUNCTION_DIR="${BASE_DIR}/src"
 ARG NODE_VERSION="20"
 FROM python:3.12-slim AS base
 ARG FUNCTION_DIR
@@ -42,11 +43,15 @@ RUN npm run build
 
 FROM base AS prod
 ARG FUNCTION_DIR
+ARG BASE_DIR
 
 # Copy django static files
 COPY --from=build /staticfiles /staticfiles
 
+COPY _static/ ${BASE_DIR}/_static/
+COPY blog/ ${BASE_DIR}/blog/
 COPY src/ ${FUNCTION_DIR}
+
 COPY --from=build /opt/venv /opt/venv
 
 

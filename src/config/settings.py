@@ -13,9 +13,11 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import logging
 from datetime import timedelta
 from pathlib import Path
+from urllib.parse import urljoin
 
 import environ
 from django.urls import reverse_lazy
+from django.utils.log import DEFAULT_LOGGING
 
 logger = logging.getLogger(__name__)
 
@@ -30,6 +32,7 @@ env = environ.Env(
     DEBUG_TOOLBAR_ENABLED=(bool, False),
     ALLOWED_HOSTS=(list, []),
     DOMAIN=(str,),
+    STATIC_HOST=(str, ""),
     CSRF_COOKIE_NAME=(str, "wiwablogcsrftoken"),
     SESSION_COOKIE_NAME=(str, "wiwablogsessionid"),
     # Default session age. This tends to need tweaking from project to project.
@@ -136,6 +139,24 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "root": {"level": "INFO", "handlers": ["console"]},
+    "filters": DEFAULT_LOGGING["filters"],
+    "formatters": DEFAULT_LOGGING["formatters"],
+    "handlers": {
+        **DEFAULT_LOGGING["handlers"],
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        **DEFAULT_LOGGING["loggers"],
+    },
+}
+
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
@@ -195,7 +216,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = urljoin(env.str("STATIC_HOST"), "static/")
 WHITENOISE_ROOT = BASE_DIR / "public"
 STATIC_ROOT = env.str("STATIC_ROOT")
 STATICFILES_DIRS = (("frontend", (BASE_DIR / "frontend" / "dist")),)

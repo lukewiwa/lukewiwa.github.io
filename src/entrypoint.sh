@@ -1,5 +1,5 @@
 #! /usr/bin/env bash
 
-python manage.py migrate --noinput
+uv run python manage.py migrate --noinput
 
 exec "$@"

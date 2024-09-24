@@ -1,10 +1,11 @@
 import io
 import logging
 
-from core.models.mixins import CreatedModifiedMixin
 from django.contrib.auth import get_user_model
-from django.core.management import CommandError, call_command
+from django.core.management import call_command
 from django.db import models
+
+from core.models.mixins import CreatedModifiedMixin
 
 logger = logging.getLogger(__name__)
 
@@ -33,7 +34,7 @@ class ManagementCommandRun(CreatedModifiedMixin):
             )
             self.stdout = stdout.getvalue()
             self.stderr = stderr.getvalue()
-        except CommandError as e:
+        except Exception as e:
             self.exception = e
         return super().save(*args, **kwargs)
 

@@ -6,6 +6,8 @@ import {
   aws_route53_targets as targets,
   aws_s3 as s3,
   aws_apigatewayv2 as apigwv2,
+  aws_cloudfront as cloudfront,
+  aws_cloudfront_origins as origins,
   Duration,
   Stack,
   StackProps,
@@ -51,6 +53,16 @@ export class InfraStack extends Stack {
       versioned: true,
     });
 
+    const distribution = new cloudfront.Distribution(
+      this,
+      "WiwaCloudfrontDistribution",
+      {
+        defaultBehavior: {
+          origin: new origins.HttpOrigin(DOMAIN_NAME),
+        },
+      }
+    );
+
     const fn = new lambda.DockerImageFunction(this, "WiwaFunction", {
       code: lambda.DockerImageCode.fromImageAsset("..", {
         platform: Platform.LINUX_ARM64,
@@ -60,6 +72,7 @@ export class InfraStack extends Stack {
         DJANGO_SECRET_KEY,
         ALLOWED_HOSTS: `${DOMAIN_NAME},127.0.0.1`,
         DOMAIN: DOMAIN_NAME,
+        STATIC_HOST: `https://${distribution.domainName}`,
         AWS_STORAGE_BUCKET_NAME: mediaBucket.bucketName,
         SQLITE_OBJECT_STORAGE_BUCKET_NAME: dbBucket.bucketName,
         INITIAL_SUPERUSER_USERNAME,
@@ -68,7 +81,7 @@ export class InfraStack extends Stack {
         AWS_LWA_READINESS_CHECK_PATH: "/health_check/",
       },
       memorySize: 512,
-      timeout: Duration.seconds(30),
+      timeout: Duration.seconds(60),
       logRetention: logs.RetentionDays.ONE_MONTH,
     });
     dbBucket.grantReadWrite(fn);

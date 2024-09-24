@@ -263,14 +263,14 @@ wheels = [
 
 [[package]]
 name = "django-storages"
-version = "1.14.4"
+version = "1.14.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6d/88/77b5ede11147941dece064bd80ac618f6a4b91b4c9d5d305a2660014941e/django-storages-1.14.4.tar.gz", hash = "sha256:69aca94d26e6714d14ad63f33d13619e697508ee33ede184e462ed766dc2a73f", size = 83496 }
+sdist = { url = "https://files.pythonhosted.org/packages/25/27/49e42e29a069c3e314c7add6a57b15dba39cf5bc5a050fd5d818a2a11858/django-storages-1.14.2.tar.gz", hash = "sha256:51b36af28cc5813b98d5f3dfe7459af638d84428c8df4a03990c7d74d1bea4e5", size = 111090 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/e0/69/a4b2f2dfa51fd18fd898e10cc41d73a30965da7cb3b683f1375b1dc3dd5c/django_storages-1.14.4-py3-none-any.whl", hash = "sha256:d61930acb4a25e3aebebc6addaf946a3b1df31c803a6bf1af2f31c9047febaa3", size = 31809 },
+    { url = "https://files.pythonhosted.org/packages/b2/5f/124d304984bbec65a925b5fec38dcda159a32422101f115b9cf66678ead1/django_storages-1.14.2-py3-none-any.whl", hash = "sha256:1db759346b52ada6c2efd9f23d8241ecf518813eb31db9e2589207174f58f6ad", size = 47105 },
 ]
 
 [package.optional-dependencies]
@@ -1013,7 +1013,7 @@ requires-dist = [
     { name = "django-extensions", specifier = ">=3.2.3" },
     { name = "django-jsonfeed", specifier = ">=0.4.0" },
     { name = "django-sqlite-object-storage", specifier = ">=0.1.1" },
-    { name = "django-storages", extras = ["s3"], specifier = ">=1.14.4" },
+    { name = "django-storages", extras = ["s3"], specifier = "==1.14.2" },
     { name = "gunicorn", specifier = ">=23.0.0" },
     { name = "marko", specifier = ">=2.1.2" },
     { name = "python-frontmatter", specifier = ">=1.1.0" },

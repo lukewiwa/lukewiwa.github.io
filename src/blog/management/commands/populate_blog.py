@@ -28,6 +28,7 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args: Any, **options: Any):
+        logger.info("Setting up site")
         site = Site.objects.first()
         if not site:
             site = Site.objects.create(hostname=settings.DOMAIN, is_default_site=True)
@@ -36,9 +37,11 @@ class Command(BaseCommand):
         example_page.all().delete()
 
         if options.get("clear"):
+            logger.info("Clearing old pages")
             BlogPage.objects.all().delete()
             BlogIndexPage.objects.all().delete()
 
+        logger.info("Setting up the index page")
         root_page = Page.objects.get(title="Root")
         blog_index_pages = BlogIndexPage.objects.filter(title="Wiwa's Blog")
         if not blog_index_pages.exists():
@@ -51,6 +54,7 @@ class Command(BaseCommand):
         blog_dir = settings.ROOT_DIR / "blog"
         markdown_files = (f for f in blog_dir.iterdir() if f.suffix == ".md")
         for file in markdown_files:
+            logger.info("Processing %s", file)
             with open(file, "r") as f:
                 post = frontmatter.load(f)
             title = post.metadata["title"]
