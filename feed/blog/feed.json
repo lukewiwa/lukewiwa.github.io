@@ -6,8 +6,8 @@
   "description": "The Ramblings of Wiwa",
   "items": [
     {
-      "id": "https://lukewiwa.com/blog/new_blank_post/",
-      "url": "https://lukewiwa.com/blog/new_blank_post/",
+      "id": "https://lukewiwa.com/blog/django_on_aws_for_chump_change/",
+      "url": "https://lukewiwa.com/blog/django_on_aws_for_chump_change/",
       "title": "Django on AWS for Chump Change",
       "content_html": "<p>Below are the resources to my PyConAU 2024 talk &quot;Django on AWS for Chump Change&quot;</p>\n<!--more-->\n<ul>\n<li><a href=\"https://docs.google.com/presentation/d/1BXcYuaGFwHEirEcrNzsS98QNLGBaVpiNN-1sWQqnspI/edit?usp=sharing\">slides</a></li>\n<li><a href=\"https://github.com/lukewiwa/deploy-django-on-aws-for-chump-change\">infrastructure CDK repo</a></li>\n</ul>",
       "date_modified": "2024-11-21T00:00:00Z"

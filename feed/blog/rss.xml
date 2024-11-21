@@ -6,12 +6,12 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2024-11-21T21:39:21Z</lastBuildDate>
+        <lastBuildDate>2024-11-21T21:41:15Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>Django on AWS for Chump Change</title>
-            <link href="https://lukewiwa.com/blog/new_blank_post/"/>
-            <guid>https://lukewiwa.com/blog/new_blank_post/</guid>
+            <link href="https://lukewiwa.com/blog/django_on_aws_for_chump_change/"/>
+            <guid>https://lukewiwa.com/blog/django_on_aws_for_chump_change/</guid>
             <pubDate>2024-11-21T00:00:00Z</pubDate>
             <description>&lt;p&gt;Below are the resources to my PyConAU 2024 talk &amp;quot;Django on AWS for Chump Change&amp;quot;&lt;/p&gt;
 &lt;!--more--&gt;

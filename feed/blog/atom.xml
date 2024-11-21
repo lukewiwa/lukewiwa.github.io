@@ -5,14 +5,14 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2024-11-21T21:39:21Z</updated>
+    <updated>2024-11-21T21:41:15Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
     <entry>
         <title>Django on AWS for Chump Change</title>
-        <id>https://lukewiwa.com/blog/new_blank_post/</id>
-        <link href="https://lukewiwa.com/blog/new_blank_post/"/>
+        <id>https://lukewiwa.com/blog/django_on_aws_for_chump_change/</id>
+        <link href="https://lukewiwa.com/blog/django_on_aws_for_chump_change/"/>
         <updated>2024-11-21T00:00:00Z</updated>
         <content type="html">&lt;p&gt;Below are the resources to my PyConAU 2024 talk &amp;quot;Django on AWS for Chump Change&amp;quot;&lt;/p&gt;
 &lt;!--more--&gt;
