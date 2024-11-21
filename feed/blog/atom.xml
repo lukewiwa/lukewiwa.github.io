@@ -5,10 +5,22 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2024-09-28T12:18:47Z</updated>
+    <updated>2024-11-21T21:39:21Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>Django on AWS for Chump Change</title>
+        <id>https://lukewiwa.com/blog/new_blank_post/</id>
+        <link href="https://lukewiwa.com/blog/new_blank_post/"/>
+        <updated>2024-11-21T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;Below are the resources to my PyConAU 2024 talk &amp;quot;Django on AWS for Chump Change&amp;quot;&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1BXcYuaGFwHEirEcrNzsS98QNLGBaVpiNN-1sWQqnspI/edit?usp=sharing&quot;&gt;slides&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/lukewiwa/deploy-django-on-aws-for-chump-change&quot;&gt;infrastructure CDK repo&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;</content>
+    </entry>
     <entry>
         <title>Pocket Notebook</title>
         <id>https://lukewiwa.com/blog/pocket_notebook/</id>
@@ -814,13 +826,6 @@ def redirected():
 &lt;p&gt;A few fun things I&#39;ve done with the data can be found at my &lt;a href=&quot;https://lukewiwa.com/projects&quot;&gt;projects&lt;/a&gt; page.&lt;/p&gt;</content>
     </entry>
     <entry>
-        <title>A Dumping Ground</title>
-        <id>https://lukewiwa.com/blog/dumping_ground/</id>
-        <link href="https://lukewiwa.com/blog/dumping_ground/"/>
-        <updated>2017-03-03T00:00:00Z</updated>
-        <content type="html">&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</content>
-    </entry>
-    <entry>
         <title>The Case Against Gymnastics Teams</title>
         <id>https://lukewiwa.com/blog/gymnastics_teams_suck/</id>
         <link href="https://lukewiwa.com/blog/gymnastics_teams_suck/"/>
@@ -842,6 +847,13 @@ def redirected():
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In essence the gymnastics community has been asking itself the wrong questions and we really need to take a hard look at ourselves and decide what we really want from gymnastics in the long term. Granted it takes two medals away from the Olympic Games events but if we really want to be honest with ourselves as a community we should stop beating around the bush and tackle this issue head on.&lt;/p&gt;</content>
+    </entry>
+    <entry>
+        <title>A Dumping Ground</title>
+        <id>https://lukewiwa.com/blog/dumping_ground/</id>
+        <link href="https://lukewiwa.com/blog/dumping_ground/"/>
+        <updated>2017-03-03T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</content>
     </entry>
     <entry>
         <title>The “We Say You Do” Model Of Code Review Is Broken</title>
