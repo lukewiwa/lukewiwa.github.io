@@ -6,7 +6,7 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2024-11-21T21:41:15Z</lastBuildDate>
+        <lastBuildDate>2024-11-21T22:26:14Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>Django on AWS for Chump Change</title>
@@ -18,6 +18,10 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1BXcYuaGFwHEirEcrNzsS98QNLGBaVpiNN-1sWQqnspI/edit?usp=sharing&quot;&gt;slides&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/lukewiwa/deploy-django-on-aws-for-chump-change&quot;&gt;infrastructure CDK repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html&quot;&gt;Offical CDK starter guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/awslabs/aws-lambda-web-adapter&quot;&gt;AWS Lambda Web Adaptor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/lukewiwa/django_sqlite_object_storage&quot;&gt;Django Sqlite Object Storage github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://pypi.org/project/django-sqlite-object-storage/&quot;&gt;Django Sqlite Object Storage PyPI&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</description>
         </item>
         <item>

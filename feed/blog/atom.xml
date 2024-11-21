@@ -5,7 +5,7 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2024-11-21T21:41:15Z</updated>
+    <updated>2024-11-21T22:26:14Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
@@ -19,6 +19,10 @@
 &lt;ul&gt;
 &lt;li&gt;&lt;a href=&quot;https://docs.google.com/presentation/d/1BXcYuaGFwHEirEcrNzsS98QNLGBaVpiNN-1sWQqnspI/edit?usp=sharing&quot;&gt;slides&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a href=&quot;https://github.com/lukewiwa/deploy-django-on-aws-for-chump-change&quot;&gt;infrastructure CDK repo&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html&quot;&gt;Offical CDK starter guide&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/awslabs/aws-lambda-web-adapter&quot;&gt;AWS Lambda Web Adaptor&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://github.com/lukewiwa/django_sqlite_object_storage&quot;&gt;Django Sqlite Object Storage github&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;https://pypi.org/project/django-sqlite-object-storage/&quot;&gt;Django Sqlite Object Storage PyPI&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;</content>
     </entry>
     <entry>

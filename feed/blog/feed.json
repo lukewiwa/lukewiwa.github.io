@@ -9,7 +9,7 @@
       "id": "https://lukewiwa.com/blog/django_on_aws_for_chump_change/",
       "url": "https://lukewiwa.com/blog/django_on_aws_for_chump_change/",
       "title": "Django on AWS for Chump Change",
-      "content_html": "<p>Below are the resources to my PyConAU 2024 talk &quot;Django on AWS for Chump Change&quot;</p>\n<!--more-->\n<ul>\n<li><a href=\"https://docs.google.com/presentation/d/1BXcYuaGFwHEirEcrNzsS98QNLGBaVpiNN-1sWQqnspI/edit?usp=sharing\">slides</a></li>\n<li><a href=\"https://github.com/lukewiwa/deploy-django-on-aws-for-chump-change\">infrastructure CDK repo</a></li>\n</ul>",
+      "content_html": "<p>Below are the resources to my PyConAU 2024 talk &quot;Django on AWS for Chump Change&quot;</p>\n<!--more-->\n<ul>\n<li><a href=\"https://docs.google.com/presentation/d/1BXcYuaGFwHEirEcrNzsS98QNLGBaVpiNN-1sWQqnspI/edit?usp=sharing\">slides</a></li>\n<li><a href=\"https://github.com/lukewiwa/deploy-django-on-aws-for-chump-change\">infrastructure CDK repo</a></li>\n<li><a href=\"https://docs.aws.amazon.com/cdk/v2/guide/hello_world.html\">Offical CDK starter guide</a></li>\n<li><a href=\"https://github.com/awslabs/aws-lambda-web-adapter\">AWS Lambda Web Adaptor</a></li>\n<li><a href=\"https://github.com/lukewiwa/django_sqlite_object_storage\">Django Sqlite Object Storage github</a></li>\n<li><a href=\"https://pypi.org/project/django-sqlite-object-storage/\">Django Sqlite Object Storage PyPI</a></li>\n</ul>",
       "date_modified": "2024-11-21T00:00:00Z"
     },
     {
