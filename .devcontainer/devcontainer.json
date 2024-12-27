@@ -1,0 +1,84 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.241.1/containers/python-3
+{
+	"name": "Wiwa Blog",
+	"dockerComposeFile": "../docker-compose.yml",
+	"service": "app",
+	"workspaceFolder": "/function",
+	// Configure tool-specific properties.
+	"customizations": {
+		// Configure properties specific to VS Code.
+		"vscode": {
+			// Set *default* container specific settings.json values on container create.
+			"settings": {
+				"terminal.integrated.defaultProfile.linux": "zsh",
+				"python.defaultInterpreterPath": "/opt/venv/bin/python",
+				"editor.formatOnSave": true,
+				"[python]": {
+					"editor.defaultFormatter": "charliermarsh.ruff",
+					"editor.formatOnSave": true,
+					"editor.codeActionsOnSave": {
+						"source.fixAll": "explicit",
+						"source.organizeImports": "explicit"
+					},
+					"sqltools.useNodeRuntime": true,
+					"sqltools.connections": [
+						{
+							"name": "SQLite",
+							"driver": "SQLite",
+							"database": "/tmp/db.sqlite3",
+							"connectionTimeout": 15,
+							"previewLimit": 50
+						}
+					]
+				}
+			},
+			// Add the IDs of extensions you want installed when the container is created.
+			"extensions": [
+				"ms-python.python",
+				"ms-python.vscode-pylance",
+				"tamasfe.even-better-toml",
+				"streetsidesoftware.code-spell-checker",
+				"batisteo.vscode-django",
+				"eamodio.gitlens",
+				"dbaeumer.vscode-eslint",
+				"VisualStudioExptTeam.vscodeintellicode",
+				"VisualStudioExptTeam.intellicode-api-usage-examples",
+				"yzhang.markdown-all-in-one",
+				"esbenp.prettier-vscode",
+				"ms-python.mypy-type-checker",
+				"charliermarsh.ruff",
+				"monosans.djlint",
+				"mtxr.sqltools",
+				"mtxr.sqltools-driver-sqlite",
+				"bradlc.vscode-tailwindcss",
+				"exiasr.hadolint",
+				"redhat.vscode-commons",
+				"amazonwebservices.aws-toolkit-vscode",
+				"denoland.vscode-deno"
+			]
+		}
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"installZsh": true,
+			"configureZshAsDefaultShell": true,
+			"installOhMyZsh": true,
+			"installOhMyZshConfig": true,
+			"upgradePackages": true,
+			"username": "automatic",
+			"userUid": "automatic",
+			"userGid": "automatic"
+		},
+		"ghcr.io/devcontainers/features/git:1": {
+			"ppa": true,
+			"version": "os-provided"
+		},
+		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {},
+		"ghcr.io/lukewiwa/features/shellcheck:0.2.3": {},
+		"ghcr.io/dhoeric/features/hadolint:1": {},
+		"ghcr.io/devcontainers-community/features/deno": {
+			"version": "1.46.3"
+		}
+	}
+}

@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  a {
+    @apply underline text-blue-600;
+  }
+  a:hover {
+    @apply underline text-blue-700;
+  }
+
+  .blog-page p {
+    @apply mb-4;
+  }
+  .blog-page h1 {
+    @apply font-bold text-2xl mb-2;
+  }
+  .blog-page h2 {
+    @apply font-semibold text-xl mb-2;
+  }
+  .blog-page h3 {
+    @apply font-medium text-lg mb-2;
+  }
+  .blog-page h4 {
+    @apply font-normal text-base mb-2;
+  }
+  .blog-page ul {
+    @apply list-disc list-inside;
+  }
+  .blog-page ol {
+    @apply list-decimal list-inside;
+  }
+}

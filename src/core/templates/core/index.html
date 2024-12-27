@@ -1,0 +1,53 @@
+{% extends "core/base.html" %}
+{% load feather %}
+{% block main %}
+    <section class="my-10 flex flex-col items-center">
+        <h1 class="font-semibold text-4xl mb-2">Luke Wiwatowski</h1>
+        <div>Gymnastics Engineering Miscellaneous</div>
+    </section>
+    {% with header_class="font-medium text-3xl mb-2 flex flex-row items-center gap-1" %}
+        {% with div_class="mb-5" %}
+            <div class="{{ div_class }}">
+                <h2 class="{{ header_class }}">
+                    {% feather "award" %}
+                    <span>Gymnastics</span>
+                </h2>
+                <p>
+                    Australian Representative for 15 years. 2010 Delhi Commonwealth Games
+                    Gold Medal winner.
+                </p>
+            </div>
+            <div class="{{ div_class }}">
+                <h2 class="{{ header_class }}">
+                    {% feather "settings" %}
+                    <span>Engineering</span>
+                </h2>
+                <p>
+                    Bachelors in mechanical engineering from Swinburne University.
+                    Controls engineering at Alerton Australia. Lab Assistant for PV Lab
+                    Australia. Software Engineer for WSP Australia.
+                </p>
+            </div>
+            <div class="{{ div_class }}">
+                <h2 class="{{ header_class }}">
+                    {% feather "smartphone" %}
+                    <span>Online</span>
+                </h2>
+                <p>
+                    You can connect with me on the line using many different urls.
+                    <div class="ml-6 flex flex-row gap-4">
+                        {% with item_class="flex flex-row gap-1" %}
+                            <div class="{{ item_class }}">
+                                LinkedIn <a href="https://www.linkedin.com/in/lukewiwa/">{% feather "linkedin" className="no-underline" %}</a>
+                            </div>
+                            <div class="{{ item_class }}">
+                                GitHub <a href="https://github.com/lukewiwa/">{% feather "github" %}</a>
+                            </div>
+                        {% endwith %}
+                    </div>
+                </p>
+            </div>
+        {% endwith %}
+    {% endwith %}
+</div>
+{% endblock main %}
