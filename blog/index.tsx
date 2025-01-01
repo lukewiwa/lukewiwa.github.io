@@ -5,9 +5,13 @@ import { Helper } from "lume/core.ts";
 export const layout = "layouts/Base.tsx";
 export const title = "Blog";
 
-const Preview = (
-  { description, preview }: { description?: string; preview: string },
-) => {
+const Preview = ({
+  description,
+  preview,
+}: {
+  description?: string;
+  preview: string;
+}) => {
   if (description) {
     return <p dangerouslySetInnerHTML={{ __html: description }} />;
   }
@@ -16,7 +20,7 @@ const Preview = (
 
 export default (
   { search }: LumeDataProps,
-  { md, printDate }: Record<string, Helper>,
+  { md, printDate }: Record<string, Helper>
 ) => {
   return (
     <>
@@ -25,11 +29,9 @@ export default (
         const preview = md(content.split("<!--more-->")[0]);
         return (
           <section className="pb2" key={url}>
-            <h3>
-              <a href={url}>
-                {title}
-              </a>
-            </h3>
+            <h1 className="f3">
+              <a href={url}>{title}</a>
+            </h1>
             <time className="db gray mb1">{printDate(date)}</time>
             <Preview description={description} preview={preview} />
           </section>

@@ -1,0 +1,13 @@
+{% load static %}
+<header class="h-20 bg-gray-50 shadow-md">
+    <nav class="flex flex-row items-center justify-between max-w-3xl mx-auto h-full px-4">
+        <a class="no-underline font-light text-gray-900 hover:text-black text-2xl {% if home_link.active %}font-semibold{% else %}font-light{% endif %}"
+           href="{{ home_link.url }}">{{ home_link.title }}</a>
+        <div class="flex flex-row space-x-5 justify-end">
+            {% for link in links %}
+                <a class="no-underline text-gray-800 hover:text-black text-xl {% if link.active %}font-semibold{% else %}font-light{% endif %}"
+                   href="{{ link.url }}">{{ link.title }}</a>
+            {% endfor %}
+        </div>
+    </nav>
+</header>

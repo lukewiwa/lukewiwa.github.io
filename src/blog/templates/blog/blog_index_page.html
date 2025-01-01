@@ -1,0 +1,14 @@
+{% extends "core/base.html" %}
+{% load wagtailcore_tags wagtailimages_tags %}
+{% block main %}
+    {% for post in posts %}
+        <section class="mb-10">
+            {% pageurl post as post_url %}
+            {% include "core/includes/heading_link.html" with url=post_url title=post.title %}
+            {% include "blog/includes/date.html" with date=post.specific.date %}
+            {% for block in post.specific.before_the_fold %}
+                {% include_block block %}
+            {% endfor %}
+        </section>
+    {% endfor %}
+{% endblock main %}

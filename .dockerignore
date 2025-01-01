@@ -1,0 +1,10 @@
+**/.DS_Store
+.git/
+.vscode/
+**/node_modules/
+.devcontainer/
+**/.venv/
+infra/
+**/.ruff_cache/
+**/mypy_cache/
+**/__pycache__/

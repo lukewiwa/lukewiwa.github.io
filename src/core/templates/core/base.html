@@ -1,0 +1,23 @@
+{% load static navbar %}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charSet="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>
+            {% block title %}
+                Wiwa
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet" href="{% static "frontend/index.css" %}">
+    </head>
+    <body>
+        {% navbar %}
+        {% block body %}
+            <main class="{% block main_css %}pt-8 max-w-3xl mx-auto px-4{% endblock main_css %}">
+                {% block main %}
+                {% endblock main %}
+            </main>
+        {% endblock body %}
+    </body>
+</html>
