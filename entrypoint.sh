@@ -1,5 +1,9 @@
 #!/bin/bash
 
-# npm --prefix=src install
+cd src || return
+
+uv sync
+
+cd ..
 
 exec "$@"

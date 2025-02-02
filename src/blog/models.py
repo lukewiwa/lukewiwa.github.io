@@ -5,9 +5,9 @@ from wagtail.blocks import BlockQuoteBlock, RichTextBlock
 from wagtail.fields import StreamField
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.models import Page
-from wagtailcodeblock.blocks import CodeBlock
 
 from blog.blocks import FoldBlock
+from wagtail_highlight.blocks import CodeHighlightBlock
 
 
 class BlogIndexPage(Page):
@@ -27,7 +27,7 @@ class BlogPage(Page):
             ("rich_text", RichTextBlock()),
             ("image", ImageChooserBlock()),
             ("quote", BlockQuoteBlock()),
-            ("code", CodeBlock()),
+            ("code_highlight", CodeHighlightBlock()),
             ("fold", FoldBlock()),
         ]
     )

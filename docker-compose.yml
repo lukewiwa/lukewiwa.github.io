@@ -19,6 +19,8 @@ services:
       - INITIAL_SUPERUSER_EMAIL=${INITIAL_SUPERUSER_EMAIL}
 
       - CSRF_COOKIE_NAME=wiwablogcsrftoken
+      - CSRF_COOKIE_SECURE=false
+      - CSRF_COOKIE_HTTPONLY=false
       - SESSION_COOKIE_NAME=wiwablogsessionid
       - SESSION_COOKIE_SECURE=false
       - SESSION_COOKIE_HTTPONLY=false

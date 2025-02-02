@@ -1,0 +1,12 @@
+{
+  "extends": "@tsconfig/node20/tsconfig.json",
+  "compilerOptions": {
+    "lib": [
+      "dom",
+    ],
+    "jsx": "react", // or "react-jsx" if using React 17+ JSX Transform
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
+}

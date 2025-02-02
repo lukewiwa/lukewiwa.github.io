@@ -111,7 +111,7 @@ class Command(BaseCommand):
                     ):
                         blocks.append(
                             {
-                                "type": "code",
+                                "type": "code_highlight",
                                 "value": {
                                     "language": child.lang,
                                     "code": code_string,

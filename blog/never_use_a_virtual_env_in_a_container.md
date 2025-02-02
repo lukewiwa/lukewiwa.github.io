@@ -11,7 +11,7 @@ Don't.
 
 Never use python virtual environments in a container. At least not directly. There is one argument that holds some water and that's using it as a base to copy from in a multi-stage build but on all honesty that's done quite neatly with a pattern like this:
 
-```docker
+```dockerfile
 ARG PYTHON_VERSION="3.9"
 FROM python:${PYTHON_VERSION} AS builder
 ARG PYTHON_VERSION
@@ -32,7 +32,7 @@ COPY --from=builder /usr/local/bin/ /usr/local/bin/
 
 If we need to install "standalone python executables" then the best way is through `pipx`. A good example might be to install `cookiecutter`.
 
-```docker
+```dockerfile
 FROM python
 
 RUN python -m pip install pipx
