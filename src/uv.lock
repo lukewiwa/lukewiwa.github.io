@@ -118,7 +118,7 @@ name = "click"
 version = "8.1.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "platform_system == 'Windows'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/96/d3/f04c7bfcf5c1862a2a5b845c6b2b360488cf47af55dfa79c98f6a6bf98b5/click-8.1.7.tar.gz", hash = "sha256:ca9853ad459e787e2192211578cc907e7594e294c7ccc834310722b41b9ca6de", size = 336121 }
 wheels = [
@@ -918,7 +918,7 @@ name = "tqdm"
 version = "4.66.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "colorama", marker = "platform_system == 'Windows'" },
+    { name = "colorama", marker = "sys_platform == 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/58/83/6ba9844a41128c62e810fddddd72473201f3eacde02046066142a2d96cc5/tqdm-4.66.5.tar.gz", hash = "sha256:e1020aef2e5096702d8a025ac7d16b1577279c9d63f8375b63083e9a5f0fcbad", size = 169504 }
 wheels = [
@@ -991,18 +991,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/1c/46/11e5269099fd3a8d04f17dd99337e807863d639c984d59f9dfe957888c88/wagtail-bakery-0.8.0.tar.gz", hash = "sha256:6ed7bfca032ef69daa51267ea820d4a9780620783559122684f92569c1467ebc", size = 9380 }
 
 [[package]]
-name = "wagtailcodeblock"
-version = "1.29.0.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "wagtail" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/18/3d/8966a61fce51095dce11f46f80f8041a026e31f12dd550727ed38ec6be3f/wagtailcodeblock-1.29.0.2.tar.gz", hash = "sha256:4e20a30ff007f1558259b1e16a757aa8a89f72fbbae5dc62f264bc84af467954", size = 99293 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/87/49/2a8451de415ce1ae356f42cbf0f295abc5f851ed3cef8578b7c9422e49e5/wagtailcodeblock-1.29.0.2-py3-none-any.whl", hash = "sha256:c6bfe8be08f5e5968d7f25747f0a90f6e717159c62936a6732307382e8b2a8f5", size = 14127 },
-]
-
-[[package]]
 name = "wcwidth"
 version = "0.2.13"
 source = { registry = "https://pypi.org/simple" }
@@ -1054,7 +1042,6 @@ dependencies = [
     { name = "python-frontmatter" },
     { name = "wagtail" },
     { name = "wagtail-bakery" },
-    { name = "wagtailcodeblock" },
     { name = "whitenoise" },
 ]
 
@@ -1079,7 +1066,6 @@ requires-dist = [
     { name = "python-frontmatter", specifier = ">=1.1.0" },
     { name = "wagtail", specifier = ">=6.2.1" },
     { name = "wagtail-bakery", specifier = ">=0.8.0" },
-    { name = "wagtailcodeblock", specifier = ">=1.29.0.2" },
     { name = "whitenoise", specifier = ">=6.7.0" },
 ]
 
