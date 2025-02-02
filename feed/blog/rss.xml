@@ -6,7 +6,7 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2025-01-03T01:33:34Z</lastBuildDate>
+        <lastBuildDate>2025-02-02T04:26:22Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
             <title>Django on AWS for Chump Change</title>
@@ -136,7 +136,7 @@
             <description>&lt;p&gt;Don&#39;t.&lt;/p&gt;
 &lt;!--more--&gt;
 &lt;p&gt;Never use python virtual environments in a container. At least not directly. There is one argument that holds some water and that&#39;s using it as a base to copy from in a multi-stage build but on all honesty that&#39;s done quite neatly with a pattern like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-docker&quot;&gt;ARG PYTHON_VERSION=&amp;quot;3.9&amp;quot;
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;ARG PYTHON_VERSION=&amp;quot;3.9&amp;quot;
 FROM python:${PYTHON_VERSION} AS builder
 ARG PYTHON_VERSION
 
@@ -154,7 +154,7 @@ COPY --from=builder /usr/local/lib/python${PYTHON_VERSION}/site-packages/ /usr/l
 COPY --from=builder /usr/local/bin/ /usr/local/bin/
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;If we need to install &amp;quot;standalone python executables&amp;quot; then the best way is through &lt;code&gt;pipx&lt;/code&gt;. A good example might be to install &lt;code&gt;cookiecutter&lt;/code&gt;.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-docker&quot;&gt;FROM python
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;FROM python
 
 RUN python -m pip install pipx
 ENV PATH=&amp;quot;/root/.local/bin:$PATH&amp;quot;
@@ -172,7 +172,7 @@ RUN pipx install cookiecutter
 &lt;!--more--&gt;
 &lt;p&gt;I&#39;ve standardised my own development using dev containers for almost everything. It provides me with a consistent developer experience regardless of the machine and has been a huge boon for onboarding people onto big projects that require a lot of moving parts.&lt;/p&gt;
 &lt;p&gt;One annoying point that I had with them though is that any development tool you would like in your environment you would have to install into your container and that led to awkward Dockerfiles with patterns like this:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-docker&quot;&gt;WORKDIR /tmp/dev-setup
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;WORKDIR /tmp/dev-setup
 ARG HADOLINT_VERSION=&amp;quot;v2.10.0&amp;quot;
 ARG HADOLINT_ARCH=&amp;quot;arm64&amp;quot;
 RUN if [ &amp;quot;$DEV_ENV&amp;quot; = &amp;quot;vscode&amp;quot; ]; then \
@@ -301,7 +301,7 @@ def handler(event: LambdaEvent, context: LambdaContext):
 &lt;!--more--&gt;
 &lt;p&gt;There are a few ways to get around this, all of them involving either building the source yourself or standing on the shoulders of &lt;a href=&quot;https://github.com/FlipperPA/django-s3-sqlite/&quot;&gt;other people who already have&lt;/a&gt;. Some people have created &lt;a href=&quot;https://docs.aws.amazon.com/lambda/latest/dg/configuration-layers.html&quot;&gt;lambda layers&lt;/a&gt; to add the required libraries.&lt;/p&gt;
 &lt;p&gt;With lambda now supporting container images I thought an easy thing to do would be to precompile sqlite inside the image using the build process in the &lt;a href=&quot;https://github.com/coleifer/pysqlite3&quot;&gt;pysqlite3&lt;/a&gt; repository. This repo formalises a build process for creating more up to date &lt;code&gt;sqlite3&lt;/code&gt; python modules. Using the magic of &lt;a href=&quot;https://docs.docker.com/develop/develop-images/multistage-build/&quot;&gt;multi-stage builds&lt;/a&gt; we can build everything and only copy over the relevant output files. The final image won&#39;t even have the build tools which cuts down on image size. Here&#39;s an example:&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-docker&quot;&gt;ARG PYTHON_VERSION=3.9
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;ARG PYTHON_VERSION=3.9
 FROM public.ecr.aws/lambda/python:${PYTHON_VERSION} as build
 
 RUN yum groupinstall -y &amp;quot;Development Tools&amp;quot; &amp;amp;&amp;amp; \
@@ -551,7 +551,7 @@ pipelines:
             <description>&lt;p&gt;Using the magic of multi-stage builds using &lt;a href=&quot;https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage&quot;&gt;external images&lt;/a&gt; and Amazon&#39;s official aws cli &lt;a href=&quot;https://hub.docker.com/r/amazon/aws-cli&quot;&gt;docker image&lt;/a&gt; it&#39;s actually pretty easy to add the AWS CLI to a huge amount of containers.&lt;/p&gt;
 &lt;!--more--&gt;
 &lt;p&gt;I haven&#39;t tested this on every single docker image out there but for my needs this is a quick and easy way to add the AWS CLI. Configuration can be done using environment variables so no need for mucking around with config files.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-docker&quot;&gt;ARG IMAGE
+&lt;pre&gt;&lt;code class=&quot;language-dockerfile&quot;&gt;ARG IMAGE
 FROM ${IMAGE}
 
 # Install AWS CLI
