@@ -6,21 +6,40 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2025-02-19T12:48:37Z</lastBuildDate>
+        <lastBuildDate>2025-02-22T02:39:42Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <item>
-            <title>AWS cloudfront and Django</title>
-            <link href="https://lukewiwa.com/blog/aws_cloudfront_and_django/"/>
-            <guid>https://lukewiwa.com/blog/aws_cloudfront_and_django/</guid>
+            <title>AWS cloudfront and API Gateway with Django</title>
+            <link href="https://lukewiwa.com/blog/aws_cloudfront_and_api_gateway_with_django/"/>
+            <guid>https://lukewiwa.com/blog/aws_cloudfront_and_api_gateway_with_django/</guid>
             <pubDate>2025-02-19T00:00:00Z</pubDate>
-            <description>&lt;p&gt;If you are hosting a web app on AWS you should be putting a Cloudfront instance in front of it. There are a few advantages but at the end of the day it&#39;s cheaper, allows for global caching at the edge and provides a fairly straight forward way to obtain SSL certificates. But it seems really annoying and difficult to get it working with a Django app given Django&#39;s security model around the allowed hosts.&lt;/p&gt;
+            <description>&lt;p&gt;If you are hosting a web app on AWS you should be putting a Cloudfront instance in front of it. There are a few advantages but at the end of the day it&#39;s cheaper, allows for global caching at the edge and provides a fairly straight forward way to obtain SSL certificates. In my own hosting of apps I will more often than not use API gateway in front of Django too as this gives you some nice tools such as rate limiting and whatnot. But it seems really annoying and difficult to get it all working with a Django app given Django&#39;s security model around the allowed hosts.&lt;/p&gt;
 &lt;!--more--&gt;
-&lt;p&gt;I had a few goes at this and at first did a complicated version that used &lt;code&gt;x-forwarded-host&lt;/code&gt; headers and cloudfront functions but turns out the solution is somewhat simpler. We really need to keep three things in mind here.&lt;/p&gt;
-&lt;p&gt;First is that we need to allow all http methods. By default cloudfront only allows GET and OPTIONS, any writable http requests need to be explicitly allowed.&lt;/p&gt;
-&lt;p&gt;Secondly we need to be aware of the caching strategy. By default the AWS predefined CACHE OPTIMIZED strategy doesn&#39;t take into account cookies or query strings. In your typical django project we&#39;ll need both included to address user accounts and list views among other things.&lt;/p&gt;
-&lt;p&gt;Finally to forward the original domain header through to the django application we need to use the origin request policy to &lt;code&gt;ALL_VIEWER_EXCEPT_HOST_HEADER&lt;/code&gt;. Then we can set the domain in django settings in &lt;code&gt;ALLOWED_HOSTS&lt;/code&gt; and the application should work as expected. There is a predefined AWS origin request policy named &lt;code&gt;ALL_VIEWER&lt;/code&gt; but that will send through the host header as the cloudfront distribution domain and Django will error out with an unexpected host header error.&lt;/p&gt;
-&lt;p&gt;I believe this cloudfront configuration should work for any origin that cloudfront is setup against but I&#39;ve only really tested it with API Gateway. Below is a CDK representation of this configuration.&lt;/p&gt;
-&lt;pre&gt;&lt;code class=&quot;language-typescript&quot;&gt;
+&lt;p&gt;I had a few goes at this and thought it might be fairly straight forward but it turns out AWS needs it&#39;s own host headers for integration purposes if you are using cloudfront and API Gateway. As such we need to do a little bit of faff to get the host header over the Django.&lt;/p&gt;
+&lt;p&gt;Firstly on the application side we need to tell Django to use the &lt;code&gt;x-forwarded-host&lt;/code&gt; header to for host checks in the &lt;code&gt;ALLOWED_HOSTS&lt;/code&gt; setting. This is necessary if we are integrating into API Gateway or Lambda URLs since the host header is expected to be the domain of the cloudfront distribution.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-python&quot;&gt;ALLOWED_HOSTS = [&amp;quot;yourdomain.com&amp;quot;]
+USE_X_FORWARDED_HOST = True
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Secondly we need to actually forward the host through using the &lt;code&gt;x-forwarded-host&lt;/code&gt; header. Cloudfront has no native setting to do this for us so we need to use a cloudfront function. It&#39;s not particularly complicated but does introduce another resource to manage.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-javascript&quot;&gt;function handler(event) {
+  const request = event.request;
+  request.headers[&amp;quot;x-forwarded-host&amp;quot;] = { value: request.headers.host.value };
+  return request;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Thirdly we need to connect to our integration. Below is a CDK representation of what that would look like. It&#39;s important to note that there are a number of native &lt;a href=&quot;https://docs.aws.amazon.com/cdk/api/v2/docs/aws-cdk-lib.aws_cloudfront_origins-readme.html&quot;&gt;cloudfront CDK integrations&lt;/a&gt; in to various AWS services. In my particular case I&#39;m using API Gateway HTTP Endpoints which are somewhat simpler than the old REST Endpoints but you do have to do a little bit of work yourself.&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&quot;language-typescript&quot;&gt;const forwardHostHeader = new cloudfront.Function(
+  this,
+  &amp;quot;ForwardHeaderCfFunction&amp;quot;,
+  {
+    code: cloudfront.FunctionCode.fromFile({
+      // Filename of the above cloudfront function code
+      filePath: &amp;quot;./lib/forwardHostFunction.js&amp;quot;,
+    }),
+    runtime: cloudfront.FunctionRuntime.JS_2_0,
+  }
+);
+
 const cachePolicy = new cloudfront.CachePolicy(this, &amp;quot;CachePolicy&amp;quot;, {
   cookieBehavior: cloudfront.CacheCookieBehavior.all(),
   queryStringBehavior: cloudfront.CacheQueryStringBehavior.all(),
@@ -33,10 +52,16 @@ const distribution = new cloudfront.Distribution(
     domainNames: [&amp;quot;your-domain-name.com&amp;quot;],
     defaultBehavior: {
       // This could be a load balancer or an API gateway
-      // or any number of AWS services
+      // or any number of AWS services.
       origin: new origins.HttpOrigin(
         `internalAWSdomain.com`
       ),
+      functionAssociations: [
+        {
+          function: forwardHostHeader,
+          eventType: cloudfront.FunctionEventType.VIEWER_REQUEST,
+        }
+      ]
       cachePolicy,
       originRequestPolicy:
         cloudfront.OriginRequestPolicy.ALL_VIEWER_EXCEPT_HOST_HEADER,
@@ -46,7 +71,15 @@ const distribution = new cloudfront.Distribution(
     },
   }
 );
-&lt;/code&gt;&lt;/pre&gt;</description>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In terms of the cloudfront distribution itself there are some extra configurations that we need to add on the defaults to make our Django application work as expected.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;We need to allow all http methods. By default cloudfront only allows GET and OPTIONS, any writable http requests need to be explicitly allowed.&lt;/li&gt;
+&lt;li&gt;We need to be aware of the caching strategy. By default the AWS predefined CACHE OPTIMIZED strategy doesn&#39;t take into account cookies or query strings. In your typical django project we&#39;ll need both included to address user accounts and list views among other things.&lt;/li&gt;
+&lt;li&gt;We need to avoid forwarding the original host header through to API Gateway. This will break integrations and basically get a permission denied error so we use the &lt;code&gt;ALL_VIEWER_EXCEPT_HOST_HEADER&lt;/code&gt; managed policy.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With all this in place the host header should flow from cloudfront all the way through to our application using the &lt;code&gt;x-forwarded-host&lt;/code&gt; header and we should be able to set the &lt;code&gt;ALLOWED_HOSTS&lt;/code&gt; Django setting to our original URL.&lt;/p&gt;
+&lt;p&gt;Annoyingly I feel like none of this is particularly clear in the AWS docs, the only reference I could find to it was in the &lt;a href=&quot;https://docs.aws.amazon.com/AmazonCloudFront/latest/DeveloperGuide/using-managed-origin-request-policies.html#managed-origin-request-policy-all-viewer-except-host-header&quot;&gt;managed origin request policies page&lt;/a&gt; which calls out specifically API Gateway and Lambda function URLs as requiring this header.&lt;/p&gt;</description>
         </item>
         <item>
             <title>Django on AWS for Chump Change</title>
