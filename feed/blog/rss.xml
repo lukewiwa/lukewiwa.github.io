@@ -6,8 +6,15 @@
         <link href="https://lukewiwa.com/feed/blog/rss.xml" />
         <description>The Ramblings of Wiwa</description>
         
-        <lastBuildDate>2025-02-22T02:39:42Z</lastBuildDate>
+        <lastBuildDate>2025-03-24T03:49:39Z</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <item>
+            <title>End of lukewiwa/manylinux2014 Container Image Builds</title>
+            <link href="https://lukewiwa.com/blog/end_multi_arch_manylinux2014_builds/"/>
+            <guid>https://lukewiwa.com/blog/end_multi_arch_manylinux2014_builds/</guid>
+            <pubDate>2025-03-24T00:00:00Z</pubDate>
+            <description>&lt;p&gt;I previously created a &lt;a href=&quot;https://github.com/lukewiwa/manylinux2014&quot;&gt;github repo&lt;/a&gt; to amalgamate the different architectural builds of &lt;code&gt;manylinux2014&lt;/code&gt; into a multi architectural manifest. With manylinux2014 &lt;a href=&quot;https://github.com/pypa/manylinux/pull/1755&quot;&gt;gaining multiarchitectural image support&lt;/a&gt; I&#39;m going to stop the schedule for these builds.&lt;/p&gt;</description>
+        </item>
         <item>
             <title>AWS cloudfront and API Gateway with Django</title>
             <link href="https://lukewiwa.com/blog/aws_cloudfront_and_api_gateway_with_django/"/>
@@ -902,13 +909,6 @@ def redirected():
 &lt;p&gt;A few fun things I&#39;ve done with the data can be found at my &lt;a href=&quot;https://lukewiwa.com/projects&quot;&gt;projects&lt;/a&gt; page.&lt;/p&gt;</description>
         </item>
         <item>
-            <title>A Dumping Ground</title>
-            <link href="https://lukewiwa.com/blog/dumping_ground/"/>
-            <guid>https://lukewiwa.com/blog/dumping_ground/</guid>
-            <pubDate>2017-03-03T00:00:00Z</pubDate>
-            <description>&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</description>
-        </item>
-        <item>
             <title>The Case Against Gymnastics Teams</title>
             <link href="https://lukewiwa.com/blog/gymnastics_teams_suck/"/>
             <guid>https://lukewiwa.com/blog/gymnastics_teams_suck/</guid>
@@ -930,6 +930,13 @@ def redirected():
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In essence the gymnastics community has been asking itself the wrong questions and we really need to take a hard look at ourselves and decide what we really want from gymnastics in the long term. Granted it takes two medals away from the Olympic Games events but if we really want to be honest with ourselves as a community we should stop beating around the bush and tackle this issue head on.&lt;/p&gt;</description>
+        </item>
+        <item>
+            <title>A Dumping Ground</title>
+            <link href="https://lukewiwa.com/blog/dumping_ground/"/>
+            <guid>https://lukewiwa.com/blog/dumping_ground/</guid>
+            <pubDate>2017-03-03T00:00:00Z</pubDate>
+            <description>&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</description>
         </item>
         <item>
             <title>The “We Say You Do” Model Of Code Review Is Broken</title>
