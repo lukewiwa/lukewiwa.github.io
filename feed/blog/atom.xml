@@ -5,10 +5,34 @@
     <title>My Blog</title>
     <subtitle>The Ramblings of Wiwa</subtitle>
     
-    <updated>2025-03-24T03:49:39Z</updated>
+    <updated>2025-12-03T00:00:00Z</updated>
     <link href="https://lukewiwa.com/feed/blog/atom.xml" rel="self"/>
     <link rel="alternate" href="https://lukewiwa.com/blog"/>
     <id>https://lukewiwa.com/</id>
+    <entry>
+        <title>Tern Quick Haul One Year Review</title>
+        <id>https://lukewiwa.com/blog/tern_quick_haul_one_year_review/</id>
+        <link href="https://lukewiwa.com/blog/tern_quick_haul_one_year_review/"/>
+        <updated>2025-12-03T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;With a growing family the idea of buying a second car mostly for school drop off and local errands felt like bringing a gun to a knife fight. Financially and in terms of the overall space and hassle a second car would occupy in our lives. In essence we didn&#39;t really need two cars, we sort of needed a car and a half. I&#39;d been hearing good things about cargo bikes and their potential as a family vehicle. So we took a punt on buying one. It&#39;s been in our possession for over a year now and has done over 3000km in that time. In short it&#39;s been a fantastic investment for us on several axes: financial, fitness, health and overall wellbeing.&lt;/p&gt;
+&lt;!--more--&gt;
+&lt;p&gt;The cargo bike in question is a Tern Quick Haul P9. We came to the decision about buying this bike after utilising the Canberra E-Bike Library. This service allows you to borrow e-bikes over several weeks for a small fee. This allowed us to see how it would actually fit into our daily lives and really show the shortcomings of each style of cargo bike. Needless to say there are many styles, long-john or Bakfiets, Long Tail, Mid Tail, Trike and some other more exotic styles. In the end we tried a bunch and came to the conclusion that a mid tail would suit us best as we didn&#39;t need to haul two kids and it rode very much like a normal bike. There was pretty much no question that Tern is the front runner brand when it comes to long and mid tail cargo bikes. Along with using the excellent Bosch motor system they used largely standard parts and had a wide array of accessories that remains unmatched by any other vendor.&lt;/p&gt;
+&lt;h1&gt;Positives&lt;/h1&gt;
+&lt;p&gt;For the most part the cargo bike has been a resounding success. It has delayed our need for a second car and has provided me and my family an alternative for getting around town. Additionally it&#39;s fun! I can&#39;t describe how nice it is to chuck the kids on the back and just whizz around town. The motor makes light work of any hills or headwinds and we always get parking right out front of wherever we are going. Within certain bounds it&#39;s more convenient than getting in the car. The kids love it too, they are much more likely to enjoy hanging out on the bike than being shoved into the car. We can ride out for a picnic with all the blankets and snacks without breaking a sweat. I&#39;ve hauled my kids bikes on it!&lt;/p&gt;
+&lt;p&gt;Surprisingly even the cold winters here in Canberra have not been a huge deterrence. As long as I have the right clothing, good coverage over my hands, ears and toes, then I&#39;m fairly fine riding in the cold. The kids are perfectly fine too as long as I throw a heatpack in the back with them.&lt;/p&gt;
+&lt;p&gt;Even without kid duties I&#39;m often using it to pickup groceries or takeaway. I commute from time to time with it, I carry tools and accessories from the local hardware store. There is something quite nice about riding and not worrying about how much I can carry, the answer is always &amp;quot;a lot!&amp;quot;. Just the carrying capacity changes the way you think about riding.&lt;/p&gt;
+&lt;p&gt;The range on this machine is fantastic. I commute 20km each way to work with the motor set to &amp;quot;turbo&amp;quot; and I get home with battery to spare. I neither need nor want a spare battery, this is plenty. If I need to go further than this I&#39;m probably going to use the car or jump on public transport anyway. Anywhere that takes more than an hour commute is probably too annoying for me to do unless we&#39;re desperate.&lt;/p&gt;
+&lt;p&gt;The running costs are near zero. I do pay for insurance on the bike, and I get it professionally serviced from time to time since I don&#39;t have the tools to work on the electrical side of things. But those costs are comparatively quite reasonable and not something I want to skimp on.&lt;/p&gt;
+&lt;p&gt;The bottom line is that I and my family ride more. I&#39;m fitter and my family are more likely to ride, not just the cargo bike but our regular bikes too.&lt;/p&gt;
+&lt;h1&gt;Upgrades&lt;/h1&gt;
+&lt;p&gt;The groupset that came with the bike, a shimano alivio set, was frankly garbage. It would not shift reliably at all. I tweaked it so much to try and get it working but I suspect the cable run was just too long and windy. I eventually replaced it with a groupset from a Chinese manufacturer called L-Twoo. It was cheap but effective. With that installed it was night and day. The shifting since has been flawless.&lt;/p&gt;
+&lt;p&gt;I replaced the seat post with a cheap dropper post with a trigger built in to the seat. This has made switching between me adn my wife riding a breeze. I highly recommend this upgrade if you are sharing a bike with someone even slightly different in height to you.&lt;/p&gt;
+&lt;h1&gt;Downsides&lt;/h1&gt;
+&lt;p&gt;Every spring the magpies come out to swoop and it&#39;s annoying and discouraging for the kids. Luckily I&#39;m usually the target so i&#39;ve had to attach a tall flag and add a brim to my helmet to distract the maggies. In the same vein when the weather really turns wet it can be a miserable experience riding in the rain. I will say it&#39;s usually not that bad, I&#39;ll often times not regret getting out. But when it really comes down you&#39;re just going to get wet.&lt;/p&gt;
+&lt;p&gt;Additionally for any reasonable use case you will need to invest in some accessories. It&#39;s pretty much non negotiable that a front basket and extra rear storage need to be added at purchase time or very soon after. Carrying kids will up the cost again. The trick here is to frame the costs not as an extra expense, but as a trade off to not buying another car. None of these accessories cost that much when you compare to even the running costs of a car.&lt;/p&gt;
+&lt;h1&gt;Sprint Finish&lt;/h1&gt;
+&lt;p&gt;I can&#39;t gush enough about how good it has been, to the point where I&#39;ve convinced at least one friend to join the club. I&#39;m on the fence as to whether we will remain a one car family but the bike seems to have already paid for itself compared to the opportunity cost of purchasing a car. It&#39;s fun, my family are riding more and the maintenance costs are minimal.&lt;/p&gt;</content>
+    </entry>
     <entry>
         <title>End of lukewiwa/manylinux2014 Container Image Builds</title>
         <id>https://lukewiwa.com/blog/end_multi_arch_manylinux2014_builds/</id>
@@ -910,6 +934,13 @@ def redirected():
 &lt;p&gt;A few fun things I&#39;ve done with the data can be found at my &lt;a href=&quot;https://lukewiwa.com/projects&quot;&gt;projects&lt;/a&gt; page.&lt;/p&gt;</content>
     </entry>
     <entry>
+        <title>A Dumping Ground</title>
+        <id>https://lukewiwa.com/blog/dumping_ground/</id>
+        <link href="https://lukewiwa.com/blog/dumping_ground/"/>
+        <updated>2017-03-03T00:00:00Z</updated>
+        <content type="html">&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</content>
+    </entry>
+    <entry>
         <title>The Case Against Gymnastics Teams</title>
         <id>https://lukewiwa.com/blog/gymnastics_teams_suck/</id>
         <link href="https://lukewiwa.com/blog/gymnastics_teams_suck/"/>
@@ -931,13 +962,6 @@ def redirected():
 &lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;In essence the gymnastics community has been asking itself the wrong questions and we really need to take a hard look at ourselves and decide what we really want from gymnastics in the long term. Granted it takes two medals away from the Olympic Games events but if we really want to be honest with ourselves as a community we should stop beating around the bush and tackle this issue head on.&lt;/p&gt;</content>
-    </entry>
-    <entry>
-        <title>A Dumping Ground</title>
-        <id>https://lukewiwa.com/blog/dumping_ground/</id>
-        <link href="https://lukewiwa.com/blog/dumping_ground/"/>
-        <updated>2017-03-03T00:00:00Z</updated>
-        <content type="html">&lt;p&gt;I have tried a few different iterations of personal websites and of online publishing in the past. Although I will still publish random thoughts on my favourite social media sites and longer thoughts tend to find their way to &lt;a href=&quot;https://medium.com/@lukewiwa&quot;&gt;medium&lt;/a&gt; this platform might be a nice dumping ground for a few things. Mainly I intend for this to become a landing page for some personal projects and also a better place to leave more personal or technical ramblings.&lt;/p&gt;</content>
     </entry>
     <entry>
         <title>The “We Say You Do” Model Of Code Review Is Broken</title>
