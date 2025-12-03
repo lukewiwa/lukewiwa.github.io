@@ -9,9 +9,9 @@ If you are hosting a web app on AWS you should be putting a Cloudfront instance 
 
 <!--more-->
 
-I had a few goes at this and thought it might be fairly straight forward but it turns out AWS needs it's own host headers for integration purposes if you are using cloudfront and API Gateway. As such we need to do a little bit of faff to get the host header over the Django.
+I had a few goes at this and thought it might be fairly straight forward but it turns out AWS needs it's own host headers for integration purposes if you are using cloudfront and API Gateway. As such we need to do a little bit of faff to get the host header over to Django.
 
-Firstly on the application side we need to tell Django to use the `x-forwarded-host` header to for host checks in the `ALLOWED_HOSTS` setting. This is necessary if we are integrating into API Gateway or Lambda URLs since the host header is expected to be the domain of the cloudfront distribution.
+Firstly on the application side we need to tell Django to use the `x-forwarded-host` header for host checks in the `ALLOWED_HOSTS` setting. This is necessary if we are integrating into API Gateway or Lambda URLs since the host header is expected to be the domain of the cloudfront distribution.
 
 ```python
 ALLOWED_HOSTS = ["yourdomain.com"]

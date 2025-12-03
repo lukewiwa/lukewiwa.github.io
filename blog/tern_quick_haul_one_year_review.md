@@ -29,7 +29,7 @@ The bottom line is that I and my family ride more. I'm fitter and my family are 
 
 The groupset that came with the bike, a shimano alivio set, was frankly garbage. It would not shift reliably at all. I tweaked it so much to try and get it working but I suspect the cable run was just too long and windy. I eventually replaced it with a groupset from a Chinese manufacturer called L-Twoo. It was cheap but effective. With that installed it was night and day. The shifting since has been flawless.
 
-I replaced the seat post with a cheap dropper post with a trigger built in to the seat. This has made switching between me adn my wife riding a breeze. I highly recommend this upgrade if you are sharing a bike with someone even slightly different in height to you.
+I replaced the seat post with a cheap dropper post with a trigger built in to the seat. This has made switching between me and my wife riding a breeze. I highly recommend this upgrade if you are sharing a bike with someone even slightly different in height to you.
 
 # Downsides
 
