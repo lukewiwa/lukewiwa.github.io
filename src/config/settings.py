@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "admin_core.apps.AdminCoreConfig",
     "admin_utils.apps.AdminUtilsConfig",
+    "django.contrib.sitemaps",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",

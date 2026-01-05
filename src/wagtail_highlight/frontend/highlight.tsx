@@ -1,5 +1,5 @@
 import hljs from "highlight.js";
-import "highlight.js/styles/default.css";
+// Styles are loaded via CDN in the template for dark mode support
 
 const highlightContainers = document.querySelectorAll(
   `code[data-wagtail-highlight="container"]`

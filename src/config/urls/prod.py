@@ -16,8 +16,17 @@ Including another URLconf
 """
 
 from django.contrib import admin
+from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
 from django.views.generic.base import RedirectView
+
+from core.sitemaps import BlogIndexSitemap, BlogSitemap, StaticViewSitemap
+
+sitemaps = {
+    "static": StaticViewSitemap,
+    "blog": BlogSitemap,
+    "blog_index": BlogIndexSitemap,
+}
 
 urlpatterns = [
     path("", include("core.urls.prod")),
@@ -25,6 +34,12 @@ urlpatterns = [
     path("blog/", include("blog.urls")),
     # path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
+    path(
+        "sitemap.xml",
+        sitemap,
+        {"sitemaps": sitemaps},
+        name="django.contrib.sitemaps.views.sitemap",
+    ),
     path(
         "feed/blog/",
         include(
