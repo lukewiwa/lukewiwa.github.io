@@ -3,7 +3,20 @@ import io
 
 import requests
 from bakery.views import BuildableTemplateView
+from django.http import HttpResponse
+from django.views import View
 from django.views.generic import RedirectView, TemplateView
+
+
+class RobotsTxtView(View):
+    def get(self, request):
+        sitemap_url = request.build_absolute_uri("/sitemap.xml")
+        content = f"""User-agent: *
+Allow: /
+
+Sitemap: {sitemap_url}
+"""
+        return HttpResponse(content, content_type="text/plain")
 
 
 class IndexView(BuildableTemplateView):

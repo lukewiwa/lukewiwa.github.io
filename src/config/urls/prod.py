@@ -22,6 +22,7 @@ from django.views.decorators.cache import cache_page
 from django.views.generic.base import RedirectView
 
 from core.sitemaps import BlogIndexSitemap, BlogSitemap, StaticViewSitemap
+from core.views import RobotsTxtView
 
 sitemaps = {
     "static": StaticViewSitemap,
@@ -38,6 +39,7 @@ urlpatterns = [
     path("blog/", include("blog.urls")),
     # path("accounts/", include("django.contrib.auth.urls")),
     path("admin/", admin.site.urls),
+    path("robots.txt", RobotsTxtView.as_view(), name="robots_txt"),
     path(
         "sitemap.xml",
         cached_sitemap,
