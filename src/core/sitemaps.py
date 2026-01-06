@@ -1,7 +1,7 @@
 from django.contrib.sitemaps import Sitemap
 from django.urls import reverse
 
-from blog.models import BlogPage
+from blog.models import BlogIndexPage, BlogPage
 
 
 class StaticViewSitemap(Sitemap):
@@ -20,7 +20,9 @@ class BlogSitemap(Sitemap):
     changefreq = "weekly"
 
     def items(self):
-        return BlogPage.objects.live().order_by("-date")
+        return BlogPage.objects.live().only(
+            "url_path", "slug", "latest_revision_created_at"
+        ).order_by("-date")
 
     def lastmod(self, obj):
         return obj.latest_revision_created_at
@@ -34,8 +36,10 @@ class BlogIndexSitemap(Sitemap):
     changefreq = "daily"
 
     def items(self):
-        return ["blog_index"]
+        return BlogIndexPage.objects.live()
 
-    def location(self, item):
-        # Blog index is at /blog/
-        return "/blog/"
+    def lastmod(self, obj):
+        return obj.latest_revision_created_at
+
+    def location(self, obj):
+        return obj.url

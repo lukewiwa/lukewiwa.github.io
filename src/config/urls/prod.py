@@ -18,6 +18,7 @@ Including another URLconf
 from django.contrib import admin
 from django.contrib.sitemaps.views import sitemap
 from django.urls import include, path
+from django.views.decorators.cache import cache_page
 from django.views.generic.base import RedirectView
 
 from core.sitemaps import BlogIndexSitemap, BlogSitemap, StaticViewSitemap
@@ -28,6 +29,9 @@ sitemaps = {
     "blog_index": BlogIndexSitemap,
 }
 
+# Cache sitemap for 24 hours (86400 seconds)
+cached_sitemap = cache_page(86400)(sitemap)
+
 urlpatterns = [
     path("", include("core.urls.prod")),
     path("", include("core.urls.health_check")),
@@ -36,7 +40,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path(
         "sitemap.xml",
-        sitemap,
+        cached_sitemap,
         {"sitemaps": sitemaps},
         name="django.contrib.sitemaps.views.sitemap",
     ),
