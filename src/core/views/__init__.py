@@ -3,6 +3,7 @@ import io
 
 import requests
 from bakery.views import BuildableTemplateView
+from django.urls import reverse
 from django.views.generic import RedirectView, TemplateView
 
 
@@ -12,7 +13,8 @@ class RobotsTxtView(TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["sitemap_url"] = self.request.build_absolute_uri("/sitemap.xml")
+        sitemap_path = reverse("django.contrib.sitemaps.views.sitemap")
+        context["sitemap_url"] = self.request.build_absolute_uri(sitemap_path)
         return context
 
 
