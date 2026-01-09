@@ -1,21 +1,19 @@
-MAKEFLAGS += --jobs
-
-.PHONY: python-server
+# Run Django development server
 python-server:
 	cd src && uv run ./manage.py runserver 0.0.0.0:8000
 
-.PHONY: static-build
+# Collect static files
 static-build:
 	cd src && uv run ./manage.py collectstatic --noinput --clear
 
-.PHONY: static-watch
+# Watch and build static assets
 static-watch:
 	npm --prefix=src run dev
 
+# Start both python server and static watch in parallel
+start:
+	just python-server & just static-watch
 
-.PHONY: start
-start: python-server static-watch
-
-.PHONY: deploy
+# Deploy infrastructure using CDK
 deploy:
 	cd infra && npm run cdk -- deploy --all --require-approval never
