@@ -2,6 +2,7 @@ import argparse
 import datetime
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Any
 
@@ -12,7 +13,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.core.management import BaseCommand
-from django.core.management.base import CommandParser
+from django.core.management.base import CommandError, CommandParser
 from django.db import transaction
 from django.utils import timezone
 from wagtail.images import get_image_model
@@ -26,8 +27,6 @@ Image = get_image_model()
 
 User = get_user_model()
 
-lukewiwa = User.objects.get(username="lukewiwa")
-
 
 class Command(BaseCommand):
     def add_arguments(self, parser: CommandParser) -> None:
@@ -35,6 +34,22 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args: Any, **options: Any):
+        username = os.getenv("INITIAL_SUPERUSER_USERNAME")
+        if not username:
+            raise CommandError(
+                "INITIAL_SUPERUSER_USERNAME environment variable is not set. "
+                "Please set it to the username of an existing superuser."
+            )
+
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise CommandError(
+                f"User '{username}' does not exist in the database. "
+                "Please create the user first or set INITIAL_SUPERUSER_USERNAME "
+                "to an existing user's username."
+            )
+
         logger.info("Setting up site")
         site = Site.objects.first()
         if not site:
@@ -138,7 +153,7 @@ class Command(BaseCommand):
             )
 
             blog_page = BlogPage(
-                owner=lukewiwa,
+                owner=user,
                 title=title,
                 date=date,
                 body=body,
@@ -149,7 +164,7 @@ class Command(BaseCommand):
             )
             blog_index_page.add_child(instance=blog_page)
             revision = blog_page.save_revision()
-            revision.publish(user=lukewiwa)
+            revision.publish(user=user)
 
             blog_page.revisions.update(created_at=blog_datetime)
             blog_page.first_published_at = blog_datetime
