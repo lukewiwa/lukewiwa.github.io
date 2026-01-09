@@ -13,7 +13,7 @@ from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.core.management import BaseCommand
-from django.core.management.base import CommandParser
+from django.core.management.base import CommandError, CommandParser
 from django.db import transaction
 from django.utils import timezone
 from wagtail.images import get_image_model
@@ -36,9 +36,19 @@ class Command(BaseCommand):
     def handle(self, *args: Any, **options: Any):
         username = os.getenv("INITIAL_SUPERUSER_USERNAME")
         if not username:
-            raise ValueError("INITIAL_SUPERUSER_USERNAME environment variable is not set")
+            raise CommandError(
+                "INITIAL_SUPERUSER_USERNAME environment variable is not set. "
+                "Please set it to the username of an existing superuser."
+            )
 
-        user = User.objects.get(username=username)
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            raise CommandError(
+                f"User '{username}' does not exist in the database. "
+                "Please create the user first or set INITIAL_SUPERUSER_USERNAME "
+                "to an existing user's username."
+            )
 
         logger.info("Setting up site")
         site = Site.objects.first()
