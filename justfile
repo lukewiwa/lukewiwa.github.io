@@ -15,11 +15,8 @@ static-watch:
 	npm --prefix=src run dev
 
 # Start both python server and static watch in parallel
-start:
-	#!/usr/bin/env bash
-	set -euo pipefail
-	trap 'kill 0' SIGINT SIGTERM
-	just python-server & just static-watch & wait
+[parallel]
+start: python-server static-watch
 
 # Deploy infrastructure using CDK
 deploy:
