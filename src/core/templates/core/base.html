@@ -2,13 +2,38 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charSet="UTF-8" />
+        <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>
             {% block title %}
                 Wiwa
             {% endblock title %}
         </title>
+        {% block meta_description %}
+            <meta name="description" content="Luke Wiwatowski - Gymnastics, Engineering, Miscellaneous" />
+        {% endblock meta_description %}
+
+        <!-- Open Graph / Facebook -->
+        <meta property="og:type" content="{% block og_type %}website{% endblock og_type %}" />
+        <meta property="og:title" content="{% block og_title %}Wiwa{% endblock og_title %}" />
+        {% block og_description %}
+            <meta property="og:description" content="Luke Wiwatowski - Gymnastics, Engineering, Miscellaneous" />
+        {% endblock og_description %}
+        <meta property="og:site_name" content="Wiwa" />
+        {% block og_url %}<meta property="og:url" content="{{ request.build_absolute_uri }}" />{% endblock og_url %}
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:title" content="{% block twitter_title %}Wiwa{% endblock twitter_title %}" />
+        {% block twitter_description %}
+            <meta name="twitter:description" content="Luke Wiwatowski - Gymnastics, Engineering, Miscellaneous" />
+        {% endblock twitter_description %}
+
+        <!-- Feeds -->
+        <link rel="alternate" type="application/rss+xml" title="Wiwa RSS Feed" href="{% url 'blog_rss_feed' %}" />
+        <link rel="alternate" type="application/atom+xml" title="Wiwa Atom Feed" href="{% url 'blog_atom_feed' %}" />
+        <link rel="alternate" type="application/json" title="Wiwa JSON Feed" href="{% url 'blog_json_feed' %}" />
+
         <link rel="stylesheet" href="{% static "frontend/index.css" %}">
         {% include "wagtail_highlight/includes/highlight_script.html" %}
     </head>
