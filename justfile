@@ -16,7 +16,10 @@ static-watch:
 
 # Start both python server and static watch in parallel
 start:
-	just python-server & just static-watch
+	#!/usr/bin/env bash
+	set -euo pipefail
+	trap 'kill 0' SIGINT SIGTERM
+	just python-server & just static-watch & wait
 
 # Deploy infrastructure using CDK
 deploy:
