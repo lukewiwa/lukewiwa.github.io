@@ -2,6 +2,7 @@ import argparse
 import datetime
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Any
 
@@ -26,8 +27,6 @@ Image = get_image_model()
 
 User = get_user_model()
 
-lukewiwa = User.objects.get(username="lukewiwa")
-
 
 class Command(BaseCommand):
     def add_arguments(self, parser: CommandParser) -> None:
@@ -35,6 +34,12 @@ class Command(BaseCommand):
 
     @transaction.atomic
     def handle(self, *args: Any, **options: Any):
+        username = os.getenv("INITIAL_SUPERUSER_USERNAME")
+        if not username:
+            raise ValueError("INITIAL_SUPERUSER_USERNAME environment variable is not set")
+
+        user = User.objects.get(username=username)
+
         logger.info("Setting up site")
         site = Site.objects.first()
         if not site:
@@ -138,7 +143,7 @@ class Command(BaseCommand):
             )
 
             blog_page = BlogPage(
-                owner=lukewiwa,
+                owner=user,
                 title=title,
                 date=date,
                 body=body,
@@ -149,7 +154,7 @@ class Command(BaseCommand):
             )
             blog_index_page.add_child(instance=blog_page)
             revision = blog_page.save_revision()
-            revision.publish(user=lukewiwa)
+            revision.publish(user=user)
 
             blog_page.revisions.update(created_at=blog_datetime)
             blog_page.first_published_at = blog_datetime
