@@ -1,5 +1,36 @@
 {% extends "core/base.html" %}
 {% load wagtailcore_tags wagtailimages_tags %}
+
+{% block title %}{{ page.title }} | Wiwa{% endblock title %}
+
+{% block meta_description %}
+    {% if page.description %}
+        <meta name="description" content="{{ page.description }}" />
+    {% else %}
+        <meta name="description" content="{{ page.title }}" />
+    {% endif %}
+{% endblock meta_description %}
+
+{% block og_type %}article{% endblock og_type %}
+{% block og_title %}{{ page.title }}{% endblock og_title %}
+{% block og_description %}
+    {% if page.description %}
+        <meta property="og:description" content="{{ page.description }}" />
+    {% else %}
+        <meta property="og:description" content="{{ page.title }}" />
+    {% endif %}
+{% endblock og_description %}
+{% block og_url %}<meta property="og:url" content="{{ page.full_url }}" />{% endblock og_url %}
+
+{% block twitter_title %}{{ page.title }}{% endblock twitter_title %}
+{% block twitter_description %}
+    {% if page.description %}
+        <meta name="twitter:description" content="{{ page.description }}" />
+    {% else %}
+        <meta name="twitter:description" content="{{ page.title }}" />
+    {% endif %}
+{% endblock twitter_description %}
+
 {% block main %}
     <article class="pb-4 blog-page">
         <h1 class="font-medium text-4xl mb-2">{{ page.title }}</h1>
