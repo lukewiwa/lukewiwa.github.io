@@ -30,9 +30,9 @@
         {% endblock twitter_description %}
 
         <!-- Feeds -->
-        <link rel="alternate" type="application/rss+xml" title="Wiwa RSS Feed" href="/blog/feed/rss.xml" />
-        <link rel="alternate" type="application/atom+xml" title="Wiwa Atom Feed" href="/blog/feed/atom.xml" />
-        <link rel="alternate" type="application/json" title="Wiwa JSON Feed" href="/blog/feed/feed.json" />
+        <link rel="alternate" type="application/rss+xml" title="Wiwa RSS Feed" href="{% url 'blog_rss_feed' %}" />
+        <link rel="alternate" type="application/atom+xml" title="Wiwa Atom Feed" href="{% url 'blog_atom_feed' %}" />
+        <link rel="alternate" type="application/json" title="Wiwa JSON Feed" href="{% url 'blog_json_feed' %}" />
 
         <link rel="stylesheet" href="{% static "frontend/index.css" %}">
         {% include "wagtail_highlight/includes/highlight_script.html" %}
