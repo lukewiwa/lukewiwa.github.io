@@ -3,6 +3,7 @@ import io
 
 import requests
 from bakery.views import BuildableTemplateView
+from django.shortcuts import render
 from django.views.generic import RedirectView, TemplateView
 
 
@@ -38,3 +39,11 @@ class CodeOfPointsView(TemplateView):
         context["headers"] = delete_first_column_in_line(next(reader))
         context["data"] = (delete_first_column_in_line(line) for line in reader)
         return context
+
+
+def custom_404_view(request, exception):
+    return render(request, "404.html", status=404)
+
+
+def custom_500_view(request):
+    return render(request, "500.html", status=500)
