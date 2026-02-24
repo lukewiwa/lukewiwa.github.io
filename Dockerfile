@@ -1,6 +1,7 @@
+FROM node:24-slim AS node_source
+
 ARG BASE_DIR="/function"
 ARG FUNCTION_DIR="${BASE_DIR}/src"
-ARG NODE_VERSION="20"
 FROM python:3.12-slim AS base
 ARG FUNCTION_DIR
 
@@ -12,12 +13,13 @@ WORKDIR ${FUNCTION_DIR}
 
 FROM base AS builder
 
-RUN apt update && apt install curl --yes
+# Copy Node.js and NPM binaries
+COPY --from=node_source /usr/local/bin/node /usr/local/bin/node
+COPY --from=node_source /usr/local/lib/node_modules /usr/local/lib/node_modules
 
-# Install node https://github.com/nodesource/distributions#debian-and-ubuntu-based-distributions
-ARG NODE_VERSION
-RUN curl -fsSL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - && \
-    apt-get install --no-install-recommends -y nodejs
+# Re-link npm and npx so they work in the new image
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
 FROM builder AS build
 ARG FUNCTION_DIR
