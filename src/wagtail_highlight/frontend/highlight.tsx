@@ -1,5 +1,5 @@
 import hljs from "highlight.js";
-import "highlight.js/styles/default.css";
+import "./highlight-themes.css";
 
 const highlightContainers = document.querySelectorAll(
   `code[data-wagtail-highlight="container"]`
