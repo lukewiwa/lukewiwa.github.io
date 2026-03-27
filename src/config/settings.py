@@ -51,6 +51,7 @@ env = environ.Env(
     AWS_S3_ACCESS_KEY_ID=(str, None),
     AWS_S3_SECRET_ACCESS_KEY=(str, None),
     AWS_S3_ENDPOINT_URL=(str, None),
+    AWS_S3_PROXIES=(dict, None),
     DB_PATH=(str, "/tmp/db.sqlite3"),
 )
 
@@ -224,6 +225,7 @@ STORAGES = {
             "access_key": env.str("AWS_S3_ACCESS_KEY_ID"),
             "secret_key": env.str("AWS_S3_SECRET_ACCESS_KEY"),
             "endpoint_url": env.str("AWS_S3_ENDPOINT_URL"),
+            "proxies": env.dict("AWS_S3_PROXIES"),
             "location": "media",
         },
     },
