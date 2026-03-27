@@ -55,7 +55,7 @@ export class InfraStack extends Stack {
       DJANGO_SECRET_KEY,
       DOMAIN: DOMAIN_NAME,
       AWS_STORAGE_BUCKET_NAME: mediaBucket.bucketName,
-      SQLITE_OBJECT_STORAGE_BUCKET_NAME: dbBucket.bucketName,
+      LITESTREAM_REPLICA_URL: `s3://${dbBucket.bucketName}/db`,
       INITIAL_SUPERUSER_USERNAME,
       INITIAL_SUPERUSER_PASSWORD,
       INITIAL_SUPERUSER_EMAIL,

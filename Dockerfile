@@ -9,6 +9,9 @@ COPY --from=public.ecr.aws/awsguru/aws-lambda-adapter:0.8.4 /lambda-adapter /opt
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 ENV UV_CACHE_DIR=/tmp/uv UV_LINK_MODE=copy UV_PROJECT_ENVIRONMENT=/opt/venv
 
+COPY --from=ghcr.io/lukewiwa/just-container:latest /usr/local/bin/just /usr/local/bin/just
+COPY --from=litestream/litestream:latest /usr/local/bin/litestream /usr/local/bin/litestream
+
 WORKDIR ${FUNCTION_DIR}
 
 FROM base AS builder
@@ -35,8 +38,6 @@ RUN --mount=type=cache,target=/tmp/uv \
 # These will have no bearing on the final image
 ENV DJANGO_SECRET_KEY="dummy-secret-key-for-static-files-collection" \
     ALLOWED_HOSTS="" \
-    DATABASE_ENGINE="django.db.backends.sqlite3" \
-    SQLITE_OBJECT_STORAGE_BUCKET_NAME="/tmp/dummy.sqlite3" \
     DOMAIN="https://example.com"
 
 RUN --mount=type=cache,target=/root/.npm npm install
@@ -47,12 +48,15 @@ FROM base AS prod
 ARG FUNCTION_DIR
 ARG BASE_DIR
 
+ENV DB_PATH=/tmp/db.sqlite3
+
 # Copy django static files
 COPY --from=build /staticfiles /staticfiles
 
 COPY _static/ ${BASE_DIR}/_static/
 COPY blog/ ${BASE_DIR}/blog/
 COPY src/ ${FUNCTION_DIR}
+COPY litestream.yml ${BASE_DIR}/litestream.yml
 
 COPY --from=build /opt/venv /opt/venv
 
