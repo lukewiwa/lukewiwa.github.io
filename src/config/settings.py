@@ -254,7 +254,7 @@ MEDIA_URL = "media/"
 
 # Uploaded images live in S3 wherever object storage is configured, and on the
 # local filesystem otherwise, so the app boots for local development without
-# MinIO running.
+# RustFS running.
 if env.str("MEDIA_BACKEND") == "s3":
     _default_storage = {
         "BACKEND": "storages.backends.s3.S3Storage",
@@ -325,7 +325,7 @@ BAKERY_VIEWS = (
 # ----------------------------------------------------------
 
 # Which deployment target a publish writes to. "filesystem" needs nothing but a
-# directory; "s3" talks to any S3 API, which means MinIO locally and the real
+# directory; "s3" talks to any S3 API, which means RustFS locally and the real
 # thing in production. Both paths run the same code.
 PUBLISH_TARGET = env.str("PUBLISH_TARGET")
 PUBLISH_DESTINATION = env.str("PUBLISH_DESTINATION") or str(ROOT_DIR / "_publish")

@@ -2,8 +2,8 @@
 
 The same pipeline runs locally and in production; only the target differs, and
 the target is chosen by configuration rather than by a `DEBUG` check. Locally
-that is either a plain directory or a MinIO bucket; in production it is the S3
-bucket behind CloudFront. Because MinIO speaks the S3 API, the production code
+that is either a plain directory or a RustFS bucket; in production it is the S3
+bucket behind CloudFront. Because RustFS speaks the S3 API, the production code
 path is the one exercised in local development.
 """
 
@@ -82,7 +82,7 @@ class FilesystemPublishTarget(PublishTarget):
 
 
 class S3PublishTarget(PublishTarget):
-    """Sync the baked site into an S3 (or MinIO) bucket.
+    """Sync the baked site into an S3 (or RustFS) bucket.
 
     Only files whose contents actually changed are uploaded, which keeps a
     republish of a 40 post blog down to the handful of pages that moved.

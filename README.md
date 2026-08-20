@@ -52,9 +52,9 @@ Where it deploys is configuration, not a `DEBUG` branch:
 | `PUBLISH_TARGET` | Goes to                        | Used for                     |
 | ---------------- | ------------------------------ | ---------------------------- |
 | `filesystem`     | `PUBLISH_DESTINATION` directory | Local dev with no dependencies |
-| `s3`             | `PUBLISH_BUCKET_NAME`           | MinIO locally, S3 in production |
+| `s3`             | `PUBLISH_BUCKET_NAME`           | RustFS locally, S3 in production |
 
-Because MinIO speaks the S3 API, `just publish-minio` exercises the exact code
+Because RustFS speaks the S3 API, `just publish-rustfs` exercises the exact code
 path production uses. CloudFront invalidation is skipped unless
 `CLOUDFRONT_DISTRIBUTION_ID` is set, which is the only genuinely
 production-only step.
@@ -79,11 +79,11 @@ just publish-local
 just serve-publish            # browse the static output on :8080
 ```
 
-Publish through the production code path, against MinIO:
+Publish through the production code path, against RustFS:
 
 ```bash
 docker compose up -d
-just publish-minio
+just publish-rustfs
 ```
 
 The CMS is at `/blog/cms/`, and the publish button is under "Publish site" in

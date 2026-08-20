@@ -32,8 +32,8 @@ publish *ARGS:
 publish-local *ARGS:
 	cd src && PUBLISH_TARGET=filesystem uv run ./manage.py publish {{ARGS}}
 
-# Publish to the local MinIO bucket, exercising the same code path as production
-publish-minio *ARGS:
+# Publish to the local RustFS bucket, exercising the same code path as production
+publish-rustfs *ARGS:
 	cd src && PUBLISH_TARGET=s3 uv run ./manage.py publish {{ARGS}}
 
 # Serve the most recent local publish, to check the static output
