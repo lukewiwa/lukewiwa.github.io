@@ -22,7 +22,10 @@ def navbar(context: template.Context) -> dict:
         Link(url=reverse("wagtail_serve", args=[""]), title="Blog"),
         Link(url=reverse("core:projects"), title="Projects"),
     ]
-    if request.user.is_authenticated:
+    # A baked page is rendered without auth middleware and is served to the
+    # public, so no user means anonymous rather than an error.
+    user = getattr(request, "user", None)
+    if user is not None and user.is_authenticated:
         REGISTERED_HEADER_LINKS.append(
             Link(url=reverse("admin:index"), title="Admin"),
         )

@@ -1,5 +1,4 @@
 import "./admin-highlight.css";
-import LanguageSelect from "./LanguageSelect";
 import Preview from "./Preview";
 
 const React = window.React;

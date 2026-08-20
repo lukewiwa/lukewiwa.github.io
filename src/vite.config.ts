@@ -1,5 +1,4 @@
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react-swc";
 import { exec as baseExec } from "child_process";
 import { promisify } from "util";
 
@@ -18,21 +17,26 @@ const collectStaticPlugin = () => {
   };
 };
 
-// https://vitejs.dev/config/
+// The public site ships no application JavaScript: this build exists to emit
+// the Tailwind stylesheet and a copy of htmx for the CMS publish panel.
+// React is not bundled here — the only React in the project is the Wagtail
+// admin code block widget, which borrows Wagtail's own `window.React`.
 export default defineConfig({
-  plugins: [react(), collectStaticPlugin()],
+  plugins: [collectStaticPlugin()],
   publicDir: false,
   build: {
     outDir: "./frontend/dist",
     assetsDir: ".",
     rollupOptions: {
-      input: "./frontend/src/index.tsx",
+      input: {
+        index: "./frontend/src/index.ts",
+        htmx: "./frontend/src/htmx.ts",
+      },
       output: {
         entryFileNames: "[name].js",
         assetFileNames: "[name].[ext]",
       },
     },
-    // We'll deal with the size limits later
     chunkSizeWarningLimit: 5000,
   },
 });

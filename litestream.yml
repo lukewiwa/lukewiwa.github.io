@@ -1,0 +1,27 @@
+# Litestream replicates the SQLite WAL to object storage continuously while the
+# process is running, and the Django middleware asks it for an immediate,
+# blocking sync after every write, so nothing is left unreplicated when Lambda
+# freezes the execution environment.
+#
+# Only ever run one replicating process against this path. Two processes
+# replicating into the same bucket prefix can produce a replica that will not
+# restore, which is why the CMS function is pinned to a concurrency of 1.
+
+# The control socket is what makes `litestream sync` possible: it is a client
+# command that tells this daemon to flush now. /tmp is the only writable path
+# on Lambda.
+socket:
+  enabled: true
+  path: ${LITESTREAM_SOCKET}
+
+dbs:
+  - path: ${DB_PATH}
+    replicas:
+      - url: ${LITESTREAM_REPLICA_URL}
+        access-key-id: ${LITESTREAM_ACCESS_KEY_ID}
+        secret-access-key: ${LITESTREAM_SECRET_ACCESS_KEY}
+        endpoint: ${LITESTREAM_S3_ENDPOINT}
+        force-path-style: ${LITESTREAM_S3_FORCE_PATH_STYLE}
+        # Keep a day of point-in-time recovery.
+        retention: 24h
+        snapshot-interval: 1h

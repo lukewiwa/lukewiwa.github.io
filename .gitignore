@@ -177,3 +177,7 @@ cython_debug/
 #.idea/
 
 node_modules/
+
+# Local publish output and uploaded media
+_publish/
+_media/

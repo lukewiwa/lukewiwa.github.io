@@ -22,6 +22,28 @@ start: python-server static-watch
 deploy:
 	cd infra && npm run cdk -- deploy --all --require-approval never
 
+# Publishing
+
+# Build the static site and deploy it to the configured target
+publish *ARGS:
+	cd src && uv run ./manage.py publish {{ARGS}}
+
+# Publish to a local directory (_publish), no object storage needed
+publish-local *ARGS:
+	cd src && PUBLISH_TARGET=filesystem uv run ./manage.py publish {{ARGS}}
+
+# Publish to the local MinIO bucket, exercising the same code path as production
+publish-minio *ARGS:
+	cd src && PUBLISH_TARGET=s3 uv run ./manage.py publish {{ARGS}}
+
+# Serve the most recent local publish, to check the static output
+serve-publish PORT="8080":
+	cd _publish && python3 -m http.server {{PORT}}
+
+# Import the markdown archive in blog/ into the database
+populate-blog *ARGS:
+	cd src && uv run ./manage.py populate_blog {{ARGS}}
+
 # Django commands
 
 # Run Django migrations
@@ -117,5 +139,6 @@ clean:
 	rm -rf src/staticfiles
 	rm -rf src/frontend/dist
 	rm -rf infra/cdk.out
+	rm -rf _publish
 	find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
 	find . -type f -name "*.pyc" -delete

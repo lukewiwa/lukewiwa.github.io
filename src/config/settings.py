@@ -33,6 +33,8 @@ env = environ.Env(
     ALLOWED_HOSTS=(list, []),
     ROOT_URLCONF=(str, "config.urls.prod"),
     DOMAIN=(str,),
+    SITE_BASE_URL=(str, ""),
+    BAKERY_HOST=(str, "testserver"),
     STATIC_HOST=(str, ""),
     CSRF_COOKIE_NAME=(str, "wiwablogcsrftoken"),
     CSRF_COOKIE_SECURE=(bool, True),
@@ -46,16 +48,31 @@ env = environ.Env(
     # or it can be manually set in the `.env` file.
     SESSION_COOKIE_SECURE=(bool, True),
     SESSION_COOKIE_HTTPONLY=(bool, True),
-    DATABASE_ENGINE=(str, "django_sqlite_object_storage"),
     STATIC_ROOT=(Path, "/staticfiles"),
+    AWS_REGION=(str, ""),
     AWS_STORAGE_BUCKET_NAME=(str, None),
     AWS_S3_ACCESS_KEY_ID=(str, None),
     AWS_S3_SECRET_ACCESS_KEY=(str, None),
     AWS_S3_ENDPOINT_URL=(str, None),
-    SQLITE_OBJECT_STORAGE_BUCKET_NAME=(str),
-    SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID=(str, None),
-    SQLITE_OBJECT_STORAGE_ACCESS_SECRET=(str, None),
-    SQLITE_OBJECT_STORAGE_ENDPOINT_URL=(str, None),
+    MEDIA_BACKEND=(str, "filesystem"),
+    MEDIA_ROOT=(str, ""),
+    # SQLite lives on local disk and is replicated to object storage by
+    # Litestream. On Lambda that local disk is /tmp.
+    DB_PATH=(str, "/tmp/db.sqlite3"),
+    LITESTREAM_BINARY=(str, "litestream"),
+    LITESTREAM_CONFIG=(str, ""),
+    LITESTREAM_SOCKET=(str, ""),
+    LITESTREAM_REPLICA_URL=(str, ""),
+    # Publishing
+    BUILD_DIR=(str, "/tmp/build"),
+    PUBLISH_TARGET=(str, "filesystem"),
+    PUBLISH_DESTINATION=(str, ""),
+    PUBLISH_RUNNER=(str, "inline"),
+    PUBLISH_BUCKET_NAME=(str, ""),
+    PUBLISH_ENDPOINT_URL=(str, ""),
+    PUBLISH_ACCESS_KEY_ID=(str, ""),
+    PUBLISH_SECRET_ACCESS_KEY=(str, ""),
+    CLOUDFRONT_DISTRIBUTION_ID=(str, ""),
 )
 
 
@@ -89,6 +106,7 @@ INSTALLED_APPS = [
     "blog.apps.BlogConfig",
     "admin_core.apps.AdminCoreConfig",
     "admin_utils.apps.AdminUtilsConfig",
+    "publishing.apps.PublishingConfig",
     "wagtail.contrib.forms",
     "wagtail.contrib.redirects",
     "wagtail.embeds",
@@ -124,6 +142,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
+    # Must come last so the WAL is flushed after everything else has run.
+    "publishing.middleware.LitestreamSyncMiddleware",
 ]
 
 ROOT_URLCONF = env("ROOT_URLCONF")
@@ -139,6 +159,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.context_processors.site",
             ],
         },
     },
@@ -171,22 +192,19 @@ LOGGING = {
 
 DATABASES = {
     "default": {
-        "ENGINE": env("DATABASE_ENGINE"),
-        "NAME": "/tmp/db.sqlite3",
-        "SQLITE_OBJECT_STORAGE_BUCKET_NAME": env.str(
-            "SQLITE_OBJECT_STORAGE_BUCKET_NAME"
-        ),
-        "SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID": env.str(
-            "SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID"
-        ),
-        "SQLITE_OBJECT_STORAGE_ACCESS_SECRET": env.str(
-            "SQLITE_OBJECT_STORAGE_ACCESS_SECRET"
-        ),
-        "SQLITE_OBJECT_STORAGE_ENDPOINT_URL": env.str(
-            "SQLITE_OBJECT_STORAGE_ENDPOINT_URL"
-        ),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": env.str("DB_PATH"),
+        "OPTIONS": {
+            # WAL is what Litestream replicates, so it is not optional here.
+            # busy_timeout keeps the occasional concurrent reader from erroring
+            # out while a write is in flight.
+            "init_command": "PRAGMA journal_mode=WAL; PRAGMA busy_timeout=5000; PRAGMA synchronous=NORMAL;",
+            "transaction_mode": "IMMEDIATE",
+        },
     }
 }
+
+DB_PATH = env.str("DB_PATH")
 
 AUTH_USER_MODEL = "core.User"
 LOGIN_REDIRECT_URL = reverse_lazy("core:index")
@@ -231,8 +249,14 @@ STATIC_ROOT = env.str("STATIC_ROOT")
 STATICFILES_DIRS = (("frontend", (BASE_DIR / "frontend" / "dist")),)
 
 
-STORAGES = {
-    "default": {
+MEDIA_ROOT = env.str("MEDIA_ROOT") or str(ROOT_DIR / "_media")
+MEDIA_URL = "media/"
+
+# Uploaded images live in S3 wherever object storage is configured, and on the
+# local filesystem otherwise, so the app boots for local development without
+# MinIO running.
+if env.str("MEDIA_BACKEND") == "s3":
+    _default_storage = {
         "BACKEND": "storages.backends.s3.S3Storage",
         "OPTIONS": {
             "file_overwrite": False,
@@ -242,7 +266,12 @@ STORAGES = {
             "endpoint_url": env.str("AWS_S3_ENDPOINT_URL"),
             "location": "media",
         },
-    },
+    }
+else:
+    _default_storage = {"BACKEND": "django.core.files.storage.FileSystemStorage"}
+
+STORAGES = {
+    "default": _default_storage,
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
@@ -256,6 +285,17 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Wagtail
 
+# Canonical origin for absolute links. DOMAIN is a bare hostname, so add a
+# scheme unless one was supplied explicitly.
+_domain = env.str("DOMAIN")
+SITE_BASE_URL = env.str("SITE_BASE_URL") or (
+    _domain if "://" in _domain else f"https://{_domain}"
+)
+
+# The synthetic host django-bakery renders through. It has to be allowed while
+# a build is running or every view raises DisallowedHost.
+BAKERY_HOST = env.str("BAKERY_HOST")
+
 WAGTAIL_SITE_NAME = "Wiwa's Blog"
 WAGTAILADMIN_BASE_URL = env.str("DOMAIN")
 
@@ -265,13 +305,49 @@ WAGTAILIMAGES_EXTENSIONS = ["gif", "jpg", "jpeg", "png", "webp", "svg"]
 # Bakery
 # ----------------------------------------------------------
 
-BUILD_DIR = "/tmp/build"
+BUILD_DIR = env.str("BUILD_DIR")
 
 BAKERY_VIEWS = (
     "wagtailbakery.views.AllPublishedPagesView",
     "core.views.IndexView",
     "core.views.ProjectsView",
+    # Feeds are linked from every page, so they have to exist in the static
+    # output too.
+    "blog.views.BuildableRssFeed",
+    "blog.views.BuildableAtomFeed",
+    "blog.views.BuildableJsonFeed",
+    # CloudFront serves this as the custom error response.
+    "core.views.Buildable404View",
 )
+
+# ----------------------------------------------------------
+# Publishing
+# ----------------------------------------------------------
+
+# Which deployment target a publish writes to. "filesystem" needs nothing but a
+# directory; "s3" talks to any S3 API, which means MinIO locally and the real
+# thing in production. Both paths run the same code.
+PUBLISH_TARGET = env.str("PUBLISH_TARGET")
+PUBLISH_DESTINATION = env.str("PUBLISH_DESTINATION") or str(ROOT_DIR / "_publish")
+PUBLISH_RUNNER = env.str("PUBLISH_RUNNER")
+PUBLISH_BUCKET_NAME = env.str("PUBLISH_BUCKET_NAME")
+PUBLISH_ENDPOINT_URL = env.str("PUBLISH_ENDPOINT_URL")
+PUBLISH_ACCESS_KEY_ID = env.str("PUBLISH_ACCESS_KEY_ID")
+PUBLISH_SECRET_ACCESS_KEY = env.str("PUBLISH_SECRET_ACCESS_KEY")
+AWS_REGION = env.str("AWS_REGION")
+
+# Set only in production; without it the publish skips cache invalidation.
+CLOUDFRONT_DISTRIBUTION_ID = env.str("CLOUDFRONT_DISTRIBUTION_ID")
+
+# ----------------------------------------------------------
+# Litestream
+# ----------------------------------------------------------
+
+LITESTREAM_BINARY = env.str("LITESTREAM_BINARY")
+LITESTREAM_CONFIG = env.str("LITESTREAM_CONFIG")
+# The daemon's control socket, which `litestream sync` connects to.
+LITESTREAM_SOCKET = env.str("LITESTREAM_SOCKET")
+LITESTREAM_REPLICA_URL = env.str("LITESTREAM_REPLICA_URL")
 
 # ----------------------------------------------------------
 # Debug Toolbar
