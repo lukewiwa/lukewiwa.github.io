@@ -5,7 +5,7 @@ import {
   StackProps,
 } from "aws-cdk-lib";
 import { Construct } from "constructs";
-import { DOMAIN_NAME, FULLY_QUALIFIED_DOMAIN } from "./settings";
+import { DOMAIN_NAME, FULLY_QUALIFIED_DOMAIN, WWW_DOMAIN_NAME } from "./settings";
 
 export class CertificateStack extends Stack {
   public certificate: acm.Certificate;
@@ -17,6 +17,7 @@ export class CertificateStack extends Stack {
     });
     this.certificate = new acm.Certificate(this, "WiwaCertificate", {
       domainName: DOMAIN_NAME,
+      subjectAlternativeNames: WWW_DOMAIN_NAME ? [WWW_DOMAIN_NAME] : undefined,
       validation: acm.CertificateValidation.fromDns(hostedZone),
     });
   }

@@ -21,6 +21,15 @@ COPY --from=node_source /usr/local/lib/node_modules /usr/local/lib/node_modules
 RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
     ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
 
+FROM builder AS litestream
+ARG TARGETARCH
+# Check https://github.com/benbjohnson/litestream/releases for newer versions.
+ARG LITESTREAM_VERSION="0.3.13"
+
+RUN curl -fsSL \
+    "https://github.com/benbjohnson/litestream/releases/download/v${LITESTREAM_VERSION}/litestream-v${LITESTREAM_VERSION}-linux-${TARGETARCH}.tar.gz" \
+    | tar -xz -C /usr/local/bin litestream
+
 FROM builder AS build
 ARG FUNCTION_DIR
 
@@ -35,9 +44,15 @@ RUN --mount=type=cache,target=/tmp/uv \
 # These will have no bearing on the final image
 ENV DJANGO_SECRET_KEY="dummy-secret-key-for-static-files-collection" \
     ALLOWED_HOSTS="" \
-    DATABASE_ENGINE="django.db.backends.sqlite3" \
-    SQLITE_OBJECT_STORAGE_BUCKET_NAME="/tmp/dummy.sqlite3" \
     DOMAIN="https://example.com"
+
+# wagtail_highlight is its own separate frontend package (own build,
+# outputs to its own static/ dir) - it has to be built before `npm run
+# build` below, since that triggers `collectstatic` as a side effect (see
+# vite.config.ts) and collectstatic needs wagtail_highlight's static files
+# to already be on disk.
+RUN --mount=type=cache,target=/root/.npm npm --prefix=wagtail_highlight install
+RUN npm --prefix=wagtail_highlight run build
 
 RUN --mount=type=cache,target=/root/.npm npm install
 RUN npm run build
@@ -55,6 +70,7 @@ COPY blog/ ${BASE_DIR}/blog/
 COPY src/ ${FUNCTION_DIR}
 
 COPY --from=build /opt/venv /opt/venv
+COPY --from=litestream /usr/local/bin/litestream /usr/local/bin/litestream
 
 
 EXPOSE 8080

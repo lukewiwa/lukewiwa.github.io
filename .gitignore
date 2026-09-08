@@ -13,6 +13,9 @@
 
 _site/
 
+# local db backup pulled down via `just db-backup-pull`
+/tmp/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

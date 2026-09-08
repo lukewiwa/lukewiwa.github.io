@@ -46,16 +46,16 @@ env = environ.Env(
     # or it can be manually set in the `.env` file.
     SESSION_COOKIE_SECURE=(bool, True),
     SESSION_COOKIE_HTTPONLY=(bool, True),
-    DATABASE_ENGINE=(str, "django_sqlite_object_storage"),
     STATIC_ROOT=(Path, "/staticfiles"),
     AWS_STORAGE_BUCKET_NAME=(str, None),
     AWS_S3_ACCESS_KEY_ID=(str, None),
     AWS_S3_SECRET_ACCESS_KEY=(str, None),
     AWS_S3_ENDPOINT_URL=(str, None),
-    SQLITE_OBJECT_STORAGE_BUCKET_NAME=(str),
-    SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID=(str, None),
-    SQLITE_OBJECT_STORAGE_ACCESS_SECRET=(str, None),
-    SQLITE_OBJECT_STORAGE_ENDPOINT_URL=(str, None),
+    # Litestream keeps this file continuously replicated to
+    # LITESTREAM_REPLICA_BUCKET. It lives on Lambda's writable /tmp so it
+    # must be restored from the replica on every cold start - see
+    # src/entrypoint.sh.
+    DATABASE_PATH=(str, "/tmp/db.sqlite3"),
 )
 
 
@@ -171,20 +171,8 @@ LOGGING = {
 
 DATABASES = {
     "default": {
-        "ENGINE": env("DATABASE_ENGINE"),
-        "NAME": "/tmp/db.sqlite3",
-        "SQLITE_OBJECT_STORAGE_BUCKET_NAME": env.str(
-            "SQLITE_OBJECT_STORAGE_BUCKET_NAME"
-        ),
-        "SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID": env.str(
-            "SQLITE_OBJECT_STORAGE_ACCESS_KEY_ID"
-        ),
-        "SQLITE_OBJECT_STORAGE_ACCESS_SECRET": env.str(
-            "SQLITE_OBJECT_STORAGE_ACCESS_SECRET"
-        ),
-        "SQLITE_OBJECT_STORAGE_ENDPOINT_URL": env.str(
-            "SQLITE_OBJECT_STORAGE_ENDPOINT_URL"
-        ),
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": env.str("DATABASE_PATH"),
     }
 }
 

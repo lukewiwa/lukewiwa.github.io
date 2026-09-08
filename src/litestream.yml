@@ -1,0 +1,16 @@
+dbs:
+  - path: ${DATABASE_PATH}
+    replicas:
+      - type: s3
+        bucket: ${LITESTREAM_REPLICA_BUCKET}
+        path: ${LITESTREAM_REPLICA_PATH}
+        # Every Lambda cold start restores the latest generation into a
+        # fresh local file, then replicate mints a brand new generation on
+        # top of it (litestream has no way to know the restored file
+        # belongs to the old lineage). That's expected and lossless, but
+        # without pruning, one generation's worth of snapshot+WAL objects
+        # accumulates in S3 per cold start indefinitely. Retention here
+        # keeps the most recent generation and cleans up older ones on a
+        # rolling basis.
+        retention: 168h
+        retention-check-interval: 1h
