@@ -1,8 +1,6 @@
 ---
 title: Australia and Pommel Horse
 date: 2022-11-03
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 There is something so wrong and rigid about how we teach pommel horse in Australia.

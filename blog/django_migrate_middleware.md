@@ -1,8 +1,6 @@
 ---
 title: Django Migrate Middleware
 date: 2022-12-28
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 I created a [python package](https://pypi.org/project/django-migrate-middleware/) that runs django migrations on every request. It seems silly but has been useful for creating *almost* stateless AWS Lambda functions using django.

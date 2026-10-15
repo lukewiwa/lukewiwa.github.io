@@ -1,8 +1,6 @@
 ---
 title: Django on AWS for Chump Change
 date: 2024-11-21
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 Below are the resources to my PyConAU 2024 talk "Django on AWS for Chump Change"

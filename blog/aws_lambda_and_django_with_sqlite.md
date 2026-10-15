@@ -1,8 +1,6 @@
 ---
 title: AWS Lambda and Django With Sqlite
 date: 2022-10-20
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 Running Django on AWS Lambda has become fairly mainstream and there are many tools to assist with this goal. There is however a pain point which is admittedly not a conventional use case but a possible use case none the less. Django supports a version of sqlite that is above the current version supported on the underlying operating systems of the AWS python lambda implementation. If you're interested lambda functions run on Amazon Linux 1 and 2 which are based on CentOS 6 and 7 respectively.

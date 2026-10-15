@@ -1,8 +1,6 @@
 ---
 title: Another Fresh Lick Of Paint
 date: 2022-02-19
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 I finally found the time and space to do my semi regular migration to a new static site generator. I thought it was time to step away from Vue and try something new, partly out of curiosity and partly because I really like JSX as a templating language. And frankly I'm just not really up for the migration from Vue 2 to Vue 3.

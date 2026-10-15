@@ -1,8 +1,5 @@
 ---
 title: Docker Image With Multiple Python Installs
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2021-05-26
 ---
 

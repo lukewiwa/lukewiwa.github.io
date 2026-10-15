@@ -1,8 +1,6 @@
 ---
 title: Tern Quick Haul One Year Review
 date: 2025-12-03
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 With a growing family the idea of buying a second car mostly for school drop off and local errands felt like bringing a gun to a knife fight. Financially and in terms of the overall space and hassle a second car would occupy in our lives. In essence we didn't really need two cars, we sort of needed a car and a half. I'd been hearing good things about cargo bikes and their potential as a family vehicle. So we took a punt on buying one. It's been in our possession for over a year now and has done over 3000km in that time. In short it's been a fantastic investment for us on several axes: financial, fitness, health and overall wellbeing.

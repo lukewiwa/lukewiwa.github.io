@@ -1,8 +1,6 @@
 ---
 title: manylinux2014 Multi Architecture Build
 date: 2023-01-08
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 [`manylinux`](https://github.com/pypa/manylinux) is a linux distro created to provide the widest support possible for python packages. The folks at the Python Packaging Authority (PyPA) provide convenient docker images of this distro but due to the scale and issues of providing builds across multiple architectures the images are distributed under different tags for different architectures. I created a [repo github action](https://github.com/lukewiwa/manylinux2014) to aggregate these images into a multi architecture build using the [docker manifest command](https://www.docker.com/blog/multi-arch-build-and-images-the-simple-way/).

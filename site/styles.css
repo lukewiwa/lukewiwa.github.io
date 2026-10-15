@@ -1,0 +1,19 @@
+@import "tailwindcss" source(none);
+@source "./";
+@plugin "@tailwindcss/typography";
+
+/*
+ * Shiki writes the light theme as inline colours and the dark theme as CSS
+ * variables on every token; swap to the variables in dark mode.
+ */
+@media (prefers-color-scheme: dark) {
+  .shiki,
+  .shiki span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+  }
+}
+
+.shiki {
+  @apply rounded-lg border border-stone-200 dark:border-stone-800;
+}

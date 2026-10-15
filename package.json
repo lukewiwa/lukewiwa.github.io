@@ -1,0 +1,38 @@
+{
+  "name": "lukewiwa.com",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "build": "tsx site/build.tsx",
+    "dev": "tsx site/dev.ts",
+    "new-post": "tsx site/new-post.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@shikijs/markdown-it": "4.5.0",
+    "markdown-it": "15.0.2",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "shiki": "4.5.0",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.3.3",
+    "@tailwindcss/typography": "0.5.20",
+    "@types/markdown-it": "14.2.0",
+    "@types/node": "24.19.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "esbuild": "0.28.2",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  },
+  "allowScripts": {
+    "esbuild": false,
+    "@parcel/watcher": false
+  }
+}

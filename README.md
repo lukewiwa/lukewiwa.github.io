@@ -1,114 +1,84 @@
 # lukewiwa.com
 
-The Ramblings of Wiwa
-
-A static blog with an interactive backend: the public site is flat files on S3
-behind CloudFront, and posts are written in a Wagtail CMS that runs on Lambda,
-from whatever device is to hand.
-
-## How it fits together
+The Ramblings of Wiwa. A static site: markdown and React templates in, flat
+files out, served by GitHub Pages.
 
 ```
-   blog/*.md ──(one-time import)──> SQLite ──Litestream──> S3 (replica)
-                                      │
-                                      │  Wagtail CMS on Lambda
-                                      │  /blog/cms, /admin
-                                      ▼
-                                  "Publish"
-                                      │
-                        bake every page to static HTML
-                                      │
-                                      ▼
-                            S3 site bucket ──> CloudFront ──> readers
+blog/*.md ─┐
+site/*.tsx ├─ npm run build ─> dist/ ─ GitHub Actions ─> GitHub Pages ─> readers
+public/   ─┘
 ```
 
-Readers never reach Django. CloudFront serves the baked site straight from S3,
-and only the CMS paths are routed to Lambda.
+## Writing a post
 
-### The database
+A post is a markdown file in `blog/`. Its file name is its URL:
+`blog/pinocchio.md` is served at `/blog/pinocchio/`.
 
-SQLite on local disk, replicated to S3 by [Litestream](https://litestream.io).
-On a cold start the entrypoint restores the database from the replica; while
-the app runs, Litestream replicates the WAL.
+```markdown
+---
+title: Pinocchio
+date: 2018-04-18
+description: Optional. Shown on the blog index instead of the excerpt.
+draft: true # optional; drafts show in `just dev` but are not published
+---
 
-Lambda freezes an execution environment the moment a response is returned, so
-asynchronous replication alone would risk losing a write that never got flushed
-before the environment was reaped. `publishing.middleware.LitestreamSyncMiddleware`
-closes that window: after any request that wrote, it asks the Litestream daemon
-over its control socket for an immediate, blocking sync, and only then returns.
+Opening paragraph, shown on the blog index.
 
-Litestream cannot have two processes replicating one database, so the CMS
-function is pinned to `reservedConcurrentExecutions: 1`. That costs nothing,
-because reads are served from S3.
+<!--more-->
 
-### Publishing
+The rest of the post.
+```
 
-`manage.py publish` bakes every published page with django-bakery, deploys the
-result, and invalidates the CDN. It runs the same way from the command line,
-from the CMS publish button, and from the worker Lambda.
+`just new-post "My Post Title"` scaffolds one as a draft.
 
-Where it deploys is configuration, not a `DEBUG` branch:
-
-| `PUBLISH_TARGET` | Goes to                        | Used for                     |
-| ---------------- | ------------------------------ | ---------------------------- |
-| `filesystem`     | `PUBLISH_DESTINATION` directory | Local dev with no dependencies |
-| `s3`             | `PUBLISH_BUCKET_NAME`           | RustFS locally, S3 in production |
-
-Because RustFS speaks the S3 API, `just publish-rustfs` exercises the exact code
-path production uses. CloudFront invalidation is skipped unless
-`CLOUDFRONT_DISTRIBUTION_ID` is set, which is the only genuinely
-production-only step.
-
-Only files whose contents changed are uploaded, so a republish after editing
-one post moves a handful of files rather than the whole site.
+**From a phone:** create or edit the file on a branch (the GitHub app, or ask
+Claude Code on the web to draft it), open a PR, and merge it. CI publishes
+every push to `main`.
 
 ## Local development
 
-```bash
-cp .env.example .env          # then fill in DJANGO_SECRET_KEY
-just install
-just migrate
-just populate-blog            # one-time import of blog/*.md
-just start                    # Django on :8000 plus asset watch
-```
-
-Publish locally, no object storage needed:
+Open the repo in the dev container. It installs Node 24, `just` and
+dependencies. Then:
 
 ```bash
-just publish-local
-just serve-publish            # browse the static output on :8080
+just dev          # http://localhost:8080, rebuilds and reloads on save
+just build        # build into dist/
+just typecheck
 ```
 
-Publish through the production code path, against RustFS:
+## How the build works
 
-```bash
-docker compose up -d
-just publish-rustfs
-```
+`site/build.tsx` is the whole generator, a few hundred lines with no
+framework:
 
-The CMS is at `/blog/cms/`, and the publish button is under "Publish site" in
-its menu.
+| Input             | Output                                                           |
+| ----------------- | ---------------------------------------------------------------- |
+| `public/`         | copied as-is                                                     |
+| `site/styles.css` | Tailwind v4, written to `dist/assets/site-<hash>.css`            |
+| `site/client/*.ts(x)` | each file is a browser entry, bundled by esbuild into `dist/assets/` |
+| `site/pages/`     | React components rendered to static HTML                         |
+| `blog/*.md`       | markdown-it, with code highlighted at build time by Shiki        |
+
+It also writes Atom, RSS and JSON feeds under `/feed/blog/`, a sitemap and a
+404 page.
+
+Pages are plain React rendered once at build time, so they ship no JavaScript.
+To make part of a page interactive, add an entry such as
+`site/client/search.tsx` and pass `scripts={["search"]}` to `<Base>`.
+
+New pages are registered in the `pages` map in `site/build.tsx`.
 
 ## Deployment
 
-```bash
-just deploy
-```
+`.github/workflows/main.yaml` type-checks and builds every PR. On a push to
+`main` it also publishes `dist/` with GitHub's official Pages actions. There
+is no separate publishing branch.
 
-CDK builds the container image, deploys both Lambda functions, the buckets and
-the distribution, then runs migrations. See [infra/lib/infra-stack.ts](infra/lib/infra-stack.ts).
+One-off setup:
 
-## Content
-
-The posts began as markdown in [blog/](blog/) and were imported once by
-`populate_blog`. The database is the source of truth now; the markdown is kept
-as an archive. `populate_blog` skips posts that already exist, so it is safe to
-re-run.
-
-## Frontend
-
-The public site ships no application JavaScript — just a Tailwind stylesheet
-and highlight.js for code blocks. htmx drives the CMS publish panel.
-
-The only React in the project is the code-block widget in the Wagtail admin,
-which borrows Wagtail's own `window.React` rather than bundling a copy.
+- **Repository settings → Pages:** set the source to "GitHub Actions" and the
+  custom domain to `lukewiwa.com`, with HTTPS enforced.
+- **DNS (Route 53, `lukewiwa.com` zone):** A records for the apex pointing at
+  `185.199.108.153`, `185.199.109.153`, `185.199.110.153` and
+  `185.199.111.153`, and a `www` CNAME to `lukewiwa.github.io`. GitHub
+  redirects `www` to the apex.

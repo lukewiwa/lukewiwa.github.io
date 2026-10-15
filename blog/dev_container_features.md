@@ -1,8 +1,6 @@
 ---
 title: Dev Container Features
 date: 2022-11-24
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 Dev containers have been a thing for a while now in different forms and it looks like Microsoft is really trying to push them forward as a standard rather than something siloed off in Visual Studio Code. One of their latest additions to the spec is a feature creatively named [*features*](https://containers.dev/features). I took the time to investigate them and [write some of my own](https://github.com/lukewiwa/features).

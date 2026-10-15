@@ -1,8 +1,6 @@
 ---
 title: AWS cloudfront and API Gateway with Django
 date: 2025-02-19
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 If you are hosting a web app on AWS you should be putting a Cloudfront instance in front of it. There are a few advantages but at the end of the day it's cheaper, allows for global caching at the edge and provides a fairly straight forward way to obtain SSL certificates. In my own hosting of apps I will more often than not use API gateway in front of Django too as this gives you some nice tools such as rate limiting and whatnot. But it seems really annoying and difficult to get it all working with a Django app given Django's security model around the allowed hosts.

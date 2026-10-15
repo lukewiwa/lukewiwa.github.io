@@ -1,9 +1,6 @@
 ---
 title: Fortune Teller by Xavier Rudd - Guitar Tabs
-
 date: 2022-01-22
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 There are no good tabs for this track online so I finally figured it out and created them.

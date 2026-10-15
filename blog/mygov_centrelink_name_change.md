@@ -1,8 +1,5 @@
 ---
 title: How To Link Your MyGov Account To Centrelink After A Name Change
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2019-02-10
 ---
 
