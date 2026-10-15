@@ -1,9 +1,6 @@
 ---
 title: Importing Rootfs Ubuntu Images into WSL2
-
 date: 2020-05-26
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 I've been generally impressed with the preview of Windows Subsystem for Linux 2 (WSL2) and it's integration between the windows desktop and the underlying linux kernel.

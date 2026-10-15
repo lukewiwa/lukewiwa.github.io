@@ -1,8 +1,6 @@
 ---
 title: Debug Django Management Commands In VSCode
 date: 2024-04-29
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 Adding break points to a django management command in Visual Studio Code is one of those tasks that I’ve been wanting to achieve for a while but never really got around to investigating. I generally fell back on print statements which has been _Good Enough_.

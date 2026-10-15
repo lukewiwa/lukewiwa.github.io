@@ -1,8 +1,5 @@
 ---
 title: A Dumping Ground
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2017-03-03
 ---
 

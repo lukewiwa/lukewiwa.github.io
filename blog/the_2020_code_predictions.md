@@ -1,8 +1,5 @@
 ---
 title: "The 2020 Code of Points: What we might expect"
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2017-06-05
 ---
 

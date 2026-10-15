@@ -1,8 +1,6 @@
 ---
 title: Wiwa's Axiom for Python Virtual Environments In Containers
 date: 2022-11-27
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 Don't.

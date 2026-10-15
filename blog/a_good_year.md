@@ -1,8 +1,6 @@
 ---
 title: A Good Year
 date: 2017-12-29
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 

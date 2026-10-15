@@ -1,8 +1,5 @@
 ---
 title: JavaScript Remains The Best Deployment Target
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2018-11-10
 description: It is abundantly clear that targeting the web, even as a Single Page App with heavy JavaScript, hits that sweet spot of development time, availability and cost.
 ---

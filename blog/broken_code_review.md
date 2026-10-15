@@ -1,8 +1,6 @@
 ---
 title: The “We Say You Do” Model Of Code Review Is Broken
 date: 2016-02-24
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 With the upcoming review and rehash of the Code of Points for the 2017–2020 cycle one thing is becoming increasingly clear, the FIG and requisite technical committees should do as students are told to do and show their working. The Code has been a living and morphing document since it’s inception. This needn’t change, however the way in which we go about modifications has to become a more data driven process.

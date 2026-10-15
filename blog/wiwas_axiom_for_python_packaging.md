@@ -1,8 +1,6 @@
 ---
 title: Wiwa's Axion For Python Packaging
 date: 2022-10-26
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 Python packaging will be "solved" when a packaging and dependency manager that is written in a compiled language becomes mainstream.

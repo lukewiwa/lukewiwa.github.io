@@ -1,8 +1,6 @@
 ---
 title: Pocket Notebook
 date: 2024-09-28
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 I've tried a lot of productivity software over the years. I seem to churn through apps and systems fairly regularly. I suspect part of this is because I just need a change from time to time. My brain requires a reset and adopting a new system provides that demarcation line and some fresh energy. Lately though I've moved to a very analogue system for personal note taking.

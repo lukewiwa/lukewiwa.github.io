@@ -1,8 +1,5 @@
 ---
 title: Pinocchio
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2018-04-18
 ---
 

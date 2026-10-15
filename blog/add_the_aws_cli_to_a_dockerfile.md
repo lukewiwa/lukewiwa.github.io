@@ -1,8 +1,6 @@
 ---
 title: Add the AWS CLI to a Dockerfile
 date: 2021-04-25
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 Using the magic of multi-stage builds using [external images](https://docs.docker.com/develop/develop-images/multistage-build/#use-an-external-image-as-a-stage) and Amazon's official aws cli [docker image](https://hub.docker.com/r/amazon/aws-cli) it's actually pretty easy to add the AWS CLI to a huge amount of containers.

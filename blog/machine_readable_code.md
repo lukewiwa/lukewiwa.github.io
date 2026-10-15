@@ -1,8 +1,5 @@
 ---
 title: The Code Of Points Format
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2017-04-08
 ---
 

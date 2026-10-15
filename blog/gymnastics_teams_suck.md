@@ -1,8 +1,5 @@
 ---
 title: The Case Against Gymnastics Teams
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2017-03-03
 ---
 

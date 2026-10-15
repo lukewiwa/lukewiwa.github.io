@@ -1,8 +1,5 @@
 ---
 title: New Text Editor and Syntax Colour Scheme
-tags: blog
-layout: layouts/Blog.tsx
-
 date: 2017-12-06
 ---
 

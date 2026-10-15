@@ -1,7 +1,5 @@
 ---
 title: Toyplot - A Simple Python Plotting Library
-tags: blog
-layout: layouts/Blog.tsx
 date: 2017-07-12
 ---
 

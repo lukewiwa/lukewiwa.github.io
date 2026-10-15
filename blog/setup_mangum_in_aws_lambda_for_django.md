@@ -1,8 +1,6 @@
 ---
 title: Setup Mangum in AWS Lambda for Django
 date: 2022-11-07
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 Here's a quick setup guide to get [mangum](https://mangum.io/) working as the request handler in a django project in AWS Lambda.

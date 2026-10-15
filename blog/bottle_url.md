@@ -2,8 +2,6 @@
 title: Bottle URL Redirect
 date: 2017-05-23
 description: The little documented url method in bottle.py
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 I've been making a little web app for my partner and I. I decided to use the [Bottle](https://bottlepy.org/docs/0.12/) framework as opposed to [Flask](http://flask.pocoo.org/docs/0.12/) since I've always liked the lightness of Bottle and my little app has no need for scaling.

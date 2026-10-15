@@ -1,8 +1,6 @@
 ---
 title: No Growth
 date: 2022-12-23
-tags: blog
-layout: layouts/Blog.tsx
 ---
 
 This end of year break my goal is to have no growth. No goals, no targets, no feeling guilty about not finishing that book or that side project.
