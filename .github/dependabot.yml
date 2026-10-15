@@ -1,0 +1,19 @@
+version: 2
+updates:
+  # Keep actions on supported majors (and runtimes) without manual chasing.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  # One grouped PR a week for the site's npm dependencies.
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    groups:
+      npm:
+        patterns: ["*"]
